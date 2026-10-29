@@ -1,66 +1,71 @@
-# ⚡ KAOSDUO: PORTAL AMBUSH v4.2.0
+<div align="center">
 
-**A pixel-art solo action game with ten combat waves, nine Portal Runs, eight unlockable weapons and two original character themes.**
+# 🏎️ KAOSDUO: NEON HIGHWAY v5.0.0
 
-[▶ Play online](https://darschnid479.github.io/KAOSDuo/play/) · [⬇ Download v4.2.0](https://github.com/Darschnid479/KAOSDuo/releases/tag/v4.2.0) · [Source code](https://github.com/Darschnid479/KAOSDuo)
+**Two heroes. One player. Ten combat waves. Nine unpredictable intermissions.**
 
-> GitHub Pages needs to be enabled in repository settings before the online links work. The release HTML can be opened directly in a browser offline.
+**[Download v5.0.0](https://github.com/Darschnid479/KAOSDuo/releases/tag/v5.0.0)** · **[Play in browser*](https://darschnid479.github.io/KAOSDuo/play/)** · **[Repository](https://github.com/Darschnid479/KAOSDuo)**
 
-![Weapon Shop](assets/armory.webp)
+![In-game neon highway screenshot](assets/highway_v5.webp)
 
-## 🎮 What you can do
+</div>
 
-- **Solo:** Pick **❄️ Blue** or **🎸 Metal**. Four difficulties: Lett, Medium, Vanskelig and Drit Vanskelig.
-- **Fight:** Ten waves with three bosses and 17 character upgrades.
-- **Portal Run:** Nine neon transitions combining cube jumps, ship flying and gravity changes. Each portal independently has a **25% chance** for an unannounced, sudden shooting miniboss phase **in the middle of the run**. Defeat it, then continue the same portal. Losing a portal attempt removes a special ability, **not HP**.
-- **Armory:** Earn coins from monster kills and portal journeys. **After every cleared battle wave, the game asks whether you want to buy a weapon** before entering the next portal. You can buy or skip. Begin with Pulse Blaster, buy seven other guns with your earnings, and equip any owned weapon with keys **1–8**.
-- **Save / Load:** Manual and automatic checkpoints, including character, difficulty, HP, XP, score, shop currency, weapons, upgrades, abilities and Portal Run state. Export/import `.json` backups to move progress between browsers.
-- **Original soundtrack:** Metal has fast distorted synthetic guitar riffs; Blue has calm cozy arpeggios. Music is generated with the Web Audio API, without external music files.
+> **Website:** The browser link requires GitHub Pages to be enabled in repository settings. The release HTML is completely self-contained and works offline without Pages.
 
-## 🔫 Weapon prices
+## 🚀 What's new in 5.0
 
-| Weapon | Cost (shop points) | Ability |
-| --- | ---: | --- |
-| Pulse Blaster | Free | Balanced starter |
-| Chaos Shotgun | 260 | Six pellets |
-| Rail Cannon | 680 | Piercing shots |
-| Chain Arc | 780 | Chaining electricity |
-| Nova Rockets | 990 | Explosive splash damage |
-| Glacier Repeater | 1,160 | Freezing rapid shots |
-| Meteor Minigun | 1,680 | High rate of fire |
-| Prism Annihilator | 2,350 | Piercing prismatic blasts |
+After each monster wave (except the final one) you pass through one of two **randomly selected travel modes**, chosen independently for each intermission:
 
-## Controls
+| Probability | Travel mode | Gameplay |
+| --- | --- | --- |
+| **50%** | 🏎️ **Neon Highway** | Drive a colorful perspective/pseudo-3D car through three lanes of traffic hazards; steer with A/D or arrows, use rechargeable nitro with Space/Shift, collect coins and earn near-miss bonuses. |
+| **50%** | 💠 **Geometry Run** | A colorful platforming portal with animated geometric scenery, cube jumps, flying sections, gravity flips and **25% chance of a sudden shooting mini-boss** halfway through the geometry course. |
 
-| Action | Key |
+**No portal or highway crash takes any HP.** Each failed travel attempt costs one *remaining* special ability (dash, double jump, special attack or OVERDRIVE). You can retry an unlimited number of times and continue after clearing the route. Both modes support mouse/keyboard and mobile touch controls.
+
+### 🎸 Original character music — now actual audio
+
+- **Metal:** *Infernal Riff* — original heavy, riff-driven instrumental with synthesized distorted power chords, bass, drums and cymbals, available in `assets/metal_theme.mp3`.
+- **Blue:** *Cozy Fjord* — original gentle bells, pads, arpeggios and soft bass, available in `assets/blue_theme.mp3`.
+- Music plays from a real MP3 loop when you click **Start**, and the menu has a **🎧 HØR VALGT MUSIKK** audition button. The Web Audio synthesizer remains as a fallback.
+- Soundtracks are original procedural compositions rendered to MP3, not sampled commercial recordings.
+
+### 🔫 Still included
+
+- **100% solo**, choose Blue or Metal; **Lett, Medium, Vanskelig, Drit Vanskelig**.
+- **10 combat waves**, **3 major bosses**, **8 unlockable weapons**, character skill upgrades.
+- Earn **shop coins** by killing monsters, completing portal journeys, collecting road coins and making near misses.
+- After each wave the game asks if you want to **buy weapons before travelling**. Open or skip the Armory.
+- **Manual / auto Save/Load**, including purchased weapons, abilities, stage, credits and the new road-mode state. JSON export/import. The same v4.1/v4.2 save keys are retained for backward compatibility.
+- **25% miniboss** probability is conditional on Geometry Run (the highway replaces that portal, not the combat wave).
+
+## 🎮 Controls
+
+| Mode | Controls |
 | --- | --- |
-| Move / Jump | A / D / W |
-| Shoot / Special / Dash | F / G / Shift |
-| Equip purchased weapon | 1–8 |
-| Open Armory | B |
-| Save / Load menu | L |
-| Pause / Music | P / M |
-| Portal cube | Tap to jump |
-| Portal ship | Hold action to fly |
-| Portal gravity | Tap to flip |
-| Portal boss | F or X to shoot |
+| Combat | A / D move · W jump · F shoot · G special · Shift/Q dash · 1–8 equipped weapons · B shop |
+| Geometry cube | Space/W/↑/tap = jump |
+| Geometry spaceship | Hold Space/W/↑/ACTION = fly up; release to descend |
+| Geometry gravity | Space/W/↑/tap = reverse gravity |
+| Geometry miniboss | F / X to fire; fly to dodge enemy bullets |
+| Neon Highway car | **A/D or ←/→** = change lane · **Space or Shift** = hold nitro; recharge by releasing |
+| Mobile highway | On-screen ◀ **VENSTRE**, ⚡ **NITRO**, **HØYRE** ▶ |
+| Game menus | P pause · B armory · L save/load · M mute · 🎵 music toggle |
 
-## Save system
+## 💾 Save/Load and older saves
 
-Manual and auto saves use your browser's local storage and are separate slots. Autosaves occur at the start of each wave, at the start of portal runs, and after portal penalties. Shop purchases also trigger autosave. Export a backup from the Save / Load panel if you want to transfer progress or keep a backup. Browsers may isolate file-based pages and block local storage: JSON export/import is provided as an alternative.
+The game preserves the localStorage slot names from v4.1 (`kaosduo_v41_manual` and `kaosduo_v41_auto`) so earlier saves are not discarded. Existing geometry runner saves are migrated to the correct `geometry` variant. New highway saves serialize road position, lane, pickups, obstacles, nitro and progress. As with browser-local saves in general, an HTML file opened from a new origin/location may see a different storage area; use **Export/Import JSON** to transfer saves.
 
-## Installation
+## 📥 Install
 
-Download the self-contained `.html` file from **Releases** and open it in Chrome or Edge. No installation or network access is required. The Android v1.1 beta is a separate, older, unverified build.
+1. Download `KAOSDUO_NEON_HIGHWAY_v5.0.0.html` from [the release](https://github.com/Darschnid479/KAOSDuo/releases/tag/v5.0.0).
+2. Open the file in Chrome, Edge or another modern browser. No network connection needed.
+3. Choose Blue or Metal, try **HØR VALGT MUSIKK**, and press **Start**. Make sure your device's media volume is turned up.
 
-## Notes
+The full ZIP contains the standalone game, editable web sources, MP3 soundtrack files, graphics and documentation. The earlier Android APK is not this version and remains unverified on real Android hardware.
 
-The game includes strong animated neon light effects. All character music is newly composed via code, not existing copyrighted recordings.
+## ⚠️ Accessibility / notes
 
-## v4.2.0: Surprise portal ambush & automatic weapon offer
+The game includes frequent flashing effects, fast-changing light, motion and intense color transitions. If you're light-sensitive, enable your operating system's **Reduce Motion** option where available and avoid the intense scenes. This is an original game and not affiliated with Geometry Dash.
 
-- **25% per portal**, selected once when the portal starts; the encounter is hidden until it actually interrupts the level around the middle. Failure/retry does not reroll the encounter.
-- The run pauses for an actual **shooting phase**. You keep flight controls and shoot the mini boss with **F / X**; defeating it resumes the course at the interruption point.
-- Portal levels alternate the order of **ship and gravity sections**, rather than repeating an identical sequence.
-- **Coin shop offer** appears automatically after every combat wave (except the final victory). Choose **Yes** to browse/buy and **No** to continue to the portal. The offer and purchases are saved.
-- Old v4.1 saves remain loadable through the original manual and auto save slots.
+Built by [Darschnid](https://github.com/Darschnid479). ❤️

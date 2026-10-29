@@ -1,0 +1,59 @@
+name: Publish KAOSDUO NEON HIGHWAY v5.0.0
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'dist/KAOSDUO_NEON_HIGHWAY_v5.0.0.html'
+      - 'dist/KAOSDUO_NEON_HIGHWAY_v5.0.0_OFFLINE.zip'
+      - '.github/workflows/neon-highway-release.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate v5 game and package
+        run: |
+          python3 - <<'PYVALIDATE'
+          from pathlib import Path
+          from zipfile import ZipFile
+          html_path=Path('dist/KAOSDUO_NEON_HIGHWAY_v5.0.0.html')
+          html=html_path.read_text(encoding='utf-8')
+          required=["function startNeonHighway(r)","function updateNeonHighway(dt)","function drawHighwayRun(t)","function playNativeMusic()","function offerWaveShop()","function restoreSave(data)"]
+          for part in required: assert part in html,part
+          assert html.count('data:image/webp;base64,')==2
+          assert html.count('data:audio/mpeg;base64,')==2
+          assert '../assets/' not in html
+          with ZipFile('dist/KAOSDUO_NEON_HIGHWAY_v5.0.0_OFFLINE.zip') as zip_file:
+            assert zip_file.testzip() is None
+            assert html_path.name in zip_file.namelist()
+            assert zip_file.read(html_path.name)==html_path.read_bytes()
+            for asset in ['source/assets/metal_theme.mp3','source/assets/blue_theme.mp3','source/play/index.html']:
+              assert asset in zip_file.namelist()
+          PYVALIDATE
+      - name: Validate JavaScript syntax
+        run: |
+          python3 - <<'PYJS'
+          from pathlib import Path
+          import re
+          text=Path('dist/KAOSDUO_NEON_HIGHWAY_v5.0.0.html').read_text()
+          m=re.search(r'<script>(.*?)</script>',text,re.S)
+          assert m
+          Path('/tmp/kaosduo.js').write_text(m.group(1))
+          PYJS
+          node --check /tmp/kaosduo.js
+      - name: Compute checksums
+        run: |
+          cd dist
+          sha256sum KAOSDUO_NEON_HIGHWAY_v5.0.0.html KAOSDUO_NEON_HIGHWAY_v5.0.0_OFFLINE.zip > SHA256SUMS_v5.0.0.txt
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view v5.0.0 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload v5.0.0 dist/KAOSDUO_NEON_HIGHWAY_v5.0.0.html dist/KAOSDUO_NEON_HIGHWAY_v5.0.0_OFFLINE.zip dist/SHA256SUMS_v5.0.0.txt --clobber --repo "$GITHUB_REPOSITORY"
+          else
+            gh release create v5.0.0 dist/KAOSDUO_NEON_HIGHWAY_v5.0.0.html dist/KAOSDUO_NEON_HIGHWAY_v5.0.0_OFFLINE.zip dist/SHA256SUMS_v5.0.0.txt --title 'KAOSDUO: NEON HIGHWAY v5.0.0' --notes-file RELEASE_NOTES.md --latest --target "$GITHUB_SHA" --repo "$GITHUB_REPOSITORY"
+          fi

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 <meta name="theme-color" content="#111028">
 <meta name="description" content="KAOSDUO: OVERDRIVE — 10 combat waves, five weapons, cube jumps, rocket flight, gravity flips and a 25 percent portal miniboss chance.">
-<title>KAOSDUO: HYPERDRIVE — v4.2.0 | Save, Shop & Soundtracks</title>
+<title>KAOSDUO: HYPERDRIVE — v5.0.0 | Save, Shop & Soundtracks</title>
 <style>
 :root { --pink:#ff5c9a; --cyan:#60f2fc; --gold:#ffe080; --ink:#111128; --light:#f4f1ff; }
 * { box-sizing:border-box; }
@@ -133,6 +133,16 @@ h1 span{color:#ffe27b;filter:drop-shadow(0 0 11px #ffa75e77)}
 .wave-shop-actions button{font-size:clamp(13px,1.5vw,19px);min-width:185px;min-height:52px}
 #waveShopNo{border:2px solid #9ab0d9;background:#252e57;color:#fff}
 @media(max-width:620px){.wave-shop-actions button{min-width:100%;min-height:44px}.wave-shop-panel{max-height:94%;overflow:auto}}
+
+/* v5: neon highway mobile controls / quick music audition */
+#driveTouch{display:none}
+#driveTouch.hidden{display:none!important}
+@media(pointer:coarse){#driveTouch:not(.hidden){display:flex;position:absolute;left:8px;right:8px;bottom:12px;z-index:16;justify-content:space-between;align-items:end;gap:8px;pointer-events:none}
+#driveTouch button{pointer-events:auto;touch-action:none;user-select:none;min-width:clamp(75px,18vw,170px);min-height:clamp(48px,8vw,76px);border-radius:18px;border:3px solid #6bffe4;background:linear-gradient(120deg,#12294fe6,#6039a6e6);font-size:clamp(11px,2.2vw,22px);color:#fff;box-shadow:0 0 22px #6cfff255}
+#driveBoost{border-color:#ffd96f!important;background:linear-gradient(120deg,#a15d22db,#ab3677ee)!important}}
+.music-actions{align-items:center;gap:12px;margin-top:4px}.music-actions button{font-size:12px;padding:7px 12px}.audio-hint{color:#9fffe5;font-size:11px;max-width:330px;text-align:left}
+@media(max-height:620px){.music-actions{margin:0}.music-actions button{padding:4px 9px;font-size:10px}.audio-hint{font-size:10px}}
+
 </style>
 </head>
 <body>
@@ -141,9 +151,9 @@ h1 span{color:#ffe27b;filter:drop-shadow(0 0 11px #ffa75e77)}
 <div id="toast" aria-live="polite"></div>
 <div class="overlay" id="menu">
   <div class="panel">
-    <p class="eyebrow">⚡ VERSION 4.2 / PORTAL AMBUSH EDITION ⚡</p>
-    <h1>KAOS<span>DUO</span></h1><div class="kicker">⚡ PORTAL AMBUSH & COIN SHOP ⚡</div>
-    <p class="subtitle">10 kampbølger, 8 våpen å låse opp med butikkpoeng og 9 reiser med KUBE, FLYVING og TYNGDEKRAFT-SKIFT! 25 % sjanse for PLUTSELIG SKYTEBOSS MIDT I PORTALEN. Kollisjon = mist én spesialevne, aldri HP. Kun solo.</p>
+    <p class="eyebrow">⚡ VERSION 5.0 / NEON HIGHWAY EDITION ⚡</p>
+    <h1>KAOS<span>DUO</span></h1><div class="kicker">🏎️ NEON HIGHWAY / GEOMETRY CHAOS ⚡</div>
+    <p class="subtitle">10 kampbølger, 8 våpen å låse opp med butikkpoeng og 9 reiser med KUBE, FLYVING og TYNGDEKRAFT-SKIFT! 50 % SJANSE for en 3D-bilbane i stedet for portal! Ellers får du en avansert rytmeportal med kube, flyving og tyngdekraft, og 25 % risiko for en plutselig skyteboss. Krasj = mist én spesialevne, aldri HP. SOLO.</p>
     <div class="selection-heading">1 — VELG KARAKTER</div>
     <div class="hero-choices" role="group" aria-label="Velg en karakter">
       <button class="hero-choice" type="button" data-character="blue" aria-pressed="true"><img src="../assets/blue.webp" alt=""><span class="hero-meta"><span class="hero-name">❄️ BLÅ</span><span class="hero-desc">Frostangrep + rolig, koselig originalmusikk.</span><span class="pick-status">✓ VALGT</span></span></button>
@@ -157,9 +167,10 @@ h1 span{color:#ffe27b;filter:drop-shadow(0 0 11px #ffa75e77)}
       <button type="button" class="difficulty-choice" data-difficulty="insane" aria-pressed="false"><strong>💀 DRIT VANSKELIG</strong><small>Ingen nåde. Lykke til!</small></button>
     </div>
     <div class="actions"><button id="start" class="primary start-button">▶ START NYTT SPILL</button><button id="menuLoad" class="secondary" type="button">💾 LAST INN</button></div>
+    <div class="actions music-actions"><button id="musicPreview" type="button" class="secondary">🎧 HØR VALGT MUSIKK</button><span class="audio-hint" id="audioHint" aria-live="polite">Trykk HØR eller START for å aktivere lyd.</span></div>
     <div class="music-banner" id="musicBanner">❄️ BLÅ: Cozy Fjord — avslappende, original chiptune</div>
-    <div class="controls"><div><strong>STYRING:</strong> A/D = GÅ · W = HOPP · F = SKYT · G = SUPER · 1–8 = KJØPTE VÅPEN · B = VÅPENBUTIKK · L = SAVE / LOAD · PORTAL: HOLD FOR Å FLY, TRYKK FOR Å SNU TYNGDEKRAFT · X = SKYT PÅ MINIBOSS</div></div>
-    <p class="small">100 % SOLO · 8 VÅPEN · VÅPENBUTIKK · SAVE / LOAD · 3 PORTALFORMER · 25 % MIDT-I-PORTALEN SKYTEMODUS · KRASJ = MIST EN EVNE · P/Esc pause · M lyd · Rekord: <strong id="record">0</strong></p>
+    <div class="controls"><div><strong>STYRING:</strong> A/D = GÅ · W = HOPP · F = SKYT · G = SUPER · 1–8 = KJØPTE VÅPEN · B = VÅPENBUTIKK · L = SAVE / LOAD · PORTAL: HOLD FOR Å FLY / TRYKK FOR GRAVITASJON · 3D-BIL: A/D = KJØREFELT, SPACE/SHIFT = NITRO · X = SKYT PÅ MINIBOSS</div></div>
+    <p class="small">100 % SOLO · 8 VÅPEN · VÅPENBUTIKK · SAVE / LOAD · 3 PORTALFORMER + 3D-BILBANE · 50 % ROAD / 50 % GEOMETRY · 25 % SKYTEBOSS I GEOMETRY · KRASJ = MIST EN EVNE · P/Esc pause · M lyd · Rekord: <strong id="record">0</strong></p>
   </div>
 </div>
 <div class="overlay hidden" id="upgrade">
@@ -171,9 +182,9 @@ h1 span{color:#ffe27b;filter:drop-shadow(0 0 11px #ffa75e77)}
   <div class="runner-loss">⚡ MISTET EVNE: <strong id="runnerLost">–</strong></div>
   <p id="runnerFailureText">0 HP mistet · 0% progresjon</p>
   <div class="runner-ability-list" id="runnerAbilities"></div>
-  <p class="small">Kube = hopp · Skip = hold for å fly · Tyngdekraft = trykk for å snu. Midt i portalen kan SKYTEMODUS plutselig starte! Ingen HP-tap i portalene.</p>
+  <p class="small">Kube = hopp · Skip = hold for å fly · Tyngdekraft = trykk for å snu. Bilbane = A/D bytt fil, Space/Shift nitro. I Geometry Run kan en miniboss overraske deg! Ingen HP-tap.</p>
   <div class="actions"><button class="primary" id="retryRunner">↻ PRØV PORTALEN IGJEN</button><button id="runnerFailSave">💾 SAVE / LOAD</button><button id="runnerMenu">HOVEDMENY</button></div>
-  <p class="small">Trykk Enter eller mellomrom for nytt forsøk.</p>
+  <p class="small">Trykk Enter eller mellomrom for nytt forsøk. Bilbanen bruker A/D eller piltaster og Space/Shift for nitro.</p>
 </div></div>
 <div class="overlay hidden" id="endPanel"><div class="panel"><div class="eyebrow" id="endEyebrow">SPILL SLUTT</div><h2 id="endTitle">DET BLE KAOS!</h2><p id="endText"></p><div class="actions"><button class="primary" id="again">🔁 PRØV IGJEN</button><button id="endMenu">HOVEDMENY</button></div></div></div>
 
@@ -205,10 +216,13 @@ h1 span{color:#ffe27b;filter:drop-shadow(0 0 11px #ffa75e77)}
   <div class="actions"><button class="primary" id="closeSavePanel">↩ TILBAKE</button></div>
   <p class="small">Bruk eksport for å flytte lagringen mellom PC-er eller nettlesere. Ikke del lagringsfiler du ikke stoler på.</p>
 </div></div>
-<div id="toolbar"><button id="quickSave" type="button">💾 LAGRE</button><button id="shopBtn" type="button">🛒 BUTIKK</button><button id="saveBtn" type="button">📁 LOAD</button><button id="mute" aria-label="Skru lyd av eller på">🔊 LYD</button><button id="pauseBtn" aria-label="Sett spillet på pause">⏸ PAUSE</button></div>
+<div id="toolbar"><button id="quickSave" type="button">💾 LAGRE</button><button id="shopBtn" type="button">🛒 BUTIKK</button><button id="musicToggle" type="button" aria-label="Spill eller stopp bakgrunnsmusikk">🎵 MUSIKK PÅ</button><button id="saveBtn" type="button">📁 LOAD</button><button id="mute" aria-label="Skru lyd av eller på">🔊 LYD</button><button id="pauseBtn" aria-label="Sett spillet på pause">⏸ PAUSE</button></div>
+<div id="driveTouch" class="hidden"><button id="driveLeft" aria-label="Kjør ett kjørefelt til venstre">◀ VENSTRE</button><button id="driveBoost" aria-label="Hold inne for nitro">⚡ NITRO</button><button id="driveRight" aria-label="Kjør ett kjørefelt til høyre">HØYRE ▶</button></div>
 <div id="runnerTouch" class="hidden"><button id="runnerJumpButton" aria-label="Hopp, fly eller snu tyngdekraft">▲ ACTION</button><button id="runnerFireButton" aria-label="Skyt mot portalminiboss">✹ SKYT</button></div>
 <div id="touch" class="hidden"><button id="weaponCycle" type="button" aria-label="Bytt våpen">🔫 BYTT VÅPEN</button><div class="touch-pad"><button data-touch="a">◀</button><button data-touch="d">▶</button><button data-touch="w">⬆</button></div><div class="touch-actions"><button class="dash" data-touch="Shift" aria-label="Turbo dash">➤</button><button class="shoot" data-touch="f" aria-label="Skyt">💥</button><button class="super" data-touch="g" aria-label="Superangrep">⚡</button></div></div>
 </div>
+<audio id="bgmMetal" src="../assets/metal_theme.mp3" preload="auto" loop aria-label="Original instrumental heavy metal theme"></audio>
+<audio id="bgmBlue" src="../assets/blue_theme.mp3" preload="auto" loop aria-label="Original calm and cozy soundtrack"></audio>
 <script>
 /* KAOSDUO: PORTALPANIKK! — local, self-contained browser game. */
 'use strict';
@@ -229,7 +243,7 @@ const palettes=[
  {sky1:'#0e1024',sky2:'#342978',mount:'#28224e',far:'#43368a',floor:'#2a2152',trim:'#e25ff9',moon:'#8ff7fa'},
  {sky1:'#081e30',sky2:'#134b5f',mount:'#143a4c',far:'#1d6570',floor:'#13354d',trim:'#58ffd1',moon:'#9affdf'}
 ];
-let game={state:'menu',mode:'solo',character:'blue',difficulty:'medium',wave:0,score:0,kills:0,combo:0,comboTime:0,level:1,xp:0,required:14,spawnLeft:0,spawnTimer:0,waveDelay:-1,time:0,shake:0,flash:0,superFlash:0,last:0,pendingWins:0,played:0,upgrades:{},stage:0,record:0,rage:0,rageTime:0,arenaHazard:8,impact:0,droneTimer:0,shards:0,version:"4.1.0",credits:0,ownedWeapons:["pulse"],weapon:'pulse',shopReturn:null,abilities:{dash:true,double:true,super:true,overdrive:true},portalFailures:0,runner:null,pausedFrom:"playing"};
+let game={state:'menu',mode:'solo',character:'blue',difficulty:'medium',wave:0,score:0,kills:0,combo:0,comboTime:0,level:1,xp:0,required:14,spawnLeft:0,spawnTimer:0,waveDelay:-1,time:0,shake:0,flash:0,superFlash:0,last:0,pendingWins:0,played:0,upgrades:{},stage:0,record:0,rage:0,rageTime:0,arenaHazard:8,impact:0,droneTimer:0,shards:0,version:"5.0.0",credits:0,ownedWeapons:["pulse"],weapon:'pulse',shopReturn:null,abilities:{dash:true,double:true,super:true,overdrive:true},portalFailures:0,runner:null,pausedFrom:"playing"};
 let players=[],enemies=[],bullets=[],particles=[],drops=[],floaters=[],rings=[],effects=[],hazards=[],trails=[];
 const BOSS_WAVES={4:'warden',7:'titan',10:'boss'};
 const BOSS_LABELS={warden:'THE GLITCH WARDEN',titan:'CRYSTAL TITAN',boss:'PORTAL KING'};
@@ -271,6 +285,72 @@ function cycleOwnedWeapon(){
 function activeWeapon(){return WEAPONS.find(w=>w.id===game.weapon)||WEAPONS[0];}
 
 let audio=null,muted=false,musicInterval=null,musicStep=0,lastShootSfx=0,musicNextTime=0;
+let musicEnabled=true,musicOutput=null,musicPreviewUntil=0,musicNoiseBuffer=null;
+let nativeMusicPlaying=false,nativeMusicTrack='',musicPreviewTimeout=null;
+function stopNativeMusic(){
+ for(const id of ['bgmBlue','bgmMetal']){const el=$(id);try{el.pause();}catch(e){}}
+ nativeMusicPlaying=false;
+}
+function playNativeMusic(){
+ if(muted||!musicEnabled){stopNativeMusic();return false;}
+ const who=(game.state==='menu'?selectedCharacter:game.character)==='metal'?'metal':'blue';
+ const el=$(who==='metal'?'bgmMetal':'bgmBlue');
+ const other=$(who==='metal'?'bgmBlue':'bgmMetal');
+ if(!el)return false;
+ try{
+  if(nativeMusicTrack!==who){other.pause();other.currentTime=0;el.currentTime=0;nativeMusicTrack=who;}
+  el.volume=who==='metal'?.75:.52;
+  nativeMusicPlaying=true;
+  const promise=el.play(); // MUST occur synchronously in the click / key gesture.
+  if(promise?.then)promise.then(()=>{
+   nativeMusicPlaying=true;
+   if($('audioHint'))$('audioHint').textContent=(who==='metal'?'🎸 METAL TRACK':'❄ COZY TRACK')+' · AVSPILLING AKTIV';
+  }).catch(()=>{nativeMusicPlaying=false;musicNextTime=0;tickCharacterMusic(true);
+   if($('audioHint'))$('audioHint').textContent='🎵 Lyd kunne ikke åpnes; bruker synthesizer-spor';});
+  return true;
+ }catch(e){nativeMusicPlaying=false;return false;}
+}
+
+function audioContext(){
+ try{audio??=new (window.AudioContext||window.webkitAudioContext)();return audio;}
+ catch(e){return null;}
+}
+function unlockAudio(){
+ const ac=audioContext();
+ if(!ac){if($('audioHint'))$('audioHint').textContent='Lyd er ikke støttet i denne nettleseren.';return false;}
+ try{
+  if(ac.state!=='running'){const pending=ac.resume();if(pending&&typeof pending.then==='function')pending.then(()=>{if($('audioHint'))$('audioHint').textContent='✅ LYDEN ER AKTIV — '+(selectedCharacter==='metal'?'METAL':'COZY')+' 🎵';}).catch(()=>{});}
+  else if($('audioHint'))$('audioHint').textContent='✅ LYD AKTIV';
+ }catch(e){}
+ return true;
+}
+function musicChannel(){
+ const ac=audioContext();if(!ac)return null;
+ if(!musicOutput){musicOutput=ac.createDynamicsCompressor();musicOutput.threshold.value=-21;musicOutput.ratio.value=5;musicOutput.knee.value=13;musicOutput.attack.value=.006;musicOutput.release.value=.16;musicOutput.connect(ac.destination);}
+ return musicOutput;
+}
+function updateMusicUI(){
+ if($('musicToggle'))$('musicToggle').textContent=musicEnabled&&!muted?'🎵 MUSIKK PÅ':'🎵 MUSIKK AV';
+}
+function toggleMusic(){
+ unlockAudio();musicEnabled=!musicEnabled;
+ if(musicEnabled){musicNextTime=0;musicStep=0;if(!playNativeMusic())tickCharacterMusic(true);}
+ else stopNativeMusic();
+ updateMusicUI();
+ toast(musicEnabled?'🎵 SOUNDTRACK AKTIVERT':'🔇 SOUNDTRACK AV',1.4);
+}
+function previewCharacterMusic(){
+ unlockAudio();if(muted)muted=false;
+ musicEnabled=true;musicPreviewUntil=Date.now()+4000;
+ musicStep=0;musicNextTime=0;
+ if(!musicInterval)musicInterval=setInterval(tickCharacterMusic,65);
+ if(!playNativeMusic())tickCharacterMusic(true);
+ clearTimeout(musicPreviewTimeout);
+ musicPreviewTimeout=setTimeout(()=>{if(game.state==='menu')stopNativeMusic();},4000);
+ updateMusicUI();$('mute').textContent='🔊 LYD';
+ if($('audioHint'))$('audioHint').textContent=selectedCharacter==='metal'?'🎸 INFERNAL RIFF SPILLER — SJEKK MEDIEVOLUMET':'❄ COZY FJORD SPILLER — SJEKK MEDIEVOLUMET';
+}
+
 let toastTimer=null;
 try{game.record=Number(localStorage.getItem('kaosduo_record')||0);}catch(e){}
 $('record').textContent=game.record.toLocaleString('nb-NO');
@@ -302,15 +382,15 @@ function awardPoints(amount){
  game.score+=pts;game.credits=(Number(game.credits)||0)+pts;
 }
 function recordScore(){if(game.score>game.record){game.record=game.score;try{localStorage.setItem('kaosduo_record',String(game.record));}catch(e){} $('record').textContent=game.record.toLocaleString('nb-NO');}}
-function showOverlay(which){['menu','upgrade','pausePanel','endPanel','runnerFailPanel','shopPanel','savePanel','shopPrompt'].forEach(id=>$(id).classList.toggle('hidden',id!==which));$('touch').classList.toggle('hidden',which!==null||game.state!=='playing');$('runnerTouch').classList.toggle('hidden',which!==null||game.state!=='runner');}
+function showOverlay(which){['menu','upgrade','pausePanel','endPanel','runnerFailPanel','shopPanel','savePanel','shopPrompt'].forEach(id=>$(id).classList.toggle('hidden',id!==which));$('touch').classList.toggle('hidden',which!==null||game.state!=='playing');$('runnerTouch').classList.toggle('hidden',which!==null||game.state!=='runner'||game.runner?.variant==='drive');$('driveTouch').classList.toggle('hidden',which!==null||game.state!=='runner'||game.runner?.variant!=='drive');}
 function toast(message,secs=2){const el=$('toast');el.textContent=message;el.classList.add('visible');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('visible'),secs*1000);}
 function beep(freq=440,dur=.1,wave='square',volume=.055,slide=0){if(muted)return;try{audio??=new (window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume();const now=audio.currentTime;const osc=audio.createOscillator(),gain=audio.createGain();osc.type=wave;osc.frequency.setValueAtTime(freq,now);if(slide)osc.frequency.exponentialRampToValueAtTime(Math.max(40,freq+slide),now+dur);gain.gain.setValueAtTime(Math.max(.001,volume),now);gain.gain.exponentialRampToValueAtTime(.0001,now+dur);osc.connect(gain);gain.connect(audio.destination);osc.start(now);osc.stop(now+dur+.01);}catch(e){}}
 function sfx(type){if(muted)return;switch(type){case 'shoot1':beep(360,.055,'triangle',.035,-160);break;case 'shoot2':beep(240,.085,'sawtooth',.033,400);break;case 'hit':beep(110,.09,'sawtooth',.035,-65);break;case 'hurt':beep(170,.21,'square',.06,-120);break;case 'kill':beep(500,.08,'triangle',.034,180);break;case 'xp':beep(850,.08,'sine',.035,160);break;case 'power':beep(550,.25,'sawtooth',.08,620);setTimeout(()=>beep(950,.3,'triangle',.08,-220),85);break;case 'wave':beep(420,.14,'square',.045,250);setTimeout(()=>beep(650,.15,'square',.045,250),120);break;case 'boss':beep(90,.65,'sawtooth',.11,130);break;case 'dash':beep(530,.12,'sawtooth',.044,-390);break;case 'lose':beep(390,.45,'triangle',.07,-330);break;}}
 // Original, generated soundtrack: no sampled or third-party music tracks.
 function musicTone(freq,duration,wave='triangle',volume=.018,cutoff=2400){
- if(muted||document.hidden)return;
+ if(muted||!musicEnabled||document.hidden)return;
  try{
-  audio??=new (window.AudioContext||window.webkitAudioContext)();
+  if(!audioContext())return;
   if(audio.state==='suspended')audio.resume();
   const now=audio.currentTime,osc=audio.createOscillator(),env=audio.createGain(),low=audio.createBiquadFilter();
   low.type='lowpass';low.frequency.value=cutoff;osc.type=wave;
@@ -318,70 +398,104 @@ function musicTone(freq,duration,wave='triangle',volume=.018,cutoff=2400){
   env.gain.setValueAtTime(.0001,now);
   env.gain.exponentialRampToValueAtTime(Math.max(.0002,volume),now+.012);
   env.gain.exponentialRampToValueAtTime(.0001,now+duration);
-  osc.connect(low);low.connect(env);env.connect(audio.destination);
+  osc.connect(low);low.connect(env);env.connect(musicChannel()||audio.destination);
   osc.start(now);osc.stop(now+duration+.02);
  }catch(e){}
 }
 // Palm-muted synthetic guitar: self-generated original riff (no recordings or samples).
 let guitarCurve=null;
 function metalGuitar(freq,duration=.14,volume=.016){
- if(muted||document.hidden)return;
+ if(muted||!musicEnabled||document.hidden)return;
  try{
-  audio??=new (window.AudioContext||window.webkitAudioContext)();
+  if(!audioContext())return;
   if(audio.state==='suspended')audio.resume();
   if(!guitarCurve){guitarCurve=new Float32Array(1024);for(let i=0;i<1024;i++){const v=i/511.5-1;guitarCurve[i]=Math.tanh(v*7);}}
   const now=audio.currentTime,shaper=audio.createWaveShaper(),filter=audio.createBiquadFilter(),gain=audio.createGain();
   shaper.curve=guitarCurve;shaper.oversample='2x';
-  filter.type='lowpass';filter.frequency.value=1300;
+  filter.type='lowpass';filter.frequency.value=2100;
   gain.gain.setValueAtTime(.0001,now);
   gain.gain.exponentialRampToValueAtTime(volume,now+.007);
   gain.gain.exponentialRampToValueAtTime(.0001,now+duration);
-  shaper.connect(filter);filter.connect(gain);gain.connect(audio.destination);
+  shaper.connect(filter);filter.connect(gain);gain.connect(musicChannel()||audio.destination);
   for(const detune of [-5,5]){
    const o=audio.createOscillator();o.type='sawtooth';o.frequency.value=freq;o.detune.value=detune;
    o.connect(shaper);o.start(now);o.stop(now+duration+.01);
   }
  }catch(e){}
 }
+function metalNoiseBeat(kind){
+ if(muted||!musicEnabled||document.hidden)return;
+ try{
+  const ac=audioContext(),out=musicChannel();if(!ac||!out)return;
+  if(!musicNoiseBuffer){const sr=ac.sampleRate,len=Math.round(sr*.17),buf=ac.createBuffer(1,len,sr),data=buf.getChannelData(0);let seed=132558;
+   for(let i=0;i<len;i++){seed=(Math.imul(seed,1664525)+1013904223)>>>0;data[i]=(seed/2147483648-1)*(.8-i/len*.35);}
+   musicNoiseBuffer=buf;
+  }
+  const src=ac.createBufferSource(),fil=ac.createBiquadFilter(),gain=ac.createGain(),now=ac.currentTime;
+  src.buffer=musicNoiseBuffer;
+  fil.type=kind==='snare'?'bandpass':'highpass';fil.frequency.value=kind==='snare'?1800:4800;
+  gain.gain.setValueAtTime(kind==='snare'?.12:.052,now);
+  gain.gain.exponentialRampToValueAtTime(.0001,now+(kind==='snare'?.16:.045));
+  src.connect(fil);fil.connect(gain);gain.connect(out);src.start(now);src.stop(now+(kind==='snare'?.17:.06));
+ }catch(e){}
+}
+function kickDrum(){
+ if(muted||!musicEnabled||document.hidden)return;
+ try{const ac=audioContext(),out=musicChannel();if(!ac||!out)return;
+  const now=ac.currentTime,osc=ac.createOscillator(),gain=ac.createGain();osc.type='sine';
+  osc.frequency.setValueAtTime(180,now);osc.frequency.exponentialRampToValueAtTime(43,now+.10);
+  gain.gain.setValueAtTime(.18,now);gain.gain.exponentialRampToValueAtTime(.0001,now+.14);
+  osc.connect(gain);gain.connect(out);osc.start(now);osc.stop(now+.15);
+ }catch(e){}
+}
+function metalBass(freq){musicTone(freq,.21,'sawtooth',.052,570);}
+
 const BLUE_CHORDS=[[196,246.94,293.66],[146.83,185,220],[130.81,164.81,196],[164.81,196,246.94]];
 const METAL_RIFF=[82.41,82.41,0,82.41,98,82.41,110,0,82.41,82.41,0,123.47,110,98,82.41,73.42];
-function tickCharacterMusic(){
- if(muted||document.hidden||!['playing','runner','upgrade','shop'].includes(game.state))return;
+function tickCharacterMusic(forcePreview=false){
+ if(nativeMusicPlaying||muted||!musicEnabled||document.hidden)return;
  const now=Date.now();
+ const allowed=['playing','runner','upgrade','shop','shopPrompt'].includes(game.state)||(game.state==='menu'&&now<musicPreviewUntil);
+ if(!allowed&&!forcePreview)return;
  if(now<musicNextTime)return;
- const metal=game.character==='metal',interval=metal?145:275;
+ const metal=(game.state==='menu'?selectedCharacter:game.character)==='metal';
+ const interval=metal?129:260;
  musicNextTime=now+interval;
  const step=musicStep++;
  if(metal){
   const freq=METAL_RIFF[step%METAL_RIFF.length];
   if(freq){
-   metalGuitar(freq,.14,.017);
-   metalGuitar(freq*1.5,.13,.007);
-   if(step%4===0)metalGuitar(freq*2,.25,.008);
+   metalGuitar(freq,.13,.077);
+   metalGuitar(freq*1.5,.12,.025);
+   metalBass(freq/2);
+   if(step%4===0)metalGuitar(freq*2,.24,.020);
   }
-  // Original double-kick / snare / hi-hat pattern.
-  if(step%2===0)beep(58,.075,'sine',.038,-24);
-  if(step%4===2)musicTone(173,.055,'triangle',.023,1700);
-  musicTone(1250+(step%2)*700,.022,'square',.0035,4400);
+  if(step%4===0||step%4===2)kickDrum();
+  if(step%4===2)metalNoiseBeat('snare');
+  if(step%2===0)metalNoiseBeat('hat');
+  if(step%8===7)musicTone(freq?freq*2:164.81,.09,'square',.017,1200);
  }else{
   const chord=BLUE_CHORDS[Math.floor(step/8)%BLUE_CHORDS.length];
   const note=chord[[0,1,2,1,0,2,1,2][step%8]];
-  musicTone(note*2,.37,'sine',.016,2100);
-  musicTone(note,.58,'triangle',.010,1200);
+  musicTone(note*2,.44,'sine',.024,2300);
+  musicTone(note,.66,'triangle',.016,1250);
   if(step%8===0){
-   chord.forEach((freq,i)=>musicTone(freq,.98,'sine',.007-(i*.001),950));
-   musicTone(chord[0]/2,.9,'sine',.012,650);
+   chord.forEach((freq,i)=>musicTone(freq,.95,'sine',.012-i*.0016,950));
+   musicTone(chord[0]/2,.86,'sine',.022,650);
   }
-  if(step%4===2)musicTone(note*4,.16,'sine',.006,1900);
+  if(step%4===2)musicTone(note*4,.18,'sine',.008,1900);
  }
 }
 function startMusic(){
  musicNextTime=0;musicStep=0;
- if(musicInterval)return;
- musicInterval=setInterval(tickCharacterMusic,65);
+ unlockAudio(); // called in the real Start click gesture (important on Android/Chrome)
+ if(!musicInterval)musicInterval=setInterval(tickCharacterMusic,65);
+ if(!playNativeMusic())tickCharacterMusic(true);
+ updateMusicUI();
 }
 function createPlayer(id,x,image,hp){return {id,x,y:GROUND,vx:0,vy:0,img:image,hp,maxHp:hp,alive:true,facing:1,cooldown:0,invuln:0,special:35,shooting:0,speech:'',speechT:0,feetDust:0,dashCd:0,dashTime:0,jumps:0,wasJump:false,droneAngle:0,droneCd:0};}
 function reset(){
+ clearTimeout(musicPreviewTimeout);
  const settings=DIFFICULTIES[selectedDifficulty];
  game.state='playing';game.mode='solo';game.character=selectedCharacter;game.difficulty=selectedDifficulty;game.wave=0;game.score=0;game.kills=0;game.combo=0;game.comboTime=0;game.level=1;game.xp=0;game.required=14;game.time=0;game.shake=0;game.flash=0;game.superFlash=0;game.pendingWins=0;game.upgrades={};game.stage=0;game.played=0;game.rage=0;game.rageTime=0;game.arenaHazard=8;game.impact=0;game.droneTimer=0;game.shards=0;game.abilities={dash:true,double:true,super:true,overdrive:true};game.weapon='pulse';game.ownedWeapons=['pulse'];game.credits=0;game.shopReturn=null;game.portalFailures=0;game.runner=null;game.pausedFrom="playing";
  enemies=[];bullets=[];particles=[];drops=[];floaters=[];rings=[];effects=[];hazards=[];trails=[];players=[createPlayer(selectedCharacter==='blue'?0:1,640,selectedCharacter==='blue'?imgBlue:imgMetal,settings.hp)];
@@ -716,7 +830,7 @@ function snapshot(){
  if(g.state==='shop'){g.state=g.shopReturn==='portal'?'shopPrompt':'paused';g.pausedFrom='playing';}
  // Saving while a menu overlays the arena should never advance the world.
  g.last=0;
- return {schema:1,version:'4.1.0',savedAt:new Date().toISOString(),
+ return {schema:1,version:'5.0.0',savedAt:new Date().toISOString(),
   game:g,players:players.map(({img,...p})=>({...p})),
   enemies,bullets,drops,hazards,trails,particles:particles.slice(-80),floaters:floaters.slice(-40),rings:rings.slice(-35),effects};
 }
@@ -743,6 +857,8 @@ function isValidSave(data){
   (!['runner','runnerFail'].includes(g.state)&&!(g.state==='paused'&&g.pausedFrom==='runner')||g.runner&&typeof g.runner==='object'&&Array.isArray(g.runner.obstacles));
 }
 function upgradeLegacyRunner(r){
+ if(!r.variant)r.variant='geometry';
+ if(r.variant==='drive'&&r.road){r.mode='car';r.phase='road';r.length=r.road.length||r.length;}
  if(!Array.isArray(r.modeSections)){
   r.modeSections=[{start:0,mode:'cube'},{start:r.shipStart||2650,mode:'ship'},{start:r.gravityStart||5360,mode:'gravity'}];
  }
@@ -754,7 +870,7 @@ function upgradeLegacyRunner(r){
 function restoreSave(data){
  if(!isValidSave(data)){saveStatus('Denne lagringsfilen er ugyldig eller inkompatibel.',false);return false;}
  const g=data.game;
- game={...game,...g};game.version='4.1.0';game.last=0;
+ game={...game,...g};game.version='5.0.0';game.last=0;
  game.credits=Math.floor(game.credits);
  game.ownedWeapons=[...new Set(game.ownedWeapons)];
  if(game.runner)upgradeLegacyRunner(game.runner);
@@ -1114,21 +1230,25 @@ function beginPortalRun(){
  // Projectiles and enemies must not continue updating during the intermission.
  bullets=[];enemies=[];hazards=[];drops=[];particles=[];rings=[];floaters=[];trails=[];
  const course=makePortalCourse(game.wave,game.difficulty);
- // Each portal rolls independently: exactly 25% miniboss encounter probability.
- const hasMiniBoss=Math.random()<0.25;
+ // Each intermission has exactly 50 % probability of being a neon highway.
+ const highwayRoll=Math.random()<0.50;
+ // Geometry-only: 25 % independent chance of a surprise shooter miniboss.
+ const hasMiniBoss=!highwayRoll&&Math.random()<0.25;
  const bossHp=Math.round((105+game.wave*19)*DIFFICULTIES[game.difficulty].enemyHp);
  game.runner={fromWave:game.wave,attempts:0,losses:[],...course,phase:'course',mode:'cube',beat:-1,
   distance:0,y:PORTAL_FLOOR-PORTAL_CUBE,vy:0,rotation:0,gravity:1,flipLock:0,
   onGround:true,jumpBuffer:0,countdown:2.3,time:0,trails:[],lastImpact:0,
   hasMiniBoss,bossTrigger:course.bossTrigger,bossTriggered:false,bossIntro:0,miniBoss:{hp:bossHp,maxHp:bossHp,defeated:false,fireCd:1.1,bullets:[],sparks:[],time:0},
   portalShots:[],portalFireCd:0,modeFlash:0,modeBanner:'KUBE-MODUS'};
+ if(highwayRoll)startNeonHighway(game.runner);else game.runner.variant='geometry';
  game.state='runner';game.rageTime=0;game.rage=game.abilities.overdrive?game.rage:0;
- showOverlay(null);persistSave('auto',true);sfx('wave');toast('🚀 PORTAL '+game.wave+'/9 · KLAR FOR UKJENT REISE?',2.5);
+ showOverlay(null);persistSave('auto',true);sfx('wave');toast(highwayRoll?'🏎️ NEON HIGHWAY · UNNGÅ TRAFIKKEN!':'💠 GEOMETRY RUN · RYTMEN KALLER!',2.5);
 }
 function portalJump(){
  if(game.state!=='runner'||!game.runner)return;
  const r=game.runner;
  if(r.countdown>0)return;
+ if(r.variant==='drive'){KEYS.roadBoost=true;return;}
  if(r.mode==='cube')r.jumpBuffer=.18;
  else if(r.mode==='ship')KEYS.portalThrust=true;
  else if(r.mode==='gravity'&&r.flipLock<=0){r.gravity*=-1;r.vy=r.gravity*260;r.flipLock=.23;beep(680,.08,'sawtooth',.04,-440);}
@@ -1142,6 +1262,7 @@ function resetPortalAttempt(r){
  r.miniBoss.hp=r.miniBoss.maxHp;r.miniBoss.defeated=false;r.miniBoss.fireCd=1.1;
  r.miniBoss.bullets=[];r.miniBoss.sparks=[];r.miniBoss.time=0;
  KEYS.portalThrust=false;KEYS.portalFire=false;
+ if(r.variant==='drive')resetHighwayAttempt(r);
 }
 function retryPortalRun(){
  if(game.state!=='runnerFail'||!game.runner)return;
@@ -1202,6 +1323,7 @@ function completePortalRun(){
 }
 function updatePortalRun(dt){
  const r=game.runner;if(!r)return;
+ if(r.variant==='drive')return updateNeonHighway(dt);
  r.time+=dt;r.modeFlash=Math.max(0,r.modeFlash-dt);
  r.flipLock=Math.max(0,r.flipLock-dt);
  if(r.countdown>0){r.countdown=Math.max(0,r.countdown-dt);return;}
@@ -1307,6 +1429,285 @@ function updatePortalRun(dt){
  if(r.distance>r.length)completePortalRun();
 }
 
+/* v5 - NEON HIGHWAY: original pseudo-3D lane runner, with no HP loss. */
+const ROAD_VIEW=1180,ROAD_HORIZON=251,ROAD_BOTTOM=627;
+const ROAD_THEMES=[
+ {sky:'#1d0c42',haze:'#6a2ec1',road:'#17122d',edge:'#6affed',accent:'#ff69bd',warm:'#ffe6a1'},
+ {sky:'#081d42',haze:'#155c9d',road:'#10223d',edge:'#7afff2',accent:'#ba84ff',warm:'#ffde91'},
+ {sky:'#2b0a35',haze:'#a33a78',road:'#2a1637',edge:'#ffe275',accent:'#ff7ad2',warm:'#b6ffff'},
+ {sky:'#061b2a',haze:'#167d73',road:'#112d33',edge:'#74ffe6',accent:'#e784ff',warm:'#fff19e'}
+];
+function makeRoadCourse(wave,difficulty){
+ const rand=seededPortal((wave*48531+20261029)>>>0);
+ const length=4650+wave*260,events=[],coins=[];
+ let position=790,previousSafe=1;
+ while(position<length-680){
+  const safe=Math.floor(rand()*3);
+  let blocks=[];
+  const available=[0,1,2].filter(l=>l!==safe);
+  const blockedFirst=available[Math.floor(rand()*2)];
+  blocks.push({lane:blockedFirst,kind:['crate','car','laser','barrel'][Math.floor(rand()*4)]});
+  const harder=difficulty==='insane'||difficulty==='hard';
+  if((rand()<(harder?.48:.26))&&Math.abs(position-790)>100){
+   blocks.push({lane:available.find(l=>l!==blockedFirst),kind:rand()<.5?'laser':'crate'});
+  }
+  // Always leave at least one passable lane and warning time for lane changes.
+  events.push({at:Math.round(position),blocks,passed:false,nearMissPaid:false});
+  const rewardLane=rand()<.72?safe:(safe+1)%3;
+  coins.push({at:Math.round(position+165),lane:rewardLane,taken:false});
+  previousSafe=safe;
+  position+=390+rand()*170;
+ }
+ const scenery=Array.from({length:72},(_,i)=>({at:160+i*115+(rand()*55),side:rand()<.5?-1:1,kind:i%5===0?'tower':i%3===0?'light':'sign',height:42+rand()*140}));
+ return {length,events,coins,scenery};
+}
+function startNeonHighway(r){
+ const road=makeRoadCourse(r.fromWave,game.difficulty);
+ r.variant='drive';r.phase='road';r.mode='car';
+ r.road={...road,lane:1,visualLane:1,boost:100,speed:430+r.fromWave*12,
+  miles:0,nearMisses:0,collected:0,boostTime:0,steerCooldown:0,flash:0,
+  banner:'🏎️ NEON HIGHWAY · 3D CHASE'};
+ r.length=road.length;r.distance=0;r.countdown=2.1;r.time=0;
+ r.modeFlash=2.2;r.modeBanner='🏎️ 3D NEON HIGHWAY';
+ r.hasMiniBoss=false;r.bossTriggered=false;
+ game.runner=r;
+}
+function roadSteer(direction){
+ if(game.state!=='runner'||game.runner?.variant!=='drive')return;
+ const r=game.runner,road=r.road;
+ if(r.countdown>0)return;
+ const newLane=clamp(road.lane+direction,0,2);
+ if(newLane===road.lane)return;
+ road.lane=newLane;road.flash=.23;
+ sfx('dash');
+}
+function roadNitro(active){
+ KEYS.roadBoost=!!active;
+}
+function resetHighwayAttempt(r){
+ if(!r.road)return;
+ const road=r.road;
+ road.events.forEach(e=>e.passed=false);
+ road.lane=1;road.visualLane=1;road.boost=100;road.speed=430+r.fromWave*12;
+ road.boostTime=0;road.steerCooldown=0;road.flash=0;
+ road.nearMisses=0;r.mode='car';r.phase='road';
+ KEYS.roadBoost=false;
+}
+function updateNeonHighway(dt){
+ const r=game.runner;if(!r?.road)return;
+ const road=r.road;
+ r.time+=dt;r.modeFlash=Math.max(0,r.modeFlash-dt);
+ road.flash=Math.max(0,road.flash-dt);
+ if(r.countdown>0){r.countdown=Math.max(0,r.countdown-dt);return;}
+ road.visualLane+=(road.lane-road.visualLane)*Math.min(1,dt*16);
+ // Nitro is optional, finite, and regenerates when you release it.
+ const nitro=(KEYS.roadBoost||KEYS.Shift||KEYS[' ']||KEYS.w||KEYS.W||KEYS.ArrowUp)&&road.boost>0;
+ road.boost=clamp(road.boost+(nitro?-27:13)*dt,0,100);
+ const speed=road.speed*(nitro?1.58:1);
+ if(nitro)road.boostTime+=dt;
+ const previous=r.distance;
+ r.distance=Math.min(r.length+30,r.distance+speed*dt);
+ for(const e of road.events){
+  if(e.passed||e.at>r.distance)continue;
+  e.passed=true;
+  if(e.blocks.some(b=>b.lane===road.lane)){
+   r.modeFlash=1;game.shake=8;sfx('hurt');failPortalRun();return;
+  }
+  if(!e.nearMissPaid&&e.blocks.some(b=>Math.abs(b.lane-road.lane)===1)){
+   e.nearMissPaid=true;road.nearMisses++;
+   const bonus=45+Math.min(8,road.nearMisses)*12;
+   awardPoints(bonus);
+   if(road.nearMisses%2===0)toast('✨ NEAR MISS x'+road.nearMisses+' +'+bonus+' MYNTER',1.1);
+  }
+ }
+ for(const coin of road.coins){
+  if(coin.taken||coin.at>r.distance)continue;
+  coin.taken=true;
+  if(coin.lane===road.lane){
+   const amount=65+r.fromWave*10;
+   awardPoints(amount);road.collected++;sfx('xp');
+   if(!reducedMotion)ring(W/2+(road.visualLane-1)*320,605,'#ffe27c',80);
+  }
+ }
+ if(r.distance>=r.length){
+  awardPoints(road.nearMisses*30+road.collected*25);
+  completePortalRun();
+ }
+}
+function roadProjection(ahead, lane=1){
+ const d=clamp(1-ahead/ROAD_VIEW,0,1);
+ const curve=Math.sin((game.runner?.distance||0)*.00045)*12*(1-d);
+ const half=78+476*d*d;
+ const y=ROAD_HORIZON+(ROAD_BOTTOM-ROAD_HORIZON)*d*d;
+ return {x:W/2+curve+(lane-1)*half*2/3,y,half,s:.13+1.65*d*d,d};
+}
+function roadPolygon(points,fill,stroke=null,width=2){
+ ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.closePath();ctx.fillStyle=fill;ctx.fill();
+ if(stroke){ctx.lineWidth=width;ctx.strokeStyle=stroke;ctx.stroke();}
+}
+function drawRoadObstacle(o,block,t,colors){
+ const proj=roadProjection(o.at-game.runner.distance,block.lane);
+ const x=proj.x,y=proj.y,sc=proj.s;
+ if(y<ROAD_HORIZON||y>ROAD_BOTTOM+20)return;
+ const w=48*sc,h=(block.kind==='car'?88:block.kind==='laser'?105:65)*sc;
+ ctx.save();ctx.translate(x,y);
+ ctx.shadowBlur=18*sc;ctx.shadowColor=block.kind==='laser'?'#ff657f':'#ffb564';
+ ctx.fillStyle='#03061266';ctx.beginPath();ctx.ellipse(0,8*sc,w*.95,15*sc,0,0,Math.PI*2);ctx.fill();
+ if(block.kind==='laser'){
+  roadPolygon([[-w,-h],[-w*.72,-h-19*sc],[w*.72,-h-19*sc],[w,-h]],'#fa426e',colors.warm,3*sc);
+  ctx.fillStyle='#ff9bd1';ctx.fillRect(-w,-h,2*w,18*sc);
+  ctx.fillStyle='#fff5b4';ctx.fillRect(-w*.5,-h+22*sc,w,8*sc);
+  ctx.fillStyle='#ff426c';ctx.fillRect(-w*.3,-h+35*sc,w*.6,25*sc);
+ }else if(block.kind==='car'){
+  roadPolygon([[-w,0],[-w*.95,-h*.5],[-w*.46,-h],[w*.46,-h],[w*.95,-h*.5],[w,0]],'#2c244e','#f6a7f5',3*sc);
+  roadPolygon([[-w*.54,-h*.6],[-w*.37,-h*.90],[w*.37,-h*.90],[w*.54,-h*.6]],'#94f2ff');
+  ctx.fillStyle='#ff4f87';ctx.fillRect(-w*.8,-h*.15,w*.45,10*sc);ctx.fillRect(w*.35,-h*.15,w*.45,10*sc);
+ }else if(block.kind==='barrel'){
+  roadPolygon([[-w*.8,0],[-w*.8,-h],[w*.8,-h],[w*.8,0]],'#f58a35',colors.warm,3*sc);
+  ctx.fillStyle='#271033';ctx.fillRect(-w*.7,-h*.62,w*1.4,13*sc);ctx.fillRect(-w*.7,-h*.33,w*1.4,9*sc);
+ }else{
+  roadPolygon([[-w,0],[-w*.96,-h],[w*.96,-h],[w,0]],'#362a6a',colors.accent,4*sc);
+  roadPolygon([[-w*.96,-h],[0,-h-22*sc],[w*1.1,-h],[w*.96,-h*.12]],'#6c4eb4','#d5baff',2*sc);
+  ctx.strokeStyle='#ffeb92';ctx.lineWidth=5*sc;ctx.beginPath();ctx.moveTo(-w*.7,-h*.76);ctx.lineTo(w*.7,-h*.17);ctx.moveTo(-w*.7,-h*.17);ctx.lineTo(w*.7,-h*.76);ctx.stroke();
+ }
+ ctx.restore();
+}
+function drawRoadCoin(coin,t,colors){
+ const p=roadProjection(coin.at-game.runner.distance,coin.lane);
+ if(p.d<=0||p.d>=1.1)return;
+ const h=36*p.s;
+ ctx.save();ctx.translate(p.x,p.y-h*1.4);ctx.shadowBlur=25*p.s;ctx.shadowColor='#ffe793';
+ ctx.fillStyle='#ffdb71';ctx.beginPath();ctx.ellipse(0,0,Math.max(3,12*p.s)*(.75+.25*Math.sin(t*7)),13*p.s,0,0,Math.PI*2);ctx.fill();
+ ctx.strokeStyle='#fffbd0';ctx.lineWidth=2*p.s;ctx.stroke();ctx.fillStyle='#fff6ae';ctx.font=`900 ${Math.max(7,16*p.s)}px system-ui`;ctx.textAlign='center';ctx.fillText('★',0,5*p.s);ctx.restore();
+}
+function drawHighwayCar(t,colors){
+ const r=game.runner,road=r.road;
+ const cx=640+(road.visualLane-1)*327,cy=ROAD_BOTTOM-42;
+ const lean=(road.lane-road.visualLane)*.10;
+ ctx.save();ctx.translate(cx,cy);ctx.rotate(lean);
+ ctx.fillStyle='#000a';ctx.beginPath();ctx.ellipse(0,21,100,31,0,0,Math.PI*2);ctx.fill();
+ const metal=game.character==='metal';
+ const base=metal?'#ff5f9e':'#45dfff',bright=metal?'#ffcf84':'#e4ffff';
+ ctx.shadowBlur=24;ctx.shadowColor=base;
+ // Three-quarter perspective futuristic car with wheel depth and glowing tail lights.
+ roadPolygon([[-78,16],[-67,-29],[-42,-65],[42,-65],[67,-29],[78,16]],base,bright,4);
+ roadPolygon([[-44,-56],[-26,-85],[26,-85],[44,-56]],'#1a2242',bright,3);
+ roadPolygon([[-35,-59],[-23,-79],[23,-79],[35,-59]],'#75a9f3');
+ ctx.fillStyle='#11162d';ctx.fillRect(-88,-20,19,37);ctx.fillRect(69,-20,19,37);
+ ctx.fillStyle='#fff0a8';ctx.fillRect(-64,1,27,11);ctx.fillRect(37,1,27,11);
+ ctx.fillStyle=base;ctx.fillRect(-12,-49,24,13);
+ const nitro=(KEYS.roadBoost||KEYS.Shift||KEYS[' ']||KEYS.w||KEYS.W||KEYS.ArrowUp)&&road.boost>0;
+ if(nitro){
+  const flame=30+Math.sin(t*30)*12;
+  roadPolygon([[-26,18],[-6,18],[-16,17+flame]],'#fddb61');
+  roadPolygon([[6,18],[26,18],[16,17+flame]],'#ff6bab');
+ }
+ ctx.restore();
+}
+function drawHighwayRun(t){
+ const r=game.runner;if(!r?.road)return;
+ const road=r.road,colors=ROAD_THEMES[(r.fromWave-1)%ROAD_THEMES.length];
+ const pulse=.5+.5*Math.sin(r.time*7.2),fast=(KEYS.roadBoost||KEYS.Shift||KEYS[' ']||KEYS.w||KEYS.W||KEYS.ArrowUp)&&road.boost>0;
+ const horizon=ROAD_HORIZON,roadBottom=ROAD_BOTTOM;
+ const sky=ctx.createLinearGradient(0,0,0,H);
+ sky.addColorStop(0,colors.sky);sky.addColorStop(.62,colors.haze);sky.addColorStop(1,'#070b20');
+ ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);
+ // Layered city and luminous giant sun / portal storm.
+ ctx.save();ctx.translate(875,167);
+ ctx.shadowColor=colors.accent;ctx.shadowBlur=50+25*pulse;
+ ctx.fillStyle=colors.accent+'44';ctx.beginPath();ctx.arc(0,0,116+8*pulse,0,Math.PI*2);ctx.fill();
+ for(let i=0;i<4;i++){ctx.beginPath();ctx.arc(0,0,146+34*i+pulse*12,0,Math.PI*2);
+ ctx.strokeStyle=(i%2?colors.edge:colors.accent)+(i===0?'77':'31');ctx.lineWidth=3;ctx.stroke();}
+ ctx.restore();
+ for(let i=0;i<42;i++){
+  const bx=((i*89-r.distance*.13)%(W+140)+(W+140))%(W+140)-70;
+  const bh=80+(i*57)%160;
+  ctx.fillStyle=i%3?'#18163d':'#342359';ctx.fillRect(bx,horizon-bh,68, bh+10);
+  for(let j=0;j<3;j++){ctx.fillStyle=j%2?colors.edge+'66':colors.accent+'66';ctx.fillRect(bx+12+j*16,horizon-bh+18,6,10+(i%3)*4);}
+ }
+ // Horizon bloom and terrain.
+ ctx.fillStyle=colors.accent+'24';ctx.fillRect(0,horizon-24,W,44);
+ // Perspective road surface and bright edges.
+ const nearL=roadProjection(0,0),farL=roadProjection(ROAD_VIEW,0),nearR=roadProjection(0,2),farR=roadProjection(ROAD_VIEW,2);
+ roadPolygon([[640-82,horizon],[640+82,horizon],[1200,roadBottom],[80,roadBottom]],colors.road);
+ const asphalt=ctx.createLinearGradient(0,horizon,0,roadBottom);asphalt.addColorStop(0,'#171431');asphalt.addColorStop(1,'#292249');
+ roadPolygon([[555,horizon],[725,horizon],[1200,roadBottom],[80,roadBottom]],asphalt);
+ ctx.lineWidth=7;ctx.shadowBlur=18;ctx.strokeStyle=colors.edge;ctx.shadowColor=colors.edge;
+ ctx.beginPath();ctx.moveTo(555,horizon);ctx.lineTo(80,roadBottom);ctx.moveTo(725,horizon);ctx.lineTo(1200,roadBottom);ctx.stroke();ctx.shadowBlur=0;
+ for(const laneBoundary of [-.5,.5]){
+  const farX=640+laneBoundary*112,nearX=640+laneBoundary*735;
+  ctx.strokeStyle=colors.warm+'7a';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(farX,horizon);ctx.lineTo(nearX,roadBottom);ctx.stroke();
+ }
+ // Dash lines recede from camera, highway surface scrolls beneath the car.
+ const first=Math.ceil(r.distance/130)*130;
+ for(let d=first;d<r.distance+ROAD_VIEW;d+=130){
+  const q1=roadProjection(d-r.distance,1),q2=roadProjection(d+64-r.distance,1);
+  if(q1.d<=0||q2.d<=0)continue;
+  const thickness=Math.max(1,5*q1.s);
+  for(const c of [-1,1]){
+   const a=roadProjection(d-r.distance,1+c*.5),b=roadProjection(d+64-r.distance,1+c*.5);
+   ctx.strokeStyle='#b7eaffba';ctx.lineWidth=thickness;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+  }
+ }
+ // Scrolling side-scene with futuristic pylons and warning signs.
+ const decor=road.scenery.filter(o=>o.at-r.distance>=-50&&o.at-r.distance<=ROAD_VIEW).sort((a,b)=>b.at-a.at);
+ for(const o of decor){
+  const p=roadProjection(o.at-r.distance,1),s=p.s;
+  const bx=640+o.side*(p.half+22+o.height*s*.2),by=p.y;
+  ctx.save();ctx.translate(bx,by);ctx.shadowBlur=14;ctx.shadowColor=o.side===1?colors.accent:colors.edge;
+  ctx.fillStyle=o.kind==='tower'?'#35195b':'#1f2d51';ctx.fillRect(-8*s,-o.height*s,16*s,o.height*s);
+  ctx.fillStyle=o.side===1?colors.accent:colors.edge;
+  ctx.fillRect(-11*s,-o.height*s,22*s,9*s);
+  if(o.kind==='sign'){
+   ctx.fillStyle='#171632';ctx.fillRect(-34*s,-o.height*s-31*s,68*s,26*s);
+   ctx.strokeStyle=colors.accent;ctx.lineWidth=2*s;ctx.strokeRect(-34*s,-o.height*s-31*s,68*s,26*s);
+   ctx.fillStyle=colors.warm;ctx.textAlign='center';ctx.font=`900 ${Math.max(3,10*s)}px system-ui`;
+   ctx.fillText('NEON',0,-o.height*s-13*s);
+  }
+  ctx.restore();
+ }
+ // Speed lines and portal arcs.
+ if(fast){ctx.save();ctx.globalAlpha=.2+.13*pulse;ctx.strokeStyle=colors.edge;ctx.lineWidth=3;
+  for(let i=0;i<14;i++){
+   const x=(i*117+r.time*110)%W,y=300+(i*73)%300;
+   ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+(x<640?-70:70),y+76);ctx.stroke();
+  }ctx.restore();}
+ // Obstacles rendered from far to near for genuine depth sorting.
+ const visible=road.events.filter(o=>o.at-r.distance>-60&&o.at-r.distance<ROAD_VIEW).sort((a,b)=>b.at-a.at);
+ for(const e of visible)for(const b of e.blocks)drawRoadObstacle(e,b,t,colors);
+ for(const c of road.coins){if(!c.taken&&c.at-r.distance>-20&&c.at-r.distance<ROAD_VIEW)drawRoadCoin(c,t,colors);}
+ drawHighwayCar(t,colors);
+ // Heads up display with safe HP, nitro, money and progress.
+ const progress=clamp(r.distance/r.length,0,1);
+ ctx.fillStyle='#080b22dd';ctx.fillRect(23,20,580,133);ctx.strokeStyle=colors.edge;ctx.lineWidth=2;ctx.strokeRect(23,20,580,133);
+ ctx.font='1000 30px system-ui';ctx.textAlign='left';ctx.fillStyle='#fff';ctx.fillText('🏎 NEON HIGHWAY  '+r.fromWave+' / 9',42,61);
+ ctx.font='900 15px system-ui';ctx.fillStyle=colors.edge;ctx.fillText('A / D eller ← / → : BYTT FIL  ·  HOLD SPACE / SHIFT: NITRO',42,91);
+ ctx.fillStyle='#d8d1fd';ctx.font='800 15px system-ui';ctx.fillText('50 % SJANSE PER PORTAL · INGEN HP-TAP VED KRASJ',42,121);
+ ctx.fillStyle='#080b22dd';ctx.fillRect(786,20,469,133);ctx.strokeStyle=colors.accent;ctx.strokeRect(786,20,469,133);
+ ctx.fillStyle='#252344';ctx.fillRect(805,66,426,15);ctx.fillStyle=colors.edge;ctx.fillRect(805,66,426*progress,15);
+ ctx.strokeStyle='#fff6b2';ctx.strokeRect(805,66,426,15);
+ ctx.fillStyle='#fff';ctx.font='900 18px system-ui';ctx.fillText('FREMGANG  '+Math.floor(progress*100)+' %',806,53);
+ ctx.fillStyle='#d8d5ee';ctx.font='700 13px system-ui';ctx.fillText('MONSTERMYNTER  '+formatPoints(game.credits)+'   ·   KAMP-HP  '+Math.ceil(players[0].hp)+' (TRYGT)',806,110);
+ ctx.fillStyle='#292445';ctx.fillRect(805,124,426,12);ctx.fillStyle=colors.accent;ctx.fillRect(805,124,426*road.boost/100,12);
+ ctx.font='900 13px system-ui';ctx.fillStyle=colors.warm;ctx.fillText('NITRO '+Math.round(road.boost)+'%',806,150);
+ ctx.fillStyle='#080b22dd';ctx.fillRect(25,174,333,108);ctx.strokeStyle=colors.edge+'9a';ctx.strokeRect(25,174,333,108);
+ ctx.fillStyle='#fff';ctx.font='900 17px system-ui';ctx.fillText('✨ NEAR MISS '+road.nearMisses+'x',44,209);
+ ctx.fillStyle=colors.warm;ctx.fillText('🪙 PLUKKET OPP '+road.collected,44,238);
+ ctx.fillStyle='#dad6f3';ctx.font='800 14px system-ui';ctx.fillText('Krasj → -1 evne, 0 HP',44,265);
+ ctx.fillStyle='#080b22cf';ctx.fillRect(867,173,389,110);ctx.strokeStyle=colors.accent+'99';ctx.strokeRect(867,173,389,110);
+ ctx.font='900 16px system-ui';ctx.fillStyle=colors.accent;ctx.fillText('⚡ DITT KJØRETØY',881,206);
+ ctx.fillStyle='#fff';ctx.fillText(game.character==='metal'?'🎸 METAL HYPERCAR':'❄ BLÅ FROST RACER',881,235);
+ ctx.fillStyle='#dcd7ff';ctx.font='13px system-ui';ctx.fillText('Fil '+(road.lane+1)+' av 3  ·  Nitro gir ekstra fart',881,264);
+ // Spawning countdown animation, intentionally warns before steering can start.
+ if(r.countdown>0){
+  ctx.fillStyle='#08051aca';ctx.fillRect(0,170,W,350);
+  ctx.textAlign='center';ctx.fillStyle=colors.warm;ctx.shadowBlur=35;ctx.shadowColor=colors.accent;
+  ctx.font='1000 64px system-ui';ctx.fillText('NEON HIGHWAY!',640,284);ctx.shadowBlur=0;
+  ctx.fillStyle='#effaff';ctx.font='900 29px system-ui';ctx.fillText('3D KJØRING · SKIFT FIL · UNNGÅ HINDRINGER',640,363);
+  ctx.font='1000 86px system-ui';ctx.fillText(Math.ceil(r.countdown),640,465);ctx.textAlign='left';
+ }
+}
+
 function drawPortalObstacle(o,x,t,palette){
  const color=palette[2],other=palette[3];
  ctx.save();ctx.shadowColor=o.kind==='saw'?other:color;ctx.shadowBlur=18;
@@ -1356,8 +1757,68 @@ function drawCombatAbilities(){
  }
  ctx.restore();
 }
+/* v5: layered original geometry art inspired by rhythm-platformer aesthetics. */
+function drawAdvancedPortalBackdrop(r,t,pal){
+ const beat=Math.sin(r.time*r.bpm/60*2*Math.PI);
+ const sway=Math.sin(r.time*1.3);
+ ctx.save();
+ // Cyberbrick wall tiles; the blocks slide at different speeds for depth.
+ for(let row=0;row<5;row++){
+  const ph=104,shift=((r.distance*(.08+row*.018))%292);
+  const y=106+row*99;
+  for(let col=-1;col<6;col++){
+   const x=col*292-shift+(row%2?136:0);
+   ctx.fillStyle=(row+col)%2?'#9a43cb20':'#ab70f027';
+   ctx.strokeStyle=pal[3]+'26';ctx.lineWidth=3;
+   ctx.fillRect(x,y,274,ph-13);ctx.strokeRect(x,y,274,ph-13);
+   ctx.fillStyle=pal[2]+'12';ctx.fillRect(x+12,y+12,250,9);
+  }
+ }
+ // Original four-point crystalline stars, suspended and pulsing.
+ for(let i=0;i<9;i++){
+  const x=((i*202-r.distance*.28)%(W+220)+(W+220))%(W+220)-120;
+  const y=168+(i%3)*113+Math.sin(t*2+i)*14;
+  const size=9+i%3*9;
+  ctx.save();ctx.translate(x,y);ctx.rotate(t*.85+i);
+  ctx.fillStyle=pal[2];ctx.globalAlpha=.32+.25*Math.sin(t*2+i)**2;
+  ctx.shadowColor=pal[2];ctx.shadowBlur=12;
+  ctx.beginPath();ctx.moveTo(0,-size);ctx.lineTo(size*.33,-size*.33);ctx.lineTo(size,0);ctx.lineTo(size*.33,size*.33);ctx.lineTo(0,size);ctx.lineTo(-size*.33,size*.33);ctx.lineTo(-size,0);ctx.lineTo(-size*.33,-size*.33);ctx.closePath();ctx.fill();ctx.restore();
+ }
+ // Hanging glowing prisms and chains - ornamental, away from active collision channel.
+ for(let i=0;i<6;i++){
+  const x=((i*281+87-r.distance*.2)%(W+260)+(W+260))%(W+260)-100;
+  const upper=i%2===0,anchor=upper?142:605;
+  const length=36+(i*27)%80;
+  ctx.save();ctx.strokeStyle='#dcddff8c';ctx.lineWidth=4;
+  for(let j=0;j<length;j+=12){const yy=upper?anchor+j:anchor-j;
+   ctx.beginPath();ctx.ellipse(x,yy,4,8,0,0,Math.PI*2);ctx.stroke();}
+  const cy=upper?anchor+length:anchor-length;
+  ctx.translate(x,cy);ctx.rotate(t*.5*(i%2?1:-1));
+  ctx.shadowColor=pal[3];ctx.shadowBlur=18+7*Math.abs(beat);
+  ctx.fillStyle='#151135';ctx.strokeStyle=i%2?pal[2]:pal[3];ctx.lineWidth=5;
+  ctx.fillRect(-16,-16,32,32);ctx.strokeRect(-16,-16,32,32);
+  ctx.fillStyle=pal[2]+'77';ctx.fillRect(-6,-6,12,12);ctx.restore();
+ }
+ // Puffy electric clouds on roof and floor, using original primitive shapes.
+ for(let side=0;side<2;side++){
+  const baseY=side===0?131:608;
+  for(let i=-1;i<16;i++){
+   const x=i*96-((r.distance*.12)%96);
+   ctx.beginPath();
+   for(let j=0;j<4;j++){
+    const cx=x+j*24,cy=baseY+(side===0?-10:10)*Math.sin(t*.85+i+j),rad=27+Math.sin(t+i+j)*4;
+    ctx.moveTo(cx+rad,cy);ctx.arc(cx,cy,rad,0,Math.PI*2);
+   }
+   ctx.globalAlpha=.34+.13*Math.abs(beat);
+   ctx.fillStyle=pal[2];ctx.shadowBlur=22;ctx.shadowColor=pal[2];ctx.fill();
+  }
+ }
+ ctx.restore();ctx.globalAlpha=1;ctx.shadowBlur=0;
+}
+
 function drawPortalRun(t){
  const r=game.runner;if(!r)return;
+ if(r.variant==='drive')return drawHighwayRun(t);
  const pal=PORTAL_PALETTES[(r.fromWave-1)%PORTAL_PALETTES.length];
  const beat=r.time*r.bpm/60*2*Math.PI;
  const pulse=.5+.5*Math.sin(beat);
@@ -1369,6 +1830,7 @@ function drawPortalRun(t){
  grad.addColorStop(.45,pal[1]);
  grad.addColorStop(1,'#050814');
  ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
+ drawAdvancedPortalBackdrop(r,t,pal);
 
  // Color flash wash and moving aurora bands.
  ctx.save();
@@ -1604,7 +2066,7 @@ function frame(now){
  draw(now/1000);
  requestAnimationFrame(frame);
 }
-function setAudio(){muted=!muted;$('mute').textContent=muted?'🔇 MUTET':'🔊 LYD';if(!muted)beep(700,.09,'triangle',.045);}
+function setAudio(){muted=!muted;$('mute').textContent=muted?'🔇 MUTET':'🔊 LYD';if(!muted){unlockAudio();musicNextTime=0;if(!playNativeMusic())tickCharacterMusic(true);beep(700,.09,'triangle',.045);}else stopNativeMusic();updateMusicUI();}
 function updateSelection(){
  for(const el of document.querySelectorAll('[data-character]')){
   const active=el.dataset.character===selectedCharacter;el.setAttribute('aria-pressed',String(active));el.querySelector('.pick-status').textContent=active?'✓ VALGT':'';
@@ -1612,7 +2074,7 @@ function updateSelection(){
  for(const el of document.querySelectorAll('[data-difficulty]'))el.setAttribute('aria-pressed',String(el.dataset.difficulty===selectedDifficulty));
  $('musicBanner').textContent=selectedCharacter==='metal'?'🎸 METAL: Infernal Riff — original tung riff-musikk':'❄️ BLÅ: Cozy Fjord — rolig, koselig originalmusikk';
 }
-for(const el of document.querySelectorAll('[data-character]'))el.addEventListener('click',()=>{selectedCharacter=el.dataset.character;updateSelection();musicStep=0;musicNextTime=0;sfx('xp');});
+for(const el of document.querySelectorAll('[data-character]'))el.addEventListener('click',()=>{selectedCharacter=el.dataset.character;updateSelection();musicStep=0;musicNextTime=0;sfx('xp');if(Date.now()<musicPreviewUntil)previewCharacterMusic();});
 for(const el of document.querySelectorAll('[data-difficulty]'))el.addEventListener('click',()=>{selectedDifficulty=el.dataset.difficulty;updateSelection();sfx('xp');});
 $('menuLoad').addEventListener('click',openSavePanel);
 $('pauseShop').addEventListener('click',weaponShop);
@@ -1636,26 +2098,35 @@ $('saveFileInput').addEventListener('change',e=>{importSaveFile(e.target.files?.
 $('start').addEventListener('click',()=>reset());
 updateSelection();
 $('resume').addEventListener('click',()=>togglePause(false));
-$('pauseMenu').addEventListener('click',()=>{game.state='menu';recordScore();showOverlay('menu');});
-$('endMenu').addEventListener('click',()=>{game.state='menu';showOverlay('menu');});
+$('pauseMenu').addEventListener('click',()=>{stopNativeMusic();game.state='menu';recordScore();showOverlay('menu');});
+$('endMenu').addEventListener('click',()=>{stopNativeMusic();game.state='menu';showOverlay('menu');});
 $('again').addEventListener('click',()=>reset());
 $('pauseBtn').addEventListener('click',()=>togglePause());
 $('retryRunner').addEventListener('click',retryPortalRun);
-$('runnerMenu').addEventListener('click',()=>{game.state='menu';game.runner=null;recordScore();showOverlay('menu');});
+$('runnerMenu').addEventListener('click',()=>{stopNativeMusic();game.state='menu';game.runner=null;recordScore();showOverlay('menu');});
+for(const [id,direction] of [['driveLeft',-1],['driveRight',1]])$(''+id).addEventListener('pointerdown',e=>{e.preventDefault();roadSteer(direction);try{e.currentTarget.setPointerCapture(e.pointerId);}catch(_){} });
+$('driveBoost').addEventListener('pointerdown',e=>{e.preventDefault();roadNitro(true);try{e.currentTarget.setPointerCapture(e.pointerId);}catch(_){} });
+for(const type of ['pointerup','pointercancel','lostpointercapture'])$('driveBoost').addEventListener(type,()=>roadNitro(false));
 $('runnerJumpButton').addEventListener('pointerdown',e=>{e.preventDefault();portalJump();e.currentTarget.setPointerCapture(e.pointerId);});
 for(const eventType of ['pointerup','pointercancel','lostpointercapture'])$('runnerJumpButton').addEventListener(eventType,()=>{KEYS.portalThrust=false;});
 $('runnerFireButton').addEventListener('pointerdown',e=>{e.preventDefault();portalFire();e.currentTarget.setPointerCapture(e.pointerId);});
 for(const eventType of ['pointerup','pointercancel','lostpointercapture'])$('runnerFireButton').addEventListener(eventType,()=>{KEYS.portalFire=false;});
-canvas.addEventListener('pointerdown',()=>{if(game.state==='runner')portalJump();});
+canvas.addEventListener('pointerdown',()=>{if(game.state==='runner'&&game.runner?.variant!=='drive')portalJump();});
 canvas.addEventListener('pointerup',()=>{KEYS.portalThrust=false;});
 $('weaponCycle').addEventListener('click',cycleOwnedWeapon);
 
 $('mute').addEventListener('click',setAudio);
+$('musicToggle').addEventListener('click',toggleMusic);
+$('musicPreview').addEventListener('click',previewCharacterMusic);
 window.addEventListener('keydown',event=>{
   const k=event.key;
   if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown',' '].includes(k))event.preventDefault();
   KEYS[k]=true;
   if(event.repeat)return;
+  if(game.state==='runner'&&game.runner?.variant==='drive'){
+   if(['a','A','ArrowLeft'].includes(k))roadSteer(-1);
+   if(['d','D','ArrowRight'].includes(k))roadSteer(1);
+  }
   if((k==='p'||k==='P'||k==='Escape')&&['playing','runner','paused'].includes(game.state))togglePause();
   else if(k==='Escape'&&game.state==='shop')closeWeaponShop();
   if(k==='m'||k==='M')setAudio();
@@ -1671,8 +2142,8 @@ window.addEventListener('keydown',event=>{
   if(game.state==='menu'&&k==='Enter'&&event.target.tagName!=='BUTTON')reset();
   if(game.state==='end'&&(k==='Enter'||k==='r'||k==='R'))reset();
 });
-window.addEventListener('keyup',event=>{KEYS[event.key]=false;if(['w','W',' ','ArrowUp'].includes(event.key))KEYS.portalThrust=false;if(['x','X','f','F','k','K'].includes(event.key))KEYS.portalFire=false;});
-window.addEventListener('blur',()=>{for(const k of Object.keys(KEYS))KEYS[k]=false;if(['playing','runner'].includes(game.state))togglePause(true);});
+window.addEventListener('keyup',event=>{KEYS[event.key]=false;if(['w','W',' ','ArrowUp','Shift'].includes(event.key))KEYS.roadBoost=false;if(['w','W',' ','ArrowUp'].includes(event.key))KEYS.portalThrust=false;if(['x','X','f','F','k','K'].includes(event.key))KEYS.portalFire=false;});
+window.addEventListener('blur',()=>{for(const k of Object.keys(KEYS))KEYS[k]=false;roadNitro(false);if(['playing','runner'].includes(game.state))togglePause(true);});
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&['playing','runner'].includes(game.state))togglePause(true);});
 for(const btn of document.querySelectorAll('[data-touch]')){
  const k=btn.dataset.touch;

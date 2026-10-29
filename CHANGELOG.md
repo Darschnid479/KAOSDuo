@@ -1,11 +1,23 @@
 # Changelog
 
-## v4.2.0 — Surprise Portal Ambush & Coins (2026-10-29)
+## v5.0.0 — NEON HIGHWAY (2026-10-29)
 
-- 25% chance per portal to interrupt **mid-level** with a separate, intense shooting miniboss phase. No boss warning at the beginning of the portal.
-- Defeat the Sentinel to resume exactly where you were interrupted; retry after a crash preserves the original encounter roll.
-- Portal modes now alternate between different cube/ship/gravity orders depending on the portal.
-- After every cleared combat wave, the game asks whether to buy a new weapon with monster-earned coins. Buy or skip before continuing.
-- Shop offers and bought weapons persist in Save/Load. Legacy 4.1 save state receives transition defaults.
-- Portal collisions still cost an ability but **never HP**.
-- Original character music, 8 weapons, solo gameplay and 4 difficulties retained.
+- **50% independent chance per transition** to enter a pseudo-3D, three-lane **Neon Highway** car stage instead of the Geometry Portal.
+- New arcade driving mode: lane-changing, regenerating **nitro**, visually projected traffic/laser barriers, road coins and near-miss bonuses.
+- Driving mode has its own mobile touch controls and safe run generation (there is always an open lane at an obstacle event).
+- Both travel modes keep the penalty of **one remaining special ability per crash**, never health; unlimited retry attempts.
+- Geometry Run now has extra layered cyberbrick scenery, neon stars, hanging prisms, electric clouds and stronger pulse effects.
+- Geometry Run retains cube, ship and gravity modes and its **25% mid-run miniboss chance** (conditional on geometry being selected).
+- **Metal audio fix**: original, audible instrumental rendered to a bundled MP3, with guitar-like distorted riffs, bass, kick, snare and hi-hat. Blue's calm music is also now a bundled MP3.
+- New in-menu **Music Preview** and dedicated soundtrack toggle. Audio playback starts directly from the Start/Preview user gesture for mobile browser compatibility; synth fallback remains.
+- Save/load now supports both portal variants and remains compatible with v4.1/v4.2 manual/auto save slots.
+- All previous combat waves, weapon shop prompts, 8 purchasable weapons, boss encounters and difficulty options remain intact.
+
+## v4.2.0 — Surprise Portal Ambush (2026-10-29)
+
+- Random 25% chance in geometry portal for mid-stage shooting miniboss, with no warning at entry.
+- Automatic prompt to buy weapons with monster-earned coins after each battle wave.
+
+## v4.1.0 — Armory & Soundtracks (2026-10-29)
+
+- Save/load, 8 weapons and the first procedural soundtrack engine.
