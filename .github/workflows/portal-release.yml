@@ -1,0 +1,51 @@
+name: Publish KAOSDUO PORTAL RUN v2.1.0
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'dist/KAOSDUO_PORTAL_RUN_v2.1.0.html'
+      - 'dist/KAOSDUO_PORTAL_RUN_v2.1.0_OFFLINE.zip'
+      - '.github/workflows/portal-release.yml'
+      - 'RELEASE_NOTES.md'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate offline build
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile
+          html = Path('dist/KAOSDUO_PORTAL_RUN_v2.1.0.html').read_text()
+          assert 'data:image/webp;base64,' in html, 'Character sprites missing from offline file'
+          assert 'function beginPortalRun()' in html, 'Portal runs missing'
+          assert 'game.abilities' in html and 'failPortalRun' in html
+          assert 'MAX_WAVES=10' in html
+          assert '../assets/' not in html, 'Offline file relies on external sprites'
+          with ZipFile('dist/KAOSDUO_PORTAL_RUN_v2.1.0_OFFLINE.zip') as z:
+              assert z.testzip() is None
+              assert 'KAOSDUO_PORTAL_RUN_v2.1.0.html' in z.namelist()
+              assert 'README.md' in z.namelist()
+          print('Validated PORTAL RUN v2.1.0 offline artifacts')
+          PY
+      - name: Generate SHA-256 checksums
+        run: |
+          cd dist
+          sha256sum KAOSDUO_PORTAL_RUN_v2.1.0.html KAOSDUO_PORTAL_RUN_v2.1.0_OFFLINE.zip > SHA256SUMS.txt
+      - name: Create or update official v2.1.0 release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view v2.1.0 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload v2.1.0 dist/KAOSDUO_PORTAL_RUN_v2.1.0.html dist/KAOSDUO_PORTAL_RUN_v2.1.0_OFFLINE.zip dist/SHA256SUMS.txt --clobber --repo "$GITHUB_REPOSITORY"
+          else
+            gh release create v2.1.0 dist/KAOSDUO_PORTAL_RUN_v2.1.0.html dist/KAOSDUO_PORTAL_RUN_v2.1.0_OFFLINE.zip dist/SHA256SUMS.txt --title 'KAOSDUO: PORTAL RUN v2.1.0' --notes-file RELEASE_NOTES.md --target "$GITHUB_SHA" --latest --repo "$GITHUB_REPOSITORY"
+          fi
