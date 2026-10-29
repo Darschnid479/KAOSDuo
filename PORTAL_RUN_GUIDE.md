@@ -1,30 +1,22 @@
-# KAOSDUO: PORTAL RUN 3.0.0
+# KAOSDUO HYPERDRIVE — norsk guide
 
-## Spilleregler
+## Start
+Dobbeltklikk `KAOSDUO_HYPERDRIVE_v4.0.0.html` i Chrome eller Edge. Velg Blå eller Metal, velg én av fire vanskelighetsgrader og start. Spillet fungerer uten internett.
 
-- Velg **Blå** eller **Metal**. Kun én spiller.
-- Overlev vanlige kamper i 10 bølger, inkludert 3 bosskamper.
-- Mellom bølge 1–9 må du fullføre en egen neon-kubehinderbane.
-- Banen beveger seg automatisk. Hopp over pigger, dobbelpigger, blokker og sagblad.
-- Ved krasj mister du **én tilfeldig tilgjengelig spesialevne**, men **ingen HP**. Du må prøve banen igjen.
-- De fire tapbare evnene er Turbo-dash, dobbelthopp, superangrep og OVERDRIVE. Når alle fire er tapt, får du fortsatt ubegrenset antall forsøk.
-- Etter en fullført hinderbane går du automatisk til neste ordinære kampbølge.
-- Hinderbanene kan alltid fullføres med ett normalt kubehopp.
+## Kamp
+- A/D: Gå, W: Hopp, F/K: Skyt, G/L: Super, Shift/Q: Dash.
+- **1–5:** Bytt mellom fem våpen når som helst: Pulse Blaster, Chaos Shotgun, Rail Cannon, Nova Rockets og Chain Arc.
+- Bytt også med «BYTT VÅPEN»-knappen på mobil/berøringsskjerm.
 
-## Styring
+## Portalreise
+Det kommer én portal mellom hver av de første ni kampbølgene. Du går gjennom tre former etter tur:
+1. **Kube:** trykk W / Space / pil opp for å hoppe.
+2. **Flyskip:** hold knappen for å stige, slipp den for å synke. Unngå laserporter.
+3. **Tyngdekraft:** trykk for å snu retning, flytt deg mellom gulv og tak.
 
-**I kamp:** A/D eller piltaster for å bevege deg, W eller pil opp for å hoppe, Shift/Q for dash, F/K for å skyte og G/L for superangrep.
+**25 % miniboss-sjanse per portal:** noen ganger møter du PORTAL SENTINEL etter hindringene. Hold F eller X for å skyte, og styr flyskipet opp/ned for å unngå boss-skudd. På mobil: ACTION + SKYT.
 
-**I PORTAL RUN:** Mellomrom, W, pil opp eller trykk på skjermen for å hoppe. Kun ett hopp trengs.
+**Krasj koster aldri HP**, men du mister én spesialevne hvis du fortsatt har en. Du kan prøve portalen igjen ubegrenset.
 
-P / Escape = pause. M = slå lyden av/på. Etter krasj: Enter, mellomrom eller PRØV IGJEN.
-
-## Installering
-
-Åpne `KAOSDUO_PORTAL_FLASH_v3.0.0.html` i Chrome, Edge eller Firefox på PC. Filen inneholder både spillmotoren og all karaktergrafikk og kan spilles uten internett. Ingen installasjon.
-
-Det finnes ingen ny APK i denne releasen. Den tidligere Android-betaen er ikke dette spillet.
-
-## New in v3.0.0
-
-Neon color flashes, animated energy rings, reactive grid floor, sparkling particles, glowing cube and finish-line effects. Flashing lights warning for photosensitive players.
+## Tilgjengelighet
+Blinkende neonfarger kan være ubehagelige ved lysfølsomhet. Nettleserutgave, ingen ny Android-APK.

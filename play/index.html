@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 <meta name="theme-color" content="#111028">
-<meta name="description" content="KAOSDUO: OVERDRIVE — 10 combat waves, 9 rhythm platformer portal runs, 3 bosses, solo mode and skill-loss consequences.">
-<title>KAOSDUO: PORTAL RUN — v3.0.0 | Solo Edition</title>
+<meta name="description" content="KAOSDUO: OVERDRIVE — 10 combat waves, five weapons, cube jumps, rocket flight, gravity flips and a 25 percent portal miniboss chance.">
+<title>KAOSDUO: HYPERDRIVE — v4.0.0 | Solo Edition</title>
 <style>
 :root { --pink:#ff5c9a; --cyan:#60f2fc; --gold:#ffe080; --ink:#111128; --light:#f4f1ff; }
 * { box-sizing:border-box; }
@@ -95,6 +95,14 @@ h1 span{color:#ffe27b;filter:drop-shadow(0 0 11px #ffa75e77)}
 #runnerTouch{display:none}
 #runnerTouch.hidden{display:none!important}
 @media(pointer:coarse){#runnerTouch:not(.hidden){display:flex;position:absolute;right:27px;bottom:23px;z-index:15;pointer-events:none}#runnerJumpButton{pointer-events:auto;touch-action:none;min-width:132px;min-height:73px;border-radius:32px;border:3px solid #81fffa;background:linear-gradient(120deg,#0c899bd9,#7755dbee);color:#fff;font-size:24px;font-weight:1000;box-shadow:0 0 25px #6ae6ff55}}
+/* HYPERDRIVE V4: mobile weapon switch + active portal flying controls */
+#weaponCycle{pointer-events:auto!important;position:absolute;bottom:58px;left:50%;transform:translateX(-50%);min-width:116px!important;min-height:48px!important;border-radius:24px!important;border-color:#ffe88b!important;background:#43255fd9!important;font-size:12px!important;box-shadow:0 0 20px #bd74ff85!important}
+#toast{font-size:clamp(14px,2.1vw,28px);max-width:92%;white-space:normal;text-align:center}
+#runnerTouch{align-items:end;gap:13px}
+#runnerJumpButton{min-width:132px;min-height:80px}
+#runnerFireButton{pointer-events:auto;touch-action:none;min-width:106px;min-height:72px;border:3px solid #ffad80;border-radius:24px;background:linear-gradient(140deg,#d03a6de0,#753bc6e0);box-shadow:0 0 25px #ff78ad88;font-weight:1000;font-size:20px}
+@media(pointer:coarse){#runnerTouch:not(.hidden){display:flex;right:15px;bottom:20px}}
+@media(max-width:670px){#runnerJumpButton{min-width:94px!important;min-height:63px!important;font-size:17px!important}#runnerFireButton{min-width:90px!important;min-height:62px!important;font-size:15px!important}#weaponCycle{bottom:52px!important}}
 </style>
 </head>
 <body>
@@ -103,9 +111,9 @@ h1 span{color:#ffe27b;filter:drop-shadow(0 0 11px #ffa75e77)}
 <div id="toast" aria-live="polite"></div>
 <div class="overlay" id="menu">
   <div class="panel">
-    <p class="eyebrow">⚡ VERSION 3.0 / PORTAL FLASH EDITION ⚡</p>
-    <h1>KAOS<span>DUO</span></h1><div class="kicker">💠 PORTAL FLASH 💠</div>
-    <p class="subtitle">10 kampbølger. 9 blinkende neonfargede hinderbaner mellom dem. Krasj i kubeform = mist en spesialevne, men ikke HP! Kun solo. Fullfør portalen for å gå videre.</p>
+    <p class="eyebrow">⚡ VERSION 4.0 / HYPERDRIVE EDITION ⚡</p>
+    <h1>KAOS<span>DUO</span></h1><div class="kicker">🚀 HYPERDRIVE: PORTAL MAYHEM 🚀</div>
+    <p class="subtitle">10 kampbølger, 5 våpen og 9 reiser med KUBE, FLYVING og TYNGDEKRAFT-SKIFT! 25 % sjanse for PORTAL MINIBOSS. Kollisjon = mist én spesialevne, aldri HP. Kun solo.</p>
     <div class="selection-heading">1 — VELG KARAKTER</div>
     <div class="hero-choices" role="group" aria-label="Velg en karakter">
       <button class="hero-choice" type="button" data-character="blue" aria-pressed="true"><img src="../assets/blue.webp" alt=""><span class="hero-meta"><span class="hero-name">❄️ BLÅ</span><span class="hero-desc">Snøballer, frost og iskald panikk.</span><span class="pick-status">✓ VALGT</span></span></button>
@@ -118,9 +126,9 @@ h1 span{color:#ffe27b;filter:drop-shadow(0 0 11px #ffa75e77)}
       <button type="button" class="difficulty-choice" data-difficulty="hard" aria-pressed="false"><strong>🔥 VANSKELIG</strong><small>Flere, sterkere og raskere</small></button>
       <button type="button" class="difficulty-choice" data-difficulty="insane" aria-pressed="false"><strong>💀 DRIT VANSKELIG</strong><small>Ingen nåde. Lykke til!</small></button>
     </div>
-    <div class="actions"><button id="start" class="primary start-button">▶ START PORTAL RUN</button></div>
-    <div class="controls"><div><strong>STYRING:</strong> A/D / ←/→ = GÅ · W / ↑ = DOBBELTHOPP · SHIFT / Q = DASH · F / K = SKYT · G / L = SUPER</div></div>
-    <p class="small">100 % SOLO · 10 KAMPBØLGER · 9 PORTAL RUNS · KRASJ = MIST EN EVNE · P/Esc pause · M lyd · Rekord: <strong id="record">0</strong></p>
+    <div class="actions"><button id="start" class="primary start-button">▶ START HYPERDRIVE</button></div>
+    <div class="controls"><div><strong>STYRING:</strong> A/D = GÅ · W = HOPP · F = SKYT · G = SUPER · 1–5 = BYTT VÅPEN · PORTAL: HOLD FOR Å FLY, TRYKK FOR Å SNU TYNGDEKRAFT · X = SKYT PÅ MINIBOSS</div></div>
+    <p class="small">100 % SOLO · 5 VÅPEN · 3 PORTALFORMER · 25 % MINIBOSS · KRASJ = MIST EN EVNE · P/Esc pause · M lyd · Rekord: <strong id="record">0</strong></p>
   </div>
 </div>
 <div class="overlay hidden" id="upgrade">
@@ -132,14 +140,14 @@ h1 span{color:#ffe27b;filter:drop-shadow(0 0 11px #ffa75e77)}
   <div class="runner-loss">⚡ MISTET EVNE: <strong id="runnerLost">–</strong></div>
   <p id="runnerFailureText">0 HP mistet · 0% progresjon</p>
   <div class="runner-ability-list" id="runnerAbilities"></div>
-  <p class="small">Banen er alltid mulig med bare ett hopp. Du beholder HP, XP og bølgen, men evnen er borte for resten av runden.</p>
+  <p class="small">Kube = hopp · Skip = hold for å fly · Tyngdekraft = trykk for å snu. Miniboss kan dukke opp! Ingen HP-tap i portalene.</p>
   <div class="actions"><button class="primary" id="retryRunner">↻ PRØV PORTALEN IGJEN</button><button id="runnerMenu">HOVEDMENY</button></div>
   <p class="small">Trykk Enter eller mellomrom for nytt forsøk.</p>
 </div></div>
 <div class="overlay hidden" id="endPanel"><div class="panel"><div class="eyebrow" id="endEyebrow">SPILL SLUTT</div><h2 id="endTitle">DET BLE KAOS!</h2><p id="endText"></p><div class="actions"><button class="primary" id="again">🔁 PRØV IGJEN</button><button id="endMenu">HOVEDMENY</button></div></div></div>
 <div id="toolbar"><button id="mute" aria-label="Skru lyd av eller på">🔊 LYD</button><button id="pauseBtn" aria-label="Sett spillet på pause">⏸ PAUSE</button></div>
-<div id="runnerTouch" class="hidden"><button id="runnerJumpButton" aria-label="Hopp med portalkuben">▲ HOPP!</button></div>
-<div id="touch" class="hidden"><div class="touch-pad"><button data-touch="a">◀</button><button data-touch="d">▶</button><button data-touch="w">⬆</button></div><div class="touch-actions"><button class="dash" data-touch="Shift" aria-label="Turbo dash">➤</button><button class="shoot" data-touch="f" aria-label="Skyt">💥</button><button class="super" data-touch="g" aria-label="Superangrep">⚡</button></div></div>
+<div id="runnerTouch" class="hidden"><button id="runnerJumpButton" aria-label="Hopp, fly eller snu tyngdekraft">▲ ACTION</button><button id="runnerFireButton" aria-label="Skyt mot portalminiboss">✹ SKYT</button></div>
+<div id="touch" class="hidden"><button id="weaponCycle" type="button" aria-label="Bytt våpen">🔫 BYTT VÅPEN</button><div class="touch-pad"><button data-touch="a">◀</button><button data-touch="d">▶</button><button data-touch="w">⬆</button></div><div class="touch-actions"><button class="dash" data-touch="Shift" aria-label="Turbo dash">➤</button><button class="shoot" data-touch="f" aria-label="Skyt">💥</button><button class="super" data-touch="g" aria-label="Superangrep">⚡</button></div></div>
 </div>
 <script>
 /* KAOSDUO: PORTALPANIKK! — local, self-contained browser game. */
@@ -161,7 +169,7 @@ const palettes=[
  {sky1:'#0e1024',sky2:'#342978',mount:'#28224e',far:'#43368a',floor:'#2a2152',trim:'#e25ff9',moon:'#8ff7fa'},
  {sky1:'#081e30',sky2:'#134b5f',mount:'#143a4c',far:'#1d6570',floor:'#13354d',trim:'#58ffd1',moon:'#9affdf'}
 ];
-let game={state:'menu',mode:'solo',character:'blue',difficulty:'medium',wave:0,score:0,kills:0,combo:0,comboTime:0,level:1,xp:0,required:14,spawnLeft:0,spawnTimer:0,waveDelay:-1,time:0,shake:0,flash:0,superFlash:0,last:0,pendingWins:0,played:0,upgrades:{},stage:0,record:0,rage:0,rageTime:0,arenaHazard:8,impact:0,droneTimer:0,shards:0,version:"3.0.0",abilities:{dash:true,double:true,super:true,overdrive:true},portalFailures:0,runner:null,pausedFrom:"playing"};
+let game={state:'menu',mode:'solo',character:'blue',difficulty:'medium',wave:0,score:0,kills:0,combo:0,comboTime:0,level:1,xp:0,required:14,spawnLeft:0,spawnTimer:0,waveDelay:-1,time:0,shake:0,flash:0,superFlash:0,last:0,pendingWins:0,played:0,upgrades:{},stage:0,record:0,rage:0,rageTime:0,arenaHazard:8,impact:0,droneTimer:0,shards:0,version:"4.0.0",weapon:'pulse',abilities:{dash:true,double:true,super:true,overdrive:true},portalFailures:0,runner:null,pausedFrom:"playing"};
 let players=[],enemies=[],bullets=[],particles=[],drops=[],floaters=[],rings=[],effects=[],hazards=[],trails=[];
 const BOSS_WAVES={4:'warden',7:'titan',10:'boss'};
 const BOSS_LABELS={warden:'THE GLITCH WARDEN',titan:'CRYSTAL TITAN',boss:'PORTAL KING'};
@@ -175,6 +183,21 @@ const DIFFICULTIES={
  insane:{label:'DRIT VANSKELIG',hp:75,enemyHp:1.8,enemySpeed:1.45,enemyDamage:1.8,spawnCount:1.65,spawnRate:.58,attackRate:.62}
 };
 let selectedCharacter='blue',selectedDifficulty='medium';
+const WEAPONS=[
+ {id:'pulse',icon:'✹',name:'PULSE BLASTER',cool:.32,damage:24,speed:880,r:11,color:'#6ceaff'},
+ {id:'scatter',icon:'✦',name:'CHAOS SHOTGUN',cool:.66,damage:14,speed:840,r:8,color:'#ffae75'},
+ {id:'rail',icon:'⚡',name:'RAIL CANNON',cool:.83,damage:88,speed:1550,r:8,color:'#fff188'},
+ {id:'rocket',icon:'🚀',name:'NOVA ROCKETS',cool:.93,damage:58,speed:680,r:17,color:'#ff83ca'},
+ {id:'arc',icon:'ϟ',name:'CHAIN ARC',cool:.47,damage:34,speed:1000,r:12,color:'#a6a0ff'}
+];
+function equipWeapon(index,quiet=false){
+ if(game.state!=='playing')return;
+ const next=WEAPONS[(index+WEAPONS.length)%WEAPONS.length];
+ game.weapon=next.id;
+ if(!quiet){toast(next.icon+' '+next.name,1.1);beep(680,.08,'sawtooth',.04,350);}
+}
+function activeWeapon(){return WEAPONS.find(w=>w.id===game.weapon)||WEAPONS[0];}
+
 let audio=null,muted=false,musicInterval=null,musicStep=0,lastShootSfx=0;
 let toastTimer=null;
 try{game.record=Number(localStorage.getItem('kaosduo_record')||0);}catch(e){}
@@ -216,7 +239,7 @@ function startMusic(){if(musicInterval)return;musicInterval=setInterval(()=>{if(
 function createPlayer(id,x,image,hp){return {id,x,y:GROUND,vx:0,vy:0,img:image,hp,maxHp:hp,alive:true,facing:1,cooldown:0,invuln:0,special:35,shooting:0,speech:'',speechT:0,feetDust:0,dashCd:0,dashTime:0,jumps:0,wasJump:false,droneAngle:0,droneCd:0};}
 function reset(){
  const settings=DIFFICULTIES[selectedDifficulty];
- game.state='playing';game.mode='solo';game.character=selectedCharacter;game.difficulty=selectedDifficulty;game.wave=0;game.score=0;game.kills=0;game.combo=0;game.comboTime=0;game.level=1;game.xp=0;game.required=14;game.time=0;game.shake=0;game.flash=0;game.superFlash=0;game.pendingWins=0;game.upgrades={};game.stage=0;game.played=0;game.rage=0;game.rageTime=0;game.arenaHazard=8;game.impact=0;game.droneTimer=0;game.shards=0;game.abilities={dash:true,double:true,super:true,overdrive:true};game.portalFailures=0;game.runner=null;game.pausedFrom="playing";
+ game.state='playing';game.mode='solo';game.character=selectedCharacter;game.difficulty=selectedDifficulty;game.wave=0;game.score=0;game.kills=0;game.combo=0;game.comboTime=0;game.level=1;game.xp=0;game.required=14;game.time=0;game.shake=0;game.flash=0;game.superFlash=0;game.pendingWins=0;game.upgrades={};game.stage=0;game.played=0;game.rage=0;game.rageTime=0;game.arenaHazard=8;game.impact=0;game.droneTimer=0;game.shards=0;game.abilities={dash:true,double:true,super:true,overdrive:true};game.weapon='pulse';game.portalFailures=0;game.runner=null;game.pausedFrom="playing";
  enemies=[];bullets=[];particles=[];drops=[];floaters=[];rings=[];effects=[];hazards=[];trails=[];players=[createPlayer(selectedCharacter==='blue'?0:1,640,selectedCharacter==='blue'?imgBlue:imgMetal,settings.hp)];
  showOverlay(null);startMusic();startWave();}
 function say(p,message,duration=2){p.speech=message;p.speechT=duration;}
@@ -256,25 +279,45 @@ function floating(x,y,text,color='#fff',size=19){floaters.push({x,y,text,color,s
 function ring(x,y,color,max=180){rings.push({x,y,r:8,max,t:.55,color});}
 function shoot(p,isAuto=false){
  if(!p.alive||p.cooldown>0)return;
- const isBlue=p.id===0;
- p.cooldown=(isBlue?.32:.37)*Math.pow(.78,game.upgrades.rate||0)*(game.rageTime>0?.57:1);
- p.shooting=.16;
- const target=nearestEnemy(p.x,p.y-120,790);
+ const w=activeWeapon(),isBlue=p.id===0;
+ p.cooldown=w.cool*Math.pow(.78,game.upgrades.rate||0)*(game.rageTime>0?.62:1);
+ p.shooting=.18;
+ const target=nearestEnemy(p.x,p.y-120,w.id==='scatter'?630:950);
  let dx=p.facing,dy=0;
  if(target){dx=target.x-p.x;dy=target.y-(p.y-128);const d=Math.max(hypot(dx,dy),1);dx/=d;dy/=d;p.facing=dx>=0?1:-1;}
- const speed=isBlue?820:900;
- const count=1+Math.min(game.upgrades.twin||0,3);
+ const count=w.id==='scatter'?6:1+Math.min(game.upgrades.twin||0,3);
+ const dmg=w.damage*Math.pow(1.28,game.upgrades.damage||0)*(game.rageTime>0?1.42:1);
  for(let i=0;i<count;i++){
-   const ang=(i-(count-1)/2)*.145;
-   const vx=(dx*Math.cos(ang)-dy*Math.sin(ang))*speed,vy=(dx*Math.sin(ang)+dy*Math.cos(ang))*speed;
-   const x=p.x+p.facing*31,y=p.y-129;
-   const crit=Math.random()<Math.min(.7,.06+.12*(game.upgrades.crit||0));
-   const damage=(isBlue?24:22)*Math.pow(1.28,game.upgrades.damage||0)*(game.rageTime>0?1.42:1)*(crit?2.25:1);
-   bullets.push({x,y,vx,vy,owner:p.id,kind:isBlue?'snow':'note',r:isBlue?12:13,life:1.45,damage,hit:[],crit,glow:0});
+  const spread=w.id==='scatter'?.19:.095;
+  const ang=(i-(count-1)/2)*spread;
+  const vx=(dx*Math.cos(ang)-dy*Math.sin(ang))*w.speed,vy=(dx*Math.sin(ang)+dy*Math.cos(ang))*w.speed;
+  const crit=Math.random()<Math.min(.7,.06+.12*(game.upgrades.crit||0));
+  bullets.push({x:p.x+p.facing*33,y:p.y-129,vx,vy,owner:p.id,kind:w.id,r:w.r,
+   life:w.id==='scatter'?.64:w.id==='rail'?.92:1.6,damage:dmg*(crit?2.1:1),crit,hit:[],pierce:w.id==='rail'?4:1,glow:0});
  }
- if(reducedMotion===false)spawnParticle(p.x+p.facing*35,p.y-128,isBlue?'#a2efff':'#ff84f5',6,88,8);
- if(game.time-lastShootSfx>.07){sfx(isBlue?'shoot1':'shoot2');lastShootSfx=game.time;}
+ if(!reducedMotion)spawnParticle(p.x+p.facing*35,p.y-129,w.color,w.id==='scatter'?18:9,160,w.id==='rocket'?15:8);
+ if(w.id==='rail'){ring(p.x+p.facing*37,p.y-129,'#ffec95',90);game.shake=Math.max(game.shake,7);}
+ if(w.id==='rocket'){game.shake=Math.max(game.shake,4);}
+ if(game.time-lastShootSfx>.07){sfx(w.id==='rail'?'power':isBlue?'shoot1':'shoot2');lastShootSfx=game.time;}
 }
+function weaponSplash(b,e,p){
+ if(b.kind==='rocket'){
+  ring(e.x,e.y,'#ff91c9',176);game.shake=Math.max(game.shake,11);
+  spawnParticle(e.x,e.y,'#ffa2cb',reducedMotion?12:38,380,12);
+  for(const other of enemies)if(other!==e&&!other.dead&&hypot(other.x-e.x,other.y-e.y)<168)damageEnemy(other,b.damage*.7,p,false,true);
+ }
+ if(b.kind==='arc'){
+  let origin=e,already=new Set([e]);
+  for(let i=0;i<3;i++){
+   const next=enemies.find(other=>!other.dead&&!already.has(other)&&hypot(other.x-origin.x,other.y-origin.y)<250);
+   if(!next)break;
+   already.add(next);trails.push({x1:origin.x,y1:origin.y,x2:next.x,y2:next.y,t:.26,color:'#b2b2ff'});
+   damageEnemy(next,b.damage*(.68-i*.12),p,false,true);origin=next;
+  }
+ }
+ if(b.kind==='rail'){trails.push({x1:b.x-b.vx*.07,y1:b.y-b.vy*.07,x2:b.x,y2:b.y,t:.23,color:'#fff2ac'});}
+}
+
 function doSuper(p){
  if(!p||!p.alive||p.special<100||!game.abilities.super)return;
  p.special=0;game.shake=Math.max(game.shake,30);game.superFlash=1;sfx('power');
@@ -308,7 +351,7 @@ function damageEnemy(e,damage,p,freeze=false,secondary=false){
    const gain=(BOSS_LABELS[e.kind]?24:7)*(1+(game.upgrades.frenzy||0)*.22);
    if(game.rageTime<=0&&game.abilities.overdrive){game.rage=clamp(game.rage+gain,0,100);if(game.rage>=100)startOverdrive();}
    if(game.upgrades.vamp&&p)p.hp=clamp(p.hp+Math.min(6,2*game.upgrades.vamp),0,p.maxHp);
-   if(game.combo%5===0){floating(e.x,e.y-60,'🔥 x'+game.combo+' KOMBO!','#ffe78d',24);sfx('kill');}
+   if(game.combo%5===0){floating(e.x,e.y-60,'🔥 x'+game.combo+' KOMBO!','#ffe78d',24);sfx('kill');game.shake=Math.max(game.shake,6);if(!reducedMotion)ring(e.x,e.y,'#ffe793',110);}
    spawnParticle(e.x,e.y,BOSS_LABELS[e.kind]?(COLORS[e.kind]||'#ff78bb'):pick(['#7bffaf','#bbadff','#fff2a5']),BOSS_LABELS[e.kind]?65:19,BOSS_LABELS[e.kind]?430:250,9);
    const lootN=BOSS_LABELS[e.kind]?17:(Math.random()<.25?2:1);
    for(let i=0;i<lootN;i++)drops.push({x:e.x+random(-20,20),y:e.y,kind:'star',r:12,vx:random(-90,90),vy:random(-220,-80),age:0,ttl:20});
@@ -431,7 +474,8 @@ function updateBullet(b,dt){
     if((game.upgrades.shock||0)>0&&Math.random()<Math.min(.65,.17*game.upgrades.shock)){
       ring(e.x,e.y,'#ffe282',120);for(const other of enemies)if(!other.dead&&other!==e&&hypot(other.x-e.x,other.y-e.y)<130)damageEnemy(other,b.damage*.35,p,false,true);
     }
-    b.life=-1;break;
+    weaponSplash(b,e,p);
+    if(b.pierce>1){b.pierce--;b.damage*=.68;}else{b.life=-1;break;}
    }
   }
  }
@@ -639,7 +683,7 @@ function drawEnemy(e,t){
  ctx.restore();ctx.shadowBlur=0;
  if(BOSS_LABELS[e.kind]&&e.hp>0){const ww=210;fillRect(e.x-ww/2,e.y-e.r-49,ww,11,'#1c132b');fillRect(e.x-ww/2,e.y-e.r-49,ww*clamp(e.hp/e.maxHp,0,1),11,COLORS[e.kind]);}
 }
-function drawBullets(t){for(const b of bullets){ctx.save();ctx.translate(b.x,b.y);ctx.shadowBlur=18;ctx.shadowColor=b.kind==='enemy'?'#ff8765':b.kind==='snow'?'#7ceaff':b.kind==='drone'?'#ffe082':'#ff72e9';if(b.kind==='snow'){ctx.fillStyle='#defaff';ctx.beginPath();ctx.arc(0,0,b.r,0,Math.PI*2);ctx.fill();fillRect(-4,-5,9,6,'#74c8f5');fillRect(1,3,5,4,'#86bcf8');}else if(b.kind==='drone'){ctx.fillStyle='#ffe787';ctx.beginPath();ctx.arc(0,0,b.r,0,Math.PI*2);ctx.fill();}else if(b.kind==='note'){ctx.fillStyle='#ff90ee';ctx.font='bold 29px system-ui';ctx.fillText('♫',-13,9);}else{ctx.fillStyle='#ff8b60';ctx.beginPath();ctx.arc(0,0,b.r,0,Math.PI*2);ctx.fill();fillRect(-4,-5,8,8,'#fff0ab');}ctx.restore();}}
+function drawBullets(t){for(const b of bullets){ctx.save();ctx.translate(b.x,b.y);ctx.shadowBlur=18;ctx.shadowColor=b.kind==='enemy'?'#ff8765':b.kind==='pulse'?'#7ceaff':b.kind==='rail'?'#fff5a2':b.kind==='rocket'?'#ff7cb8':b.kind==='arc'?'#aba0ff':b.kind==='drone'?'#ffe082':'#ffa267';if(b.kind==='pulse'){ctx.fillStyle='#defaff';ctx.beginPath();ctx.arc(0,0,b.r,0,Math.PI*2);ctx.fill();fillRect(-4,-5,9,6,'#74c8f5');fillRect(1,3,5,4,'#86bcf8');}else if(['rail','rocket','arc','scatter'].includes(b.kind)){ctx.fillStyle=b.kind==='rail'?'#fff4ab':b.kind==='rocket'?'#ff82cb':b.kind==='arc'?'#b5a1ff':'#ffbf81';ctx.beginPath();ctx.arc(0,0,b.r,0,Math.PI*2);ctx.fill();ctx.fillStyle='#fff';ctx.fillRect(-3,-3,6,6);}else if(b.kind==='drone'){ctx.fillStyle='#ffe787';ctx.beginPath();ctx.arc(0,0,b.r,0,Math.PI*2);ctx.fill();}else if(b.kind==='note'){ctx.fillStyle='#ff90ee';ctx.font='bold 29px system-ui';ctx.fillText('♫',-13,9);}else{ctx.fillStyle='#ff8b60';ctx.beginPath();ctx.arc(0,0,b.r,0,Math.PI*2);ctx.fill();fillRect(-4,-5,8,8,'#fff0ab');}ctx.restore();}}
 function drawDrops(t){for(const d of drops){const bob=Math.sin(t*6+d.x)*5;ctx.save();ctx.shadowBlur=14;ctx.shadowColor=d.kind==='star'?'#ffe67a':d.kind==='heart'?'#ff6b9e':d.kind==='rage'?'#ffad64':'#65e9ff';ctx.font='bold 22px system-ui';ctx.textAlign='center';ctx.fillStyle='#fff';ctx.fillText(d.kind==='star'?'⭐':d.kind==='heart'?'❤️':d.kind==='rage'?'🔥':'⚡',d.x,d.y+bob);ctx.textAlign='left';ctx.restore();}}
 function drawVfx(){for(const p of particles){ctx.globalAlpha=clamp(p.ttl/.45,0,1);fillRect(p.x,p.y,p.size,p.size,p.color);}ctx.globalAlpha=1;for(const r of rings){ctx.save();ctx.globalAlpha=clamp(r.t/.55,0,1);ctx.strokeStyle=r.color;ctx.lineWidth=6;ctx.shadowBlur=20;ctx.shadowColor=r.color;ctx.beginPath();ctx.arc(r.x,r.y,r.r,0,Math.PI*2);ctx.stroke();ctx.restore();}
  for(const tr of trails){ctx.save();ctx.globalAlpha=clamp(tr.t/.22,0,1);ctx.strokeStyle=tr.color;ctx.lineWidth=4;ctx.shadowColor=tr.color;ctx.shadowBlur=12;ctx.beginPath();ctx.moveTo(tr.x1,tr.y1);ctx.lineTo(tr.x2,tr.y2);ctx.stroke();ctx.restore();}
@@ -666,6 +710,11 @@ function drawHUD(){
  ctx.fillStyle=game.difficulty==='insane'?'#ff8a9f':'#ffe09a';ctx.font='900 20px system-ui';ctx.fillText('⚔ '+diff.label,961,50);
  ctx.fillStyle='#dad5ee';ctx.font='13px system-ui';ctx.fillText('SOLO · DASH SHIFT / Q · DOBBELTHOPP',961,78);
  fillRect(385,680,510,16,'#111126ce');bar(405,682,470,10,game.xp,game.required,'#fff074');ctx.font='800 11px system-ui';ctx.textAlign='center';ctx.fillStyle='#e8deff';ctx.fillText('NIVÅ '+game.level+' — NY OPPGRADERING',640,673);ctx.textAlign='left';
+ const chosen=activeWeapon();
+ fillRect(365,114,566,45,'#090c25e9');ctx.strokeStyle=chosen.color;ctx.lineWidth=2;ctx.strokeRect(365,114,566,45);
+ ctx.font='900 17px system-ui';ctx.fillStyle=chosen.color;
+ ctx.fillText('VÅPEN '+(WEAPONS.findIndex(w=>w.id===chosen.id)+1)+'/5  '+chosen.icon+' '+chosen.name,381,140);
+ ctx.fillStyle='#e2d4fa';ctx.font='12px system-ui';ctx.fillText('TRYKK 1–5 FOR Å BYTTE',706,141);
  const dashLeft=Math.ceil(p.dashCd*10)/10;
  ctx.fillStyle='#fff2a3';ctx.font='900 15px system-ui';ctx.fillText('⚡ DASH '+(!game.abilities.dash?'TAPT':p.dashCd>0?dashLeft.toFixed(1)+'s':'KLAR'),24,183);
  drawCombatAbilities();
@@ -674,7 +723,7 @@ function drawHUD(){
  if(game.combo>=3&&game.comboTime>0&&game.rageTime<=0){ctx.textAlign='center';ctx.fillStyle='#fff2a0';ctx.font='1000 31px system-ui';ctx.strokeStyle='#111028';ctx.lineWidth=5;ctx.strokeText(game.combo+'x KOMBO!',640,146);ctx.fillText(game.combo+'x KOMBO!',640,146);ctx.textAlign='left';}
  if(game.waveDelay>0){ctx.textAlign='center';ctx.fillStyle='#fff';ctx.font='1000 30px system-ui';ctx.fillText('NESTE BØLGE OM '+Math.ceil(game.waveDelay)+'...',640,240);ctx.textAlign='left';}
  const boss=enemies.find(e=>BOSS_LABELS[e.kind]);if(boss){fillRect(388,160,505,46,'#160b2ae5');ctx.strokeStyle='#f977b7';ctx.strokeRect(388,160,505,46);ctx.font='1000 18px system-ui';ctx.fillStyle='#ffc1df';ctx.textAlign='center';ctx.fillText('👑 '+BOSS_LABELS[boss.kind]+(boss.phase===2?' — ENRAGED':''),640,180);ctx.textAlign='left';bar(404,190,473,10,boss.hp,boss.maxHp,COLORS[boss.kind]);}
- ctx.fillStyle='#ffffffa8';ctx.font='12px system-ui';ctx.fillText('A/D eller ←/→: GÅ    W/↑: DOBBELTHOPP    SHIFT / Q: DASH    F/K: SKYT    G/L: SUPER    P: PAUSE',15,703);
+ ctx.fillStyle='#ffffffa8';ctx.font='12px system-ui';ctx.fillText('A/D eller ←/→: GÅ    W/↑: DOBBELTHOPP    SHIFT / Q: DASH    F/K: SKYT    1–5: VÅPEN    G/L: SUPER    P: PAUSE',15,703);
  ctx.restore();}
 
 /* PORTAL RUN: nine authored-by-seed one-button cube courses, no health damage. */
@@ -699,48 +748,98 @@ const PORTAL_PALETTES=[
 function seededPortal(seed){let x=seed>>>0;return()=>{x=(Math.imul(x,1664525)+1013904223)>>>0;return x/4294967296;};}
 function makePortalCourse(wave,difficulty){
  const rand=seededPortal((wave*20261029+49)>>>0);
- const scalar={easy:.85,medium:1,hard:1.12,insane:1.23}[difficulty];
- const speed=(356+wave*10)*scalar;
- const count=5+Math.floor((wave+1)/2)+(difficulty==='insane'?2:0);
- const spacing=clamp(570-wave*8-(difficulty==='insane'?34:0),465,600);
- const obstacles=[];let x=790;
- for(let i=0;i<count;i++){
-  const kind=i===0?'spike':pickPortalType(rand(),i,wave);
-  const w=kind==='double'?76:kind==='block'?54:kind==='saw'?64:45;
-  const h=kind==='block'?64:kind==='saw'?64:kind==='double'?48:50;
-  obstacles.push({x:Math.round(x),w,h,y:PORTAL_FLOOR-h,kind,spin:rand()*6.283});
-  x+=spacing+Math.round((rand()-.5)*65);
+ const scalar={easy:.86,medium:1,hard:1.10,insane:1.19}[difficulty];
+ const speed=(360+wave*9)*scalar;
+ const obstacles=[];
+ let x=770;
+ // Segment 1: classic cube jumps.
+ for(let i=0;i<3;i++){
+  const kind=i===0?'spike':(rand()<.43?'double':'spike');
+  obstacles.push({x:Math.round(x),w:kind==='double'?78:45,h:50,y:PORTAL_FLOOR-50,kind,spin:rand()*6.283});
+  x+=620;
  }
- return {obstacles,speed,length:Math.round(x+230),bpm:116+wave*4};
+ const shipStart=x+30;
+ // Segment 2: active hold-to-fly through gaps.
+ x=shipStart+720;
+ const gapCenters=[327,389,288];
+ for(let i=0;i<3;i++){
+  const gapY=gapCenters[(i+wave)%3];
+  obstacles.push({x:Math.round(x),w:88,h:0,y:0,kind:'gate',gapY,gapH:228-(difficulty==='insane'?20:0),spin:rand()*6.283});
+  x+=625;
+ }
+ const gravityStart=x+150;
+ // Segment 3: tap to reverse gravity, between floor and ceiling beams.
+ x=gravityStart+810;
+ for(let i=0;i<3;i++){
+  const kind=i%2===0?'floorBeam':'ceilingBeam';
+  obstacles.push({x:Math.round(x),w:74,h:kind==='floorBeam'?147:294,y:kind==='floorBeam'?PORTAL_FLOOR-147:0,kind,spin:rand()*6.283});
+  x+=670;
+ }
+ const bossStart=x+380;
+ return {obstacles,speed,shipStart,gravityStart,bossStart,length:Math.round(bossStart+740),bpm:124+wave*5};
 }
-function pickPortalType(rand,i,wave){
- if(rand<.28)return 'spike';
- if(rand<.53)return 'double';
- if(rand<.78&&wave>=2)return 'block';
- return wave>=3?'saw':'spike';
-}
+function pickPortalType(rand,i,wave){return rand<.5?'spike':'double';}
+
 function beginPortalRun(){
  if(game.state!=='playing'||game.wave>=MAX_WAVES)return;
  // Projectiles and enemies must not continue updating during the intermission.
  bullets=[];enemies=[];hazards=[];drops=[];particles=[];rings=[];floaters=[];trails=[];
  const course=makePortalCourse(game.wave,game.difficulty);
- game.runner={fromWave:game.wave,attempts:0,losses:[],...course,phase:0,beat:-1,
-  distance:0,y:PORTAL_FLOOR-PORTAL_CUBE,vy:0,rotation:0,onGround:true,jumpBuffer:0,countdown:2.65,
-  time:0,trails:[],lastImpact:0};
+ // Each portal rolls independently: exactly 25% miniboss encounter probability.
+ const hasMiniBoss=Math.random()<0.25;
+ const bossHp=Math.round((105+game.wave*19)*DIFFICULTIES[game.difficulty].enemyHp);
+ game.runner={fromWave:game.wave,attempts:0,losses:[],...course,phase:'course',mode:'cube',beat:-1,
+  distance:0,y:PORTAL_FLOOR-PORTAL_CUBE,vy:0,rotation:0,gravity:1,flipLock:0,
+  onGround:true,jumpBuffer:0,countdown:2.3,time:0,trails:[],lastImpact:0,
+  hasMiniBoss,miniBoss:{hp:bossHp,maxHp:bossHp,defeated:false,fireCd:1.1,bullets:[],sparks:[],time:0},
+  portalShots:[],portalFireCd:0,modeFlash:0,modeBanner:'KUBE-MODUS'};
  game.state='runner';game.rageTime=0;game.rage=game.abilities.overdrive?game.rage:0;
- showOverlay(null);sfx('wave');toast('💠 PORTAL RUN '+game.wave+' / 9 — DU ER EN KUBE!',2.5);
+ showOverlay(null);sfx('wave');toast('🚀 PORTAL '+game.wave+'/9 · KUBE → FLY → GRAVITASJON'+(hasMiniBoss?' · ⚠ MINI-BOSS!':''),2.5);
 }
 function portalJump(){
  if(game.state!=='runner'||!game.runner)return;
  const r=game.runner;
- r.jumpBuffer=.16;
+ if(r.countdown>0)return;
+ if(r.mode==='cube')r.jumpBuffer=.18;
+ else if(r.mode==='ship')KEYS.portalThrust=true;
+ else if(r.mode==='gravity'&&r.flipLock<=0){r.gravity*=-1;r.vy=r.gravity*260;r.flipLock=.23;beep(680,.08,'sawtooth',.04,-440);}
+}
+function portalFire(){if(game.state==='runner')KEYS.portalFire=true;}
+function resetPortalAttempt(r){
+ r.distance=0;r.y=PORTAL_FLOOR-PORTAL_CUBE;r.vy=0;r.rotation=0;r.onGround=true;
+ r.mode='cube';r.phase='course';r.gravity=1;r.flipLock=0;
+ r.jumpBuffer=0;r.countdown=1.65;r.time=0;r.trails=[];r.beat=-1;r.lastImpact=0;
+ r.portalShots=[];r.portalFireCd=0;r.modeFlash=0;r.modeBanner='KUBE-MODUS';
+ r.miniBoss.hp=r.miniBoss.maxHp;r.miniBoss.defeated=false;r.miniBoss.fireCd=1.1;
+ r.miniBoss.bullets=[];r.miniBoss.sparks=[];r.miniBoss.time=0;
+ KEYS.portalThrust=false;KEYS.portalFire=false;
 }
 function retryPortalRun(){
  if(game.state!=='runnerFail'||!game.runner)return;
- const r=game.runner;
- Object.assign(r,{distance:0,y:PORTAL_FLOOR-PORTAL_CUBE,vy:0,rotation:0,onGround:true,jumpBuffer:0,countdown:1.65,time:0,trails:[],beat:-1,lastImpact:0});
+ resetPortalAttempt(game.runner);
  game.state='runner';showOverlay(null);sfx('wave');
 }
+function portalModeSwitch(r,mode){
+ if(r.mode===mode)return;
+ r.mode=mode;r.modeFlash=1.4;r.rotation=0;
+ if(mode==='ship'){
+  r.y=315;r.vy=0;r.onGround=false;
+  r.modeBanner='🚀 FLY MODUS · HOLD FOR Å STIGE';
+ }else if(mode==='gravity'){
+  r.y=PORTAL_FLOOR-PORTAL_CUBE;r.vy=0;r.gravity=1;r.flipLock=0;
+  r.modeBanner='🌀 GRAVITASJON · TRYKK FOR Å SNU';
+ }else{r.modeBanner='▣ KUBE · HOPP';}
+ beep(850,.17,'sawtooth',.055,-520);
+ toast(r.modeBanner,1.8);
+}
+function startPortalMiniBoss(r){
+ r.phase='miniboss';r.distance=r.bossStart;
+ portalModeSwitch(r,'ship');r.y=320;r.vy=0;
+ r.miniBoss.time=0;r.miniBoss.fireCd=1.15;
+ r.miniBoss.bullets=[];r.portalShots=[];r.portalFireCd=0;
+ sfx('boss');toast('⚠  PORTAL SENTINEL! 25% SJANSE · HOLD F / X FOR Å SKYTE!',3);
+}
+
 function failPortalRun(){
  if(game.state!=='runner')return;
  const r=game.runner;
@@ -772,37 +871,108 @@ function completePortalRun(){
 }
 function updatePortalRun(dt){
  const r=game.runner;if(!r)return;
- r.time+=dt;
+ r.time+=dt;r.modeFlash=Math.max(0,r.modeFlash-dt);
+ r.flipLock=Math.max(0,r.flipLock-dt);
  if(r.countdown>0){r.countdown=Math.max(0,r.countdown-dt);return;}
- r.distance+=r.speed*dt;
- r.jumpBuffer=Math.max(0,r.jumpBuffer-dt);
- if(r.jumpBuffer>0&&r.onGround){
-  r.vy=-840;r.onGround=false;r.jumpBuffer=0;
-  beep(370,.09,'triangle',.048,270);
+ // Flight, jump, or reverse gravity, depending on the current section.
+ if(r.phase==='course'){
+  const requested=r.distance>=r.gravityStart?'gravity':r.distance>=r.shipStart?'ship':'cube';
+  portalModeSwitch(r,requested);
+  r.distance+=r.speed*dt;
+ }else if(r.phase==='miniboss'){
+  portalModeSwitch(r,'ship');
  }
- r.vy+=2200*dt;r.y+=r.vy*dt;
- if(r.y>=PORTAL_FLOOR-PORTAL_CUBE){r.y=PORTAL_FLOOR-PORTAL_CUBE;r.vy=0;r.onGround=true;}
- if(!r.onGround)r.rotation+=dt*6.2;
- else r.rotation=Math.round(r.rotation/(Math.PI/2))*(Math.PI/2);
- r.trails.push({x:r.distance,y:r.y+PORTAL_CUBE/2,life:.36});
- for(const tr of r.trails)tr.life-=dt;r.trails=r.trails.filter(tr=>tr.life>0).slice(-30);
+ const thrust=KEYS.portalThrust||KEYS.w||KEYS.W||KEYS.ArrowUp||KEYS[' '];
+ if(r.mode==='cube'){
+  r.jumpBuffer=Math.max(0,r.jumpBuffer-dt);
+  if(r.jumpBuffer>0&&r.onGround){r.vy=-835;r.onGround=false;r.jumpBuffer=0;beep(370,.09,'triangle',.044,270);}
+  r.vy+=2250*dt;r.y+=r.vy*dt;
+  if(r.y>=PORTAL_FLOOR-PORTAL_CUBE){r.y=PORTAL_FLOOR-PORTAL_CUBE;r.vy=0;r.onGround=true;}
+  if(!r.onGround)r.rotation+=dt*6.2;else r.rotation=Math.round(r.rotation/(Math.PI/2))*(Math.PI/2);
+ }else if(r.mode==='ship'){
+  r.vy=clamp(r.vy+(thrust?-2200:1720)*dt,-550,570);
+  r.y=clamp(r.y+r.vy*dt,165,PORTAL_FLOOR-PORTAL_CUBE);
+  if(r.y===165||r.y===PORTAL_FLOOR-PORTAL_CUBE)r.vy=0;
+  r.rotation=clamp(r.vy/900,-.6,.6);
+ }else{
+  r.vy=clamp(r.vy+2700*r.gravity*dt,-920,920);
+  r.y=clamp(r.y+r.vy*dt,168,PORTAL_FLOOR-PORTAL_CUBE);
+  if(r.y===168||r.y===PORTAL_FLOOR-PORTAL_CUBE)r.vy=0;
+  r.rotation+=r.gravity*dt*3.9;
+ }
+ r.trails.push({x:r.distance,y:r.y+PORTAL_CUBE/2,life:.38});
+ for(const tr of r.trails)tr.life-=dt;r.trails=r.trails.filter(tr=>tr.life>0).slice(-42);
  const beat=Math.floor(r.time*r.bpm/60);
- if(beat!==r.beat){r.beat=beat;if(beat%2===0)beep(92,.095,'sine',.032,-36);else beep(680,.035,'triangle',.014,-300);}
- // AABB collision with small margins for fair, forgiving precision.
- for(const obstacle of r.obstacles){
-  if(obstacle.x>r.distance+PORTAL_CUBE+20)break;
-  if(obstacle.x+obstacle.w<r.distance-20)continue;
-  if(obstacle.kind==='saw'){
-   const cx=obstacle.x+32,cy=obstacle.y+32;
-   const dx=clamp(cx,r.distance+8,r.distance+PORTAL_CUBE-8)-cx;
-   const dy=clamp(cy,r.y+7,r.y+PORTAL_CUBE-6)-cy;
-   if(dx*dx+dy*dy<25*25){failPortalRun();return;}
-  }else if(r.distance+PORTAL_CUBE-9>obstacle.x+7&&r.distance+9<obstacle.x+obstacle.w-6 && r.y+PORTAL_CUBE-8>obstacle.y+10 && r.y+9<obstacle.y+obstacle.h-5){
-   failPortalRun();return;
+ if(beat!==r.beat){r.beat=beat;if(beat%2===0)beep(92,.095,'sine',.028,-36);else beep(680,.035,'triangle',.012,-300);}
+ if(r.phase==='miniboss'){
+  const boss=r.miniBoss;boss.time+=dt;
+  const bossY=325+Math.sin(boss.time*2.2)*74;
+  boss.fireCd-=dt;
+  if(boss.fireCd<=0){
+   boss.fireCd=Math.max(.72,1.33-r.fromWave*.035)*DIFFICULTIES[game.difficulty].attackRate;
+   const originX=1020;
+   const ang=Math.atan2(r.y+PORTAL_CUBE/2-bossY,PORTAL_SCREEN_X+PORTAL_CUBE/2-originX);
+   for(let i=-1;i<=1;i++){
+    const a=ang+i*.15;
+    boss.bullets.push({x:originX-30,y:bossY,vx:Math.cos(a)*(355+r.fromWave*11),vy:Math.sin(a)*(355+r.fromWave*11),r:13});
+   }
+   beep(210,.13,'sawtooth',.033,-120);
   }
+  for(const b of boss.bullets){
+   b.x+=b.vx*dt;b.y+=b.vy*dt;
+   if(hypot(b.x-(PORTAL_SCREEN_X+PORTAL_CUBE/2),b.y-(r.y+PORTAL_CUBE/2))<b.r+PORTAL_CUBE*.32){failPortalRun();return;}
+  }
+  boss.bullets=boss.bullets.filter(b=>b.x>-60&&b.y>-100&&b.y<PORTAL_FLOOR+60);
+  r.portalFireCd=Math.max(0,r.portalFireCd-dt);
+  const shooting=KEYS.portalFire||KEYS.x||KEYS.X||KEYS.f||KEYS.F||KEYS.k||KEYS.K;
+  if(shooting&&r.portalFireCd<=0){
+   r.portalFireCd=.16;
+   const startX=PORTAL_SCREEN_X+42,startY=r.y+PORTAL_CUBE/2;
+   const a=Math.atan2(bossY-startY,1020-startX);
+   r.portalShots.push({x:startX,y:startY,vx:Math.cos(a)*1550,vy:Math.sin(a)*1550});
+   beep(700,.045,'triangle',.014,-120);
+  }
+  for(const b of r.portalShots){
+   b.x+=b.vx*dt;b.y+=b.vy*dt;
+   if(hypot(b.x-1020,b.y-bossY)<66){
+    b.dead=true;boss.hp-=14+Math.floor(r.fromWave/3)*2;
+    game.shake=Math.max(game.shake,5);
+    if(boss.hp<=0){
+     boss.hp=0;boss.defeated=true;r.phase='course';game.score+=600+r.fromWave*100;
+     r.portalShots=[];boss.bullets=[];
+     toast('💥 PORTAL SENTINEL KNUST! +BONUS!',2.2);sfx('power');
+     break;
+    }
+   }
+  }
+  r.portalShots=r.portalShots.filter(b=>!b.dead&&b.x<W+90);
+  return;
  }
+ // Collision in each form. One collision = one ability lost; never HP.
+ for(const o of r.obstacles){
+  if(o.x>r.distance+PORTAL_CUBE+22)break;
+  if(o.x+o.w<r.distance-20)continue;
+  const left=r.distance+9,right=r.distance+PORTAL_CUBE-8;
+  const top=r.y+7,bottom=r.y+PORTAL_CUBE-7;
+  if(right<=o.x+6||left>=o.x+o.w-6)continue;
+  let collision=false;
+  if(o.kind==='gate'){
+    const low=o.gapY-o.gapH/2,high=o.gapY+o.gapH/2;
+    collision=(top<low-5||bottom>high+5);
+  }else if(o.kind==='floorBeam'||o.kind==='ceilingBeam'){
+    collision=bottom>o.y+9&&top<o.y+o.h-9;
+  }else if(o.kind==='saw'){
+    const cy=o.y+32;
+    collision=hypot(o.x+32-(left+right)/2,cy-(top+bottom)/2)<35;
+  }else{
+    collision=bottom>o.y+10&&top<o.y+o.h-5;
+  }
+  if(collision){failPortalRun();return;}
+ }
+ if(r.hasMiniBoss&&!r.miniBoss.defeated&&r.distance>=r.bossStart){startPortalMiniBoss(r);return;}
  if(r.distance>r.length)completePortalRun();
 }
+
 function drawPortalObstacle(o,x,t,palette){
  const color=palette[2],other=palette[3];
  ctx.save();ctx.shadowColor=o.kind==='saw'?other:color;ctx.shadowBlur=18;
@@ -813,6 +983,23 @@ function drawPortalObstacle(o,x,t,palette){
    ctx.beginPath();ctx.moveTo(sx,PORTAL_FLOOR);ctx.lineTo(sx+20,PORTAL_FLOOR-49);ctx.lineTo(sx+40,PORTAL_FLOOR);ctx.closePath();ctx.fill();ctx.stroke();
    ctx.strokeStyle=other;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(sx+20,PORTAL_FLOOR-39);ctx.lineTo(sx+20,PORTAL_FLOOR-11);ctx.stroke();ctx.strokeStyle=color;ctx.lineWidth=4;
   }
+ }else if(o.kind==='gate'){
+  const lo=o.gapY-o.gapH/2,hi=o.gapY+o.gapH/2;
+  ctx.fillStyle='#23224fff';ctx.strokeStyle=other;
+  ctx.fillRect(x,158,o.w,Math.max(1,lo-158));ctx.strokeRect(x,158,o.w,Math.max(1,lo-158));
+  ctx.fillRect(x,hi,o.w,PORTAL_FLOOR-hi);ctx.strokeRect(x,hi,o.w,PORTAL_FLOOR-hi);
+  ctx.shadowColor=color;ctx.shadowBlur=23;ctx.strokeStyle=color;ctx.lineWidth=5;
+  ctx.beginPath();ctx.moveTo(x,lo);ctx.lineTo(x+o.w,lo);ctx.moveTo(x,hi);ctx.lineTo(x+o.w,hi);ctx.stroke();
+  ctx.fillStyle=other;ctx.fillRect(x+8,lo-18,o.w-16,8);ctx.fillRect(x+8,hi+11,o.w-16,8);
+ }else if(o.kind==='floorBeam'||o.kind==='ceilingBeam'){
+  ctx.fillStyle='#1c2149';ctx.strokeStyle=other;ctx.lineWidth=5;
+  ctx.fillRect(x,o.y,o.w,o.h);ctx.strokeRect(x,o.y,o.w,o.h);
+  for(let i=0;i<4;i++){
+   const yy=o.y+12+i*(o.h-24)/3;
+   ctx.fillStyle=i%2?color:other;ctx.fillRect(x+12,yy,o.w-24,6);
+  }
+  ctx.font='900 26px system-ui';ctx.fillStyle=color;
+  ctx.fillText(o.kind==='ceilingBeam'?'↓':'↑',x+22,o.kind==='ceilingBeam'?o.y+o.h-24:o.y+40);
  }else if(o.kind==='block'){
   ctx.fillRect(x,o.y,o.w,o.h);ctx.strokeRect(x,o.y,o.w,o.h);
   ctx.strokeStyle=other;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(x+10,o.y+12);ctx.lineTo(x+o.w-10,o.y+o.h-12);ctx.moveTo(x+o.w-10,o.y+12);ctx.lineTo(x+10,o.y+o.h-12);ctx.stroke();
@@ -952,6 +1139,34 @@ function drawPortalRun(t){
   drawPortalObstacle(obstacle,x,t,pal);
  }
 
+ // Portal mode gates and miniboss.
+ const sections=[{x:r.shipStart,label:'🚀 FLY',color:'#8dffff'},{x:r.gravityStart,label:'🌀 GRAVITY',color:'#ffa7f0'}];
+ for(const sect of sections){
+  const sx=sect.x-r.distance+PORTAL_SCREEN_X;
+  if(sx>-70&&sx<W+80){
+   ctx.save();ctx.globalAlpha=.30+.2*pulse;ctx.fillStyle=sect.color;ctx.fillRect(sx-13,160,26,PORTAL_FLOOR-160);
+   ctx.globalAlpha=1;ctx.shadowBlur=25;ctx.shadowColor=sect.color;ctx.strokeStyle=sect.color;
+   ctx.lineWidth=4;ctx.strokeRect(sx-13,160,26,PORTAL_FLOOR-160);
+   ctx.font='900 20px system-ui';ctx.fillStyle=sect.color;ctx.fillText(sect.label,sx-42,195);ctx.restore();
+  }
+ }
+ if(r.phase==='miniboss'){
+  const boss=r.miniBoss,bx=1020,by=325+Math.sin(boss.time*2.2)*74;
+  ctx.save();ctx.translate(bx,by);ctx.rotate(Math.sin(t*2)*.16);
+  ctx.shadowColor='#ff68c9';ctx.shadowBlur=38;ctx.fillStyle='#28153f';ctx.strokeStyle='#ff77d4';ctx.lineWidth=8;
+  ctx.beginPath();for(let i=0;i<16;i++){const a=i*Math.PI/8,rad=i%2?49:76;
+   const x=Math.cos(a)*rad,y=Math.sin(a)*rad;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}
+  ctx.closePath();ctx.fill();ctx.stroke();ctx.shadowBlur=18;ctx.fillStyle='#ffe58c';
+  ctx.beginPath();ctx.arc(0,0,26+5*pulse,0,Math.PI*2);ctx.fill();ctx.fillStyle='#291a39';
+  ctx.beginPath();ctx.arc(0,0,10,0,Math.PI*2);ctx.fill();ctx.restore();
+  ctx.fillStyle='#0b0c27';ctx.fillRect(777,140,466,46);ctx.strokeStyle='#ffa5dc';ctx.lineWidth=2;ctx.strokeRect(777,140,466,46);
+  ctx.font='900 18px system-ui';ctx.fillStyle='#ffbae8';ctx.fillText('⚠ PORTAL SENTINEL — MINI BOSS',797,134);
+  ctx.fillStyle='#2c173c';ctx.fillRect(791,154,438,17);ctx.fillStyle='#ff6bb6';ctx.fillRect(791,154,438*clamp(boss.hp/boss.maxHp,0,1),17);
+  for(const b of boss.bullets){ctx.save();ctx.fillStyle='#ff7da5';ctx.shadowColor='#ff68a9';ctx.shadowBlur=23;
+   ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);ctx.fill();ctx.restore();}
+  for(const b of r.portalShots){ctx.save();ctx.strokeStyle='#9bfbff';ctx.shadowColor='#9bfbff';ctx.lineWidth=6;ctx.shadowBlur=25;
+   ctx.beginPath();ctx.moveTo(b.x-23,b.y);ctx.lineTo(b.x+8,b.y);ctx.stroke();ctx.restore();}
+ }
  // Trail and single rotating cube protagonist.
  for(const tr of r.trails){
   const x=tr.x-r.distance+PORTAL_SCREEN_X;if(x<0)continue;
@@ -963,10 +1178,18 @@ function drawPortalRun(t){
  ctx.save();
  ctx.translate(PORTAL_SCREEN_X+PORTAL_CUBE/2,r.y+PORTAL_CUBE/2);ctx.rotate(r.rotation);
  ctx.shadowBlur=34+flash*10;ctx.shadowColor=game.character==='blue'?'#8ee8ff':'#f998f2';
- ctx.fillStyle=game.character==='blue'?'#84deff':'#ff9edb';ctx.fillRect(-PORTAL_CUBE/2,-PORTAL_CUBE/2,PORTAL_CUBE,PORTAL_CUBE);
- ctx.fillStyle=pal[3];ctx.globalAlpha=.25+.18*pulseFast;ctx.fillRect(-PORTAL_CUBE/2-8,-PORTAL_CUBE/2-8,PORTAL_CUBE+16,PORTAL_CUBE+16);
- ctx.globalAlpha=1;ctx.fillStyle='#1b2146';ctx.fillRect(-PORTAL_CUBE/2+7,-PORTAL_CUBE/2+7,PORTAL_CUBE-14,PORTAL_CUBE-14);
- ctx.fillStyle='#f9f5ff';ctx.fillRect(-10,-9,7,8);ctx.fillRect(6,-9,7,8);ctx.fillStyle=pal[3];ctx.fillRect(-7,8,17,5);
+ ctx.fillStyle=game.character==='blue'?'#84deff':'#ff9edb';
+ if(r.mode==='ship'){
+  ctx.beginPath();ctx.moveTo(27,0);ctx.lineTo(-22,-20);ctx.lineTo(-13,0);ctx.lineTo(-22,20);ctx.closePath();ctx.fill();
+  ctx.shadowColor='#ffb66c';ctx.fillStyle='#ffe98b';ctx.fillRect(-38,-6,16+Math.sin(t*20)*7,12);
+ }else ctx.fillRect(-PORTAL_CUBE/2,-PORTAL_CUBE/2,PORTAL_CUBE,PORTAL_CUBE);
+ if(r.mode!=='ship'){
+  ctx.fillStyle=pal[3];ctx.globalAlpha=.25+.18*pulseFast;ctx.fillRect(-PORTAL_CUBE/2-8,-PORTAL_CUBE/2-8,PORTAL_CUBE+16,PORTAL_CUBE+16);
+  ctx.globalAlpha=1;ctx.fillStyle='#1b2146';ctx.fillRect(-PORTAL_CUBE/2+7,-PORTAL_CUBE/2+7,PORTAL_CUBE-14,PORTAL_CUBE-14);
+  ctx.fillStyle='#f9f5ff';ctx.fillRect(-10,-9,7,8);ctx.fillRect(6,-9,7,8);ctx.fillStyle=pal[3];ctx.fillRect(-7,8,17,5);
+ }else{
+  ctx.fillStyle='#1a1640';ctx.beginPath();ctx.arc(3,0,8,0,Math.PI*2);ctx.fill();
+ }
  for(let i=0;i<4;i++){
   ctx.rotate(Math.PI/2);
   ctx.globalAlpha=.17+.08*pulse;
@@ -986,8 +1209,11 @@ function drawPortalRun(t){
  // HUD
  ctx.fillStyle='#080d27d9';ctx.fillRect(23,18,540,138);ctx.strokeStyle=pal[2]+'aa';ctx.lineWidth=2;ctx.strokeRect(23,18,540,138);
  ctx.textAlign='left';ctx.fillStyle='#fff';ctx.font='1000 32px system-ui';ctx.fillText('◆ PORTAL RUN  '+r.fromWave+' / 9',42,59);
- ctx.font='bold 17px system-ui';ctx.fillStyle=pal[2];ctx.fillText('BØLGE '+r.fromWave+' → '+(r.fromWave+1)+'  ·  HOPP OVER HINDRINGENE',42,91);
- ctx.fillStyle='#e3d9ff';ctx.font='bold 14px system-ui';ctx.fillText('SPACE / W / ↑ / TRYKK PÅ SKJERMEN = HOPP',42,121);
+ ctx.font='bold 17px system-ui';ctx.fillStyle=pal[2];ctx.fillText('BØLGE '+r.fromWave+' → '+(r.fromWave+1)+' · '+(r.phase==='miniboss'?'⚠ BOSS KAMP':r.mode==='cube'?'▣ KUBE':r.mode==='ship'?'🚀 FLYSKIP':'🌀 GRAVITASJON'),42,91);
+ ctx.fillStyle='#e3d9ff';ctx.font='bold 14px system-ui';
+ ctx.fillText(r.phase==='miniboss'?'HOLD F / X / SKYT · FLY FOR Å UNNGÅ SKUDD!':r.mode==='cube'?'SPACE / W / TRYKK = HOPP':r.mode==='ship'?'HOLD SPACE / W / ACTION FOR Å FLY OPP':'TRYKK SPACE / W / ACTION FOR Å SNU GRAVITASJON',42,121);
+ if(r.modeFlash>0){ctx.save();ctx.globalAlpha=clamp(r.modeFlash/1.4,0,1);ctx.textAlign='center';ctx.font='1000 44px system-ui';ctx.fillStyle='#fff2bd';ctx.shadowBlur=30;ctx.shadowColor=pal[3];ctx.fillText(r.modeBanner,650,260);ctx.restore();}
+
  ctx.fillStyle='#080d27d9';ctx.fillRect(784,17,472,93);ctx.strokeStyle=pal[3]+'aa';ctx.strokeRect(784,17,472,93);
  const progress=clamp(r.distance/r.length,0,1);const bw=428;
  ctx.fillStyle='#29294e';ctx.fillRect(807,64,bw,15);ctx.fillStyle=pal[2];ctx.fillRect(807,64,bw*progress,15);ctx.fillStyle=pal[3]+'55';ctx.fillRect(807,64,bw*progress*(.35+.65*pulseFast),15);ctx.strokeStyle='#9dfcf8';ctx.strokeRect(807,64,bw,15);
@@ -1005,7 +1231,7 @@ function drawPortalRun(t){
   ctx.fillStyle='#06051cbd';ctx.fillRect(0,168,W,405);
   ctx.save();ctx.globalAlpha=.16+.12*pulseFast;ctx.fillStyle=pal[3];ctx.fillRect(0,168,W,405);ctx.restore();
   ctx.textAlign='center';ctx.font='1000 68px system-ui';ctx.fillStyle='#fff1a3';ctx.shadowBlur=45;ctx.shadowColor=pal[3];ctx.fillText('BLI TIL EN KUBE!',640,287);ctx.shadowBlur=0;
-  ctx.font='900 29px system-ui';ctx.fillStyle=pal[2];ctx.fillText('HOPP I RYTME · UNNGÅ PIGGER · BEHOLD EVNENE!',640,367);
+  ctx.font='900 29px system-ui';ctx.fillStyle=pal[2];ctx.fillText('KUBE · FLYSKIP · GRAVITASJON · 25% MINI BOSS',640,367);
   ctx.font='1000 88px system-ui';ctx.fillStyle='#fff';ctx.fillText(Math.ceil(r.countdown),640,479);ctx.textAlign='left';
  }
 }
@@ -1056,8 +1282,14 @@ $('again').addEventListener('click',()=>reset());
 $('pauseBtn').addEventListener('click',()=>togglePause());
 $('retryRunner').addEventListener('click',retryPortalRun);
 $('runnerMenu').addEventListener('click',()=>{game.state='menu';game.runner=null;recordScore();showOverlay('menu');});
-$('runnerJumpButton').addEventListener('pointerdown',e=>{e.preventDefault();portalJump();});
+$('runnerJumpButton').addEventListener('pointerdown',e=>{e.preventDefault();portalJump();e.currentTarget.setPointerCapture(e.pointerId);});
+for(const eventType of ['pointerup','pointercancel','lostpointercapture'])$('runnerJumpButton').addEventListener(eventType,()=>{KEYS.portalThrust=false;});
+$('runnerFireButton').addEventListener('pointerdown',e=>{e.preventDefault();portalFire();e.currentTarget.setPointerCapture(e.pointerId);});
+for(const eventType of ['pointerup','pointercancel','lostpointercapture'])$('runnerFireButton').addEventListener(eventType,()=>{KEYS.portalFire=false;});
 canvas.addEventListener('pointerdown',()=>{if(game.state==='runner')portalJump();});
+canvas.addEventListener('pointerup',()=>{KEYS.portalThrust=false;});
+$('weaponCycle').addEventListener('click',()=>{if(game.state==='playing')equipWeapon(WEAPONS.findIndex(w=>w.id===game.weapon)+1);});
+
 $('mute').addEventListener('click',setAudio);
 window.addEventListener('keydown',event=>{
   const k=event.key;
@@ -1070,10 +1302,12 @@ window.addEventListener('keydown',event=>{
   if(game.state==='runnerFail'&&['Enter',' ','Spacebar'].includes(k))retryPortalRun();
   if(game.state==='upgrade'&&['1','2','3'].includes(k)){const u=game.offered[Number(k)-1];if(u)selectUpgrade(u);}
   if(game.state==='playing'&&['g','G','l','L'].includes(k))doSuper(players[0]);
+  if(game.state==='playing'&&['1','2','3','4','5'].includes(k))equipWeapon(Number(k)-1);
+  if(game.state==='runner'&&['x','X','f','F','k','K'].includes(k))portalFire();
   if(game.state==='menu'&&k==='Enter'&&event.target.tagName!=='BUTTON')reset();
   if(game.state==='end'&&(k==='Enter'||k==='r'||k==='R'))reset();
 });
-window.addEventListener('keyup',event=>{KEYS[event.key]=false;});
+window.addEventListener('keyup',event=>{KEYS[event.key]=false;if(['w','W',' ','ArrowUp'].includes(event.key))KEYS.portalThrust=false;if(['x','X','f','F','k','K'].includes(event.key))KEYS.portalFire=false;});
 window.addEventListener('blur',()=>{for(const k of Object.keys(KEYS))KEYS[k]=false;if(['playing','runner'].includes(game.state))togglePause(true);});
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&['playing','runner'].includes(game.state))togglePause(true);});
 for(const btn of document.querySelectorAll('[data-touch]')){

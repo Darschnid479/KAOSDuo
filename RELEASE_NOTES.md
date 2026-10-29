@@ -1,12 +1,27 @@
-# KAOSDUO: PORTAL FLASH v3.0.0
+# KAOSDUO: HYPERDRIVE v4.0.0
 
-Enter a much brighter, faster-feeling neon world between combat waves. This release enhances the nine Portal Run cube levels with beat-reactive flashes, animated auroras, moving particles, portal rings, high-energy glowing hazards, new trails, and a dynamic finish gate.
+The most intense KAOSDUO yet: **five combat weapons**, **three portal transformation modes**, and a **25% mini-boss encounter chance for each of the nine portals**.
 
-## Gameplay
-Fight through ten combat waves as **Blue** or **Metal**. Between each wave, your character becomes a cube in a jumping obstacle course. Crashing never costs HP but removes one remaining special ability (dash, double jump, super attack, or OVERDRIVE). Retry as often as needed.
+### Combat
+- Switch on the fly with 1–5: Pulse Blaster, Chaos Shotgun, Rail Cannon (piercing), Nova Rockets (splash), Chain Arc (chain lightning).
+- Original character select, 4 difficulties and all 10 waves remain available.
+- Enhanced impact feedback and combo effects.
 
-## Downloads
-- `KAOSDUO_PORTAL_FLASH_v3.0.0.html`: full offline game, double-click to play.
-- `KAOSDUO_PORTAL_FLASH_v3.0.0_OFFLINE.zip`: game and instructions.
+### Portals
+- **CUBE:** timed jumps over neon spikes.
+- **SHIP:** hold W/Space to fly through laser gaps.
+- **GRAVITY:** tap to reverse gravity and dodge floor/ceiling hazards.
+- **PORTAL SENTINEL:** each portal independently has 25% chance to spawn a miniboss. Hover to dodge and use F/X to fire at it. Boss HP is local to the portal; entering the encounter does not affect combat HP.
+- Crashes cost **one remaining special ability**, never HP. Unlimited retries. Bonus score for miniboss victory.
 
-**Important:** This version uses intentional flashing lights and rapid color changes. No Android APK is included.
+### Files
+- KAOSDUO_HYPERDRIVE_v4.0.0.html: standalone offline PC/browser game.
+- KAOSDUO_HYPERDRIVE_v4.0.0_OFFLINE.zip: full offline game and instructions.
+
+**Heads-up:** flashing lights and rapid color changes; this is a PC/browser release, not an updated Android APK.
+
+## Screenshots
+
+![Portal Sentinel miniboss](assets/portal_miniboss.webp)
+
+![Rocket ship flight](assets/flight.webp)
