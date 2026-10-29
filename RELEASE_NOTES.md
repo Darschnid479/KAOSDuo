@@ -1,27 +1,18 @@
-# KAOSDUO: HYPERDRIVE v4.0.0
+# 🎸❄️ KAOSDUO: HYPERDRIVE v4.1.0 — ARMORY & SOUNDTRACK
 
-The most intense KAOSDUO yet: **five combat weapons**, **three portal transformation modes**, and a **25% mini-boss encounter chance for each of the nine portals**.
+The portal universe now has an **Armory, complete Save / Load system, and character-specific music**!
 
-### Combat
-- Switch on the fly with 1–5: Pulse Blaster, Chaos Shotgun, Rail Cannon (piercing), Nova Rockets (splash), Chain Arc (chain lightning).
-- Original character select, 4 difficulties and all 10 waves remain available.
-- Enhanced impact feedback and combo effects.
+## Release highlights
+- **Eight weapons:** unlock seven guns by spending shop points earned during combat and portal journeys.
+- **Three new weapons:** Glacier Repeater, Meteor Minigun, Prism Annihilator.
+- **Save / Load:** manual and automatic slots save character, difficulty, health, points, purchases, level, upgrades, current wave, portal position and any lost abilities.
+- **Portable saves:** export and import a JSON file.
+- **Two original procedural themes:** a punchy, distorted synth-metal soundtrack for Metal and a gentle cozy soundtrack for Blue. Created with Web Audio without third-party audio assets.
+- **All v4.0 features preserved:** 10 waves, 9 portal runs, flying, gravity-flip, 25% portal miniboss chance and ability-loss penalties without HP loss.
 
-### Portals
-- **CUBE:** timed jumps over neon spikes.
-- **SHIP:** hold W/Space to fly through laser gaps.
-- **GRAVITY:** tap to reverse gravity and dodge floor/ceiling hazards.
-- **PORTAL SENTINEL:** each portal independently has 25% chance to spawn a miniboss. Hover to dodge and use F/X to fire at it. Boss HP is local to the portal; entering the encounter does not affect combat HP.
-- Crashes cost **one remaining special ability**, never HP. Unlimited retries. Bonus score for miniboss victory.
+## Download & play
+Download **KAOSDUO_HYPERDRIVE_v4.1.0.html** to play offline in a modern browser. The ZIP includes the HTML game and instructions.
 
-### Files
-- KAOSDUO_HYPERDRIVE_v4.0.0.html: standalone offline PC/browser game.
-- KAOSDUO_HYPERDRIVE_v4.0.0_OFFLINE.zip: full offline game and instructions.
+**Controls:** B = shop · L = save/load · 1–8 = equip purchased weapons · M = mute · P = pause.
 
-**Heads-up:** flashing lights and rapid color changes; this is a PC/browser release, not an updated Android APK.
-
-## Screenshots
-
-![Portal Sentinel miniboss](assets/portal_miniboss.webp)
-
-![Rocket ship flight](assets/flight.webp)
+*Notes:* The earlier Android beta has not been updated to v4.1.0. GitHub Pages activation is managed separately from GitHub Releases. Save files from v4.0 are unavailable because that version did not support saving.

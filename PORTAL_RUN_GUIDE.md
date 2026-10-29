@@ -1,22 +1,22 @@
-# KAOSDUO HYPERDRIVE — norsk guide
+# KAOSDUO v4.1 — Playing Guide
 
 ## Start
-Dobbeltklikk `KAOSDUO_HYPERDRIVE_v4.0.0.html` i Chrome eller Edge. Velg Blå eller Metal, velg én av fire vanskelighetsgrader og start. Spillet fungerer uten internett.
+Choose **Blue** (calm, cozy soundtrack) or **Metal** (fast synth-metal riff). Select a difficulty and start a solo run.
 
-## Kamp
-- A/D: Gå, W: Hopp, F/K: Skyt, G/L: Super, Shift/Q: Dash.
-- **1–5:** Bytt mellom fem våpen når som helst: Pulse Blaster, Chaos Shotgun, Rail Cannon, Nova Rockets og Chain Arc.
-- Bytt også med «BYTT VÅPEN»-knappen på mobil/berøringsskjerm.
+## Earn and spend points
+Defeated enemies, collected stars, cleared waves and completed portals award points. These add to your score *and* your spendable weapon-shop balance. Buying a weapon only deducts from the shop balance, not from your score record.
 
-## Portalreise
-Det kommer én portal mellom hver av de første ni kampbølgene. Du går gjennom tre former etter tur:
-1. **Kube:** trykk W / Space / pil opp for å hoppe.
-2. **Flyskip:** hold knappen for å stige, slipp den for å synke. Unngå laserporter.
-3. **Tyngdekraft:** trykk for å snu retning, flytt deg mellom gulv og tak.
+Press **B** (or the **BUTIKK** button) while fighting or paused to open the Armory. Buy a gun and equip it immediately; only purchased weapons are available on keys **1–8**. The shop pauses the fight.
 
-**25 % miniboss-sjanse per portal:** noen ganger møter du PORTAL SENTINEL etter hindringene. Hold F eller X for å skyte, og styr flyskipet opp/ned for å unngå boss-skudd. På mobil: ACTION + SKYT.
+## Save and load
+Press **L**, use the toolbar **LOAD** button, or open **SAVE / LOAD** from the pause menu. Choose **LAGRE** for a manual save or **LAST INN** for a previous manual/automatic save. You can also **EKSPORTER SAVE** to a `.json` file and **IMPORTER SAVE** later. Loading resumes in a paused state so you have time to prepare.
 
-**Krasj koster aldri HP**, men du mister én spesialevne hvis du fortsatt har en. Du kan prøve portalen igjen ubegrenset.
+## Portal modes
+- **Cube**: jump over spikes and obstacles.
+- **Ship**: hold action to rise, release to fall.
+- **Gravity**: tap to invert the direction of gravity.
+- **Portal Sentinel**: appears on a random 25% of portal runs; shoot with F/X while flying.
+- **Failure**: never costs health. One available special ability is lost instead. Reattempt as needed.
 
-## Tilgjengelighet
-Blinkende neonfarger kan være ubehagelige ved lysfølsomhet. Nettleserutgave, ingen ny Android-APK.
+## Audio
+Metal uses an original guitar-like synthesized riff and percussion. Blue uses soft synthesized chord progressions and gentle melodic notes. Press **M** or **LYD** to mute/unmute.

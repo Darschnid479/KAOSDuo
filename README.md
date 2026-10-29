@@ -1,40 +1,58 @@
-# 🚀 KAOSDUO: HYPERDRIVE v4.0.0
+# ⚡ KAOSDUO: HYPERDRIVE v4.1.0
 
-**One hero. Five weapons. Ten combat waves. Nine portals. Three movement modes. Surprise minibosses.**
+**A pixel-art solo action game with ten combat waves, nine Portal Runs, eight unlockable weapons and two original character themes.**
 
-[![Download v4.0.0](https://img.shields.io/badge/RELEASE-v4.0.0-ff77bb?style=for-the-badge)](https://github.com/Darschnid479/KAOSDuo/releases/tag/v4.0.0)
-[![Play](https://img.shields.io/badge/PLAY-HTML5%20OFFLINE-7fffea?style=for-the-badge)](https://github.com/Darschnid479/KAOSDuo/releases/download/v4.0.0/KAOSDUO_HYPERDRIVE_v4.0.0.html)
+[▶ Play online](https://darschnid479.github.io/KAOSDuo/play/) · [⬇ Download v4.1.0](https://github.com/Darschnid479/KAOSDuo/releases/tag/v4.1.0) · [Source code](https://github.com/Darschnid479/KAOSDuo)
 
-## What's new in HYPERDRIVE
+> GitHub Pages needs to be enabled in repository settings before the online links work. The release HTML can be opened directly in a browser offline.
 
-- **Five switchable weapons:** Pulse Blaster, Chaos Shotgun, Rail Cannon, Nova Rockets and Chain Arc. Use **1–5** during combat.
-- **Ten survival waves** including the original three combat bosses, solo only, with selectable Blue or Metal.
-- **Three portal movement modes:** cube jumping, hold-to-fly rocket ship and tap-to-flip gravity.
-- **25% independent chance per portal** to meet **PORTAL SENTINEL**, a dodge-and-shoot mini boss. Shoot with **F/X**, avoid its projectile spreads; victory opens the exit.
-- **No HP damage in portals.** Every crash costs one remaining special ability. Retry without limit.
-- Enhanced neon flashing visuals, energy rings, weapon trails, screen-shake and combo effects.
+![Weapon Shop](assets/armory.webp)
+
+## 🎮 What you can do
+
+- **Solo:** Pick **❄️ Blue** or **🎸 Metal**. Four difficulties: Lett, Medium, Vanskelig and Drit Vanskelig.
+- **Fight:** Ten waves with three bosses and 17 character upgrades.
+- **Portal Run:** Nine neon transitions combining cube jumps, ship flying and gravity changes. A miniboss has a **25% chance on each portal run**. Losing a portal attempt removes a special ability, **not HP**.
+- **Armory:** Earn shop points in combat and portal journeys. Begin with Pulse Blaster, buy seven other guns with your earnings, and equip any owned weapon with keys **1–8**.
+- **Save / Load:** Manual and automatic checkpoints, including character, difficulty, HP, XP, score, shop currency, weapons, upgrades, abilities and Portal Run state. Export/import `.json` backups to move progress between browsers.
+- **Original soundtrack:** Metal has fast distorted synthetic guitar riffs; Blue has calm cozy arpeggios. Music is generated with the Web Audio API, without external music files.
+
+## 🔫 Weapon prices
+
+| Weapon | Cost (shop points) | Ability |
+| --- | ---: | --- |
+| Pulse Blaster | Free | Balanced starter |
+| Chaos Shotgun | 260 | Six pellets |
+| Rail Cannon | 680 | Piercing shots |
+| Chain Arc | 780 | Chaining electricity |
+| Nova Rockets | 990 | Explosive splash damage |
+| Glacier Repeater | 1,160 | Freezing rapid shots |
+| Meteor Minigun | 1,680 | High rate of fire |
+| Prism Annihilator | 2,350 | Piercing prismatic blasts |
 
 ## Controls
 
-| Phase | Keys |
-|---|---|
-| Combat | A/D move, W jump, F fire, G super, Shift/Q dash, **1–5 weapons** |
-| Portal cube | Tap W / Space / Up to jump |
-| Portal flight | **Hold** W / Space / Up to fly up, release to descend |
-| Portal gravity | **Tap** W / Space / Up to switch between ceiling and floor |
-| Portal miniboss | Fly with W / Space, **hold F / X** to fire |
-| General | P / Esc pause, M sound |
+| Action | Key |
+| --- | --- |
+| Move / Jump | A / D / W |
+| Shoot / Special / Dash | F / G / Shift |
+| Equip purchased weapon | 1–8 |
+| Open Armory | B |
+| Save / Load menu | L |
+| Pause / Music | P / M |
+| Portal cube | Tap to jump |
+| Portal ship | Hold action to fly |
+| Portal gravity | Tap to flip |
+| Portal boss | F or X to shoot |
 
-Touch buttons support portal actions, shooting, and combat weapon switching.
+## Save system
 
-## Download
+Manual and auto saves use your browser's local storage and are separate slots. Autosaves occur at the start of each wave, at the start of portal runs, and after portal penalties. Shop purchases also trigger autosave. Export a backup from the Save / Load panel if you want to transfer progress or keep a backup. Browsers may isolate file-based pages and block local storage: JSON export/import is provided as an alternative.
 
-[**HTML (standalone/offline)**](https://github.com/Darschnid479/KAOSDuo/releases/download/v4.0.0/KAOSDUO_HYPERDRIVE_v4.0.0.html) · [**Offline ZIP**](https://github.com/Darschnid479/KAOSDuo/releases/download/v4.0.0/KAOSDUO_HYPERDRIVE_v4.0.0_OFFLINE.zip)
+## Installation
 
-> Flashing light effects may affect photosensitive players. Browser/PC release; this does **not** update the Android APK.
+Download the self-contained `.html` file from **Releases** and open it in Chrome or Edge. No installation or network access is required. The Android v1.1 beta is a separate, older, unverified build.
 
----
+## Notes
 
-## Previous releases
-
-[v3.0.0 Portal Flash](https://github.com/Darschnid479/KAOSDuo/releases/tag/v3.0.0) · [v2.1.0 Portal Run](https://github.com/Darschnid479/KAOSDuo/releases/tag/v2.1.0) · [v2.0.0 OVERDRIVE](https://github.com/Darschnid479/KAOSDuo/releases/tag/v2.0.0)
+The game includes strong animated neon light effects. All character music is newly composed via code, not existing copyrighted recordings.

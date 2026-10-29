@@ -1,0 +1,44 @@
+name: Publish KAOSDUO HYPERDRIVE v4.1.0
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'dist/KAOSDUO_HYPERDRIVE_v4.1.0.html'
+      - 'dist/KAOSDUO_HYPERDRIVE_v4.1.0_OFFLINE.zip'
+      - '.github/workflows/hyperdrive-v41-release.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify release files
+        run: |
+          python3 - <<'PYVALIDATE'
+          from pathlib import Path
+          from zipfile import ZipFile
+          h=Path('dist/KAOSDUO_HYPERDRIVE_v4.1.0.html').read_text()
+          assert 'function restoreSave(data)' in h and 'function renderWeaponShop()' in h
+          assert 'function tickCharacterMusic()' in h and 'function metalGuitar(' in h
+          assert 'GLACIER REPEATER' in h and 'PRISM ANNIHILATOR' in h
+          assert 'data:image/webp;base64,' in h
+          assert '../assets/' not in h
+          with ZipFile('dist/KAOSDUO_HYPERDRIVE_v4.1.0_OFFLINE.zip') as z:
+              assert z.testzip() is None
+              assert 'KAOSDUO_HYPERDRIVE_v4.1.0.html' in z.namelist()
+          PYVALIDATE
+      - name: Checksums
+        run: |
+          cd dist
+          sha256sum KAOSDUO_HYPERDRIVE_v4.1.0.html KAOSDUO_HYPERDRIVE_v4.1.0_OFFLINE.zip > SHA256SUMS_v4.1.0.txt
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view v4.1.0 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload v4.1.0 dist/KAOSDUO_HYPERDRIVE_v4.1.0.html dist/KAOSDUO_HYPERDRIVE_v4.1.0_OFFLINE.zip dist/SHA256SUMS_v4.1.0.txt --clobber --repo "$GITHUB_REPOSITORY"
+          else
+            gh release create v4.1.0 dist/KAOSDUO_HYPERDRIVE_v4.1.0.html dist/KAOSDUO_HYPERDRIVE_v4.1.0_OFFLINE.zip dist/SHA256SUMS_v4.1.0.txt --title 'KAOSDUO: HYPERDRIVE v4.1.0 — ARMORY & SOUNDTRACK' --notes-file RELEASE_NOTES.md --latest --target "$GITHUB_SHA" --repo "$GITHUB_REPOSITORY"
+          fi

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 <meta name="theme-color" content="#111028">
 <meta name="description" content="KAOSDUO: OVERDRIVE — 10 combat waves, five weapons, cube jumps, rocket flight, gravity flips and a 25 percent portal miniboss chance.">
-<title>KAOSDUO: HYPERDRIVE — v4.0.0 | Solo Edition</title>
+<title>KAOSDUO: HYPERDRIVE — v4.1.0 | Save, Shop & Soundtracks</title>
 <style>
 :root { --pink:#ff5c9a; --cyan:#60f2fc; --gold:#ffe080; --ink:#111128; --light:#f4f1ff; }
 * { box-sizing:border-box; }
@@ -103,6 +103,25 @@ h1 span{color:#ffe27b;filter:drop-shadow(0 0 11px #ffa75e77)}
 #runnerFireButton{pointer-events:auto;touch-action:none;min-width:106px;min-height:72px;border:3px solid #ffad80;border-radius:24px;background:linear-gradient(140deg,#d03a6de0,#753bc6e0);box-shadow:0 0 25px #ff78ad88;font-weight:1000;font-size:20px}
 @media(pointer:coarse){#runnerTouch:not(.hidden){display:flex;right:15px;bottom:20px}}
 @media(max-width:670px){#runnerJumpButton{min-width:94px!important;min-height:63px!important;font-size:17px!important}#runnerFireButton{min-width:90px!important;min-height:62px!important;font-size:15px!important}#weaponCycle{bottom:52px!important}}
+
+/* KAOSDUO v4.1: shop and save UI */
+.music-banner{margin:5px auto 7px;padding:8px 15px;max-width:650px;border:1px solid #7be3fa66;border-radius:10px;background:#0f2e46a0;color:#d8fff3;font-size:clamp(10px,1.05vw,14px);font-weight:850;letter-spacing:.025em}
+.shop-panel,.save-panel{width:min(96%,1120px);max-height:92%;overflow:auto;text-align:center}
+.shop-panel h2,.save-panel h2{font-size:clamp(24px,3vw,43px);line-height:1.05;margin:7px 0 11px;color:#fff2aa}
+.panel-lead{margin:8px auto 14px;max-width:840px;color:#d5d4ef;font-size:clamp(12px,1.2vw,15px)}
+.wallet-banner{display:inline-flex;align-items:center;gap:16px;padding:10px 19px;margin:4px auto 14px;background:linear-gradient(100deg,#243859,#4a2a62);border:1px solid #ffd86c;border-radius:12px;font-weight:900;color:#ffe19b}
+.wallet-banner strong{font-size:25px;color:#fff}
+.shop-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:6px auto 15px}
+.shop-item{text-align:left;background:linear-gradient(165deg,#30355f,#171c36);border:1px solid #7c84b0;border-radius:13px;padding:12px;display:flex;flex-direction:column;gap:5px;min-height:168px}
+.shop-item h3{font-size:15px;margin:0;color:#fff}.shop-item .shop-icon{font-size:24px}.shop-item p{font-size:11px;color:#d0cbe7;margin:0;line-height:1.3;flex:1}.shop-item button{width:100%;padding:8px 6px;font-size:11px}.shop-item.owned{border-color:#7bffc7}.shop-item.equipped{background:linear-gradient(145deg,#14594e,#152d45);box-shadow:0 0 19px #77f9c727}
+.shop-item button:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.save-slots{max-width:870px;margin:14px auto;display:grid;gap:12px}
+.save-slot{display:flex;gap:14px;justify-content:space-between;align-items:center;text-align:left;background:#121d3b;border:1px solid #7773bd;border-radius:14px;padding:15px}
+.save-slot strong{color:#ffdc94;font-size:16px}.save-slot p{margin:6px 0 0;color:#cbcae9;font-size:13px;line-height:1.4}.slot-actions{display:flex;gap:8px;flex-wrap:wrap}.slot-actions button{white-space:nowrap}
+.save-status{min-height:20px;color:#8ff7c4;font-size:13px;font-weight:800}
+#toolbar{flex-wrap:wrap;justify-content:end;max-width:min(90%,600px)}#toolbar button{background:#242a50df;border-color:#8ea9de;font-size:11px}
+@media(max-width:780px){.shop-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.shop-panel,.save-panel{padding:14px}.shop-item{min-height:145px}.save-slot{flex-direction:column;align-items:stretch}.slot-actions button{flex:1}}
+@media(max-width:500px){.shop-grid{gap:6px}.shop-item{padding:8px}.shop-item h3{font-size:12px}.save-slot{padding:9px}.shop-panel h2,.save-panel h2{font-size:24px}#toolbar button{padding:6px 8px;font-size:9px}}
 </style>
 </head>
 <body>
@@ -111,13 +130,13 @@ h1 span{color:#ffe27b;filter:drop-shadow(0 0 11px #ffa75e77)}
 <div id="toast" aria-live="polite"></div>
 <div class="overlay" id="menu">
   <div class="panel">
-    <p class="eyebrow">⚡ VERSION 4.0 / HYPERDRIVE EDITION ⚡</p>
-    <h1>KAOS<span>DUO</span></h1><div class="kicker">🚀 HYPERDRIVE: PORTAL MAYHEM 🚀</div>
-    <p class="subtitle">10 kampbølger, 5 våpen og 9 reiser med KUBE, FLYVING og TYNGDEKRAFT-SKIFT! 25 % sjanse for PORTAL MINIBOSS. Kollisjon = mist én spesialevne, aldri HP. Kun solo.</p>
+    <p class="eyebrow">⚡ VERSION 4.1 / SOUNDTRACK & ARMORY EDITION ⚡</p>
+    <h1>KAOS<span>DUO</span></h1><div class="kicker">🎸 ARMORY & SOUNDTRACK UPDATE ❄️</div>
+    <p class="subtitle">10 kampbølger, 8 våpen å låse opp med butikkpoeng og 9 reiser med KUBE, FLYVING og TYNGDEKRAFT-SKIFT! 25 % sjanse for PORTAL MINIBOSS. Kollisjon = mist én spesialevne, aldri HP. Kun solo.</p>
     <div class="selection-heading">1 — VELG KARAKTER</div>
     <div class="hero-choices" role="group" aria-label="Velg en karakter">
-      <button class="hero-choice" type="button" data-character="blue" aria-pressed="true"><img src="../assets/blue.webp" alt=""><span class="hero-meta"><span class="hero-name">❄️ BLÅ</span><span class="hero-desc">Snøballer, frost og iskald panikk.</span><span class="pick-status">✓ VALGT</span></span></button>
-      <button class="hero-choice" type="button" data-character="metal" aria-pressed="false"><img src="../assets/metal.webp" alt=""><span class="hero-meta"><span class="hero-name">🎸 METAL</span><span class="hero-desc">Gitarriff, sjokkbølger og brutalt bråk.</span><span class="pick-status"></span></span></button>
+      <button class="hero-choice" type="button" data-character="blue" aria-pressed="true"><img src="../assets/blue.webp" alt=""><span class="hero-meta"><span class="hero-name">❄️ BLÅ</span><span class="hero-desc">Frostangrep + rolig, koselig originalmusikk.</span><span class="pick-status">✓ VALGT</span></span></button>
+      <button class="hero-choice" type="button" data-character="metal" aria-pressed="false"><img src="../assets/metal.webp" alt=""><span class="hero-meta"><span class="hero-name">🎸 METAL</span><span class="hero-desc">Gitarriff + tøff, original metal-musikk.</span><span class="pick-status"></span></span></button>
     </div>
     <div class="selection-heading">2 — VELG VANSKELIGHET</div>
     <div class="difficulty-choices" role="group" aria-label="Velg vanskelighetsgrad">
@@ -126,26 +145,48 @@ h1 span{color:#ffe27b;filter:drop-shadow(0 0 11px #ffa75e77)}
       <button type="button" class="difficulty-choice" data-difficulty="hard" aria-pressed="false"><strong>🔥 VANSKELIG</strong><small>Flere, sterkere og raskere</small></button>
       <button type="button" class="difficulty-choice" data-difficulty="insane" aria-pressed="false"><strong>💀 DRIT VANSKELIG</strong><small>Ingen nåde. Lykke til!</small></button>
     </div>
-    <div class="actions"><button id="start" class="primary start-button">▶ START HYPERDRIVE</button></div>
-    <div class="controls"><div><strong>STYRING:</strong> A/D = GÅ · W = HOPP · F = SKYT · G = SUPER · 1–5 = BYTT VÅPEN · PORTAL: HOLD FOR Å FLY, TRYKK FOR Å SNU TYNGDEKRAFT · X = SKYT PÅ MINIBOSS</div></div>
-    <p class="small">100 % SOLO · 5 VÅPEN · 3 PORTALFORMER · 25 % MINIBOSS · KRASJ = MIST EN EVNE · P/Esc pause · M lyd · Rekord: <strong id="record">0</strong></p>
+    <div class="actions"><button id="start" class="primary start-button">▶ START NYTT SPILL</button><button id="menuLoad" class="secondary" type="button">💾 LAST INN</button></div>
+    <div class="music-banner" id="musicBanner">❄️ BLÅ: Cozy Fjord — avslappende, original chiptune</div>
+    <div class="controls"><div><strong>STYRING:</strong> A/D = GÅ · W = HOPP · F = SKYT · G = SUPER · 1–8 = KJØPTE VÅPEN · B = VÅPENBUTIKK · L = SAVE / LOAD · PORTAL: HOLD FOR Å FLY, TRYKK FOR Å SNU TYNGDEKRAFT · X = SKYT PÅ MINIBOSS</div></div>
+    <p class="small">100 % SOLO · 8 VÅPEN · VÅPENBUTIKK · SAVE / LOAD · 3 PORTALFORMER · 25 % MINIBOSS · KRASJ = MIST EN EVNE · P/Esc pause · M lyd · Rekord: <strong id="record">0</strong></p>
   </div>
 </div>
 <div class="overlay hidden" id="upgrade">
-  <div class="panel"><div class="eyebrow">LEVEL UP — DU ER LITT MINDRE DÅRLIG!</div><h2>VELG EN KAOS-OPPGRADERING</h2><p>Trykk 1, 2, 3 eller velg med musa</p><div id="choices"></div></div>
+  <div class="panel"><div class="eyebrow">LEVEL UP — DU ER LITT MINDRE DÅRLIG!</div><h2>VELG EN KAOS-OPPGRADERING</h2><p>Trykk 1, 2, 3 eller velg med musa</p><div id="choices"></div><div class="actions"><button id="upgradeSave" type="button">💾 SAVE / LOAD</button></div></div>
 </div>
-<div class="overlay hidden" id="pausePanel"><div class="panel"><p class="eyebrow">Pølsestopp</p><h2>⏸️ PAUSE!</h2><p>Fiendene har fått kaffepause. Det er mistenkelig.</p><div class="actions"><button class="primary" id="resume">FORTSETT</button><button id="pauseMenu">HOVEDMENY</button></div></div></div>
+<div class="overlay hidden" id="pausePanel"><div class="panel"><p class="eyebrow">Pølsestopp</p><h2>⏸️ PAUSE!</h2><p>Fiendene har fått kaffepause. Det er mistenkelig.</p><div class="actions"><button class="primary" id="resume">FORTSETT</button><button id="pauseShop">🛒 VÅPENBUTIKK</button><button id="pauseSave">💾 SAVE / LOAD</button><button id="pauseMenu">HOVEDMENY</button></div></div></div>
 <div class="overlay hidden" id="runnerFailPanel"><div class="panel runner-fail-panel">
   <p class="eyebrow">💠 PORTAL RUN · KRASJ!</p><h2>GEOMETRIEN VANT DENNE GANGEN</h2>
   <div class="runner-loss">⚡ MISTET EVNE: <strong id="runnerLost">–</strong></div>
   <p id="runnerFailureText">0 HP mistet · 0% progresjon</p>
   <div class="runner-ability-list" id="runnerAbilities"></div>
   <p class="small">Kube = hopp · Skip = hold for å fly · Tyngdekraft = trykk for å snu. Miniboss kan dukke opp! Ingen HP-tap i portalene.</p>
-  <div class="actions"><button class="primary" id="retryRunner">↻ PRØV PORTALEN IGJEN</button><button id="runnerMenu">HOVEDMENY</button></div>
+  <div class="actions"><button class="primary" id="retryRunner">↻ PRØV PORTALEN IGJEN</button><button id="runnerFailSave">💾 SAVE / LOAD</button><button id="runnerMenu">HOVEDMENY</button></div>
   <p class="small">Trykk Enter eller mellomrom for nytt forsøk.</p>
 </div></div>
 <div class="overlay hidden" id="endPanel"><div class="panel"><div class="eyebrow" id="endEyebrow">SPILL SLUTT</div><h2 id="endTitle">DET BLE KAOS!</h2><p id="endText"></p><div class="actions"><button class="primary" id="again">🔁 PRØV IGJEN</button><button id="endMenu">HOVEDMENY</button></div></div></div>
-<div id="toolbar"><button id="mute" aria-label="Skru lyd av eller på">🔊 LYD</button><button id="pauseBtn" aria-label="Sett spillet på pause">⏸ PAUSE</button></div>
+
+<div class="overlay hidden" id="shopPanel"><div class="panel shop-panel">
+  <p class="eyebrow">🛒 KAOSDUO VÅPENSMIE</p><h2>THE CHAOS ARMORY</h2>
+  <p class="panel-lead">Tjen butikkpoeng ved å beseire fiender, samle stjerner og overleve portalreiser. Kjøpte våpen beholdes i denne spillrunden og i lagringsfilen.</p>
+  <div class="wallet-banner">💰 TILGJENGELIGE BUTIKKPOENG <strong id="shopCredits">0</strong></div>
+  <div id="weaponShopGrid" class="shop-grid"></div>
+  <div class="actions"><button id="closeShop" class="primary">↩ TILBAKE TIL SPILLET</button></div>
+  <p class="small">Du starter med Pulse Blaster. Kjøpte våpen kan velges med tastene 1–8. Butikken setter spillet på pause.</p>
+</div></div>
+<div class="overlay hidden" id="savePanel"><div class="panel save-panel">
+  <p class="eyebrow">💾 KAOSDUO SAVE / LOAD</p><h2>YOUR ADVENTURE. YOUR RULES.</h2>
+  <p class="panel-lead">Lagre en spillrunde og fortsett senere. Automatisk lagring skjer ved nye bølger og portaloverganger. Lagringer er knyttet til denne nettleseren.</p>
+  <div class="save-slots">
+    <div class="save-slot"><div><strong>💾 MANUELL LAGRING</strong><p id="manualSaveInfo">Tom</p></div><div class="slot-actions"><button id="saveManual" class="primary">LAGRE</button><button id="loadManual">LAST INN</button></div></div>
+    <div class="save-slot"><div><strong>🔄 AUTOLAGRING</strong><p id="autoSaveInfo">Tom</p></div><div class="slot-actions"><button id="loadAuto">LAST INN</button></div></div>
+  </div>
+  <div class="actions"><button id="exportSave">⬇ EKSPORTER SAVE (.json)</button><button id="importSave">⬆ IMPORTER SAVE (.json)</button><input id="saveFileInput" type="file" accept=".json,application/json" hidden></div>
+  <p class="save-status" id="saveStatus" aria-live="polite"></p>
+  <div class="actions"><button class="primary" id="closeSavePanel">↩ TILBAKE</button></div>
+  <p class="small">Bruk eksport for å flytte lagringen mellom PC-er eller nettlesere. Ikke del lagringsfiler du ikke stoler på.</p>
+</div></div>
+<div id="toolbar"><button id="quickSave" type="button">💾 LAGRE</button><button id="shopBtn" type="button">🛒 BUTIKK</button><button id="saveBtn" type="button">📁 LOAD</button><button id="mute" aria-label="Skru lyd av eller på">🔊 LYD</button><button id="pauseBtn" aria-label="Sett spillet på pause">⏸ PAUSE</button></div>
 <div id="runnerTouch" class="hidden"><button id="runnerJumpButton" aria-label="Hopp, fly eller snu tyngdekraft">▲ ACTION</button><button id="runnerFireButton" aria-label="Skyt mot portalminiboss">✹ SKYT</button></div>
 <div id="touch" class="hidden"><button id="weaponCycle" type="button" aria-label="Bytt våpen">🔫 BYTT VÅPEN</button><div class="touch-pad"><button data-touch="a">◀</button><button data-touch="d">▶</button><button data-touch="w">⬆</button></div><div class="touch-actions"><button class="dash" data-touch="Shift" aria-label="Turbo dash">➤</button><button class="shoot" data-touch="f" aria-label="Skyt">💥</button><button class="super" data-touch="g" aria-label="Superangrep">⚡</button></div></div>
 </div>
@@ -169,7 +210,7 @@ const palettes=[
  {sky1:'#0e1024',sky2:'#342978',mount:'#28224e',far:'#43368a',floor:'#2a2152',trim:'#e25ff9',moon:'#8ff7fa'},
  {sky1:'#081e30',sky2:'#134b5f',mount:'#143a4c',far:'#1d6570',floor:'#13354d',trim:'#58ffd1',moon:'#9affdf'}
 ];
-let game={state:'menu',mode:'solo',character:'blue',difficulty:'medium',wave:0,score:0,kills:0,combo:0,comboTime:0,level:1,xp:0,required:14,spawnLeft:0,spawnTimer:0,waveDelay:-1,time:0,shake:0,flash:0,superFlash:0,last:0,pendingWins:0,played:0,upgrades:{},stage:0,record:0,rage:0,rageTime:0,arenaHazard:8,impact:0,droneTimer:0,shards:0,version:"4.0.0",weapon:'pulse',abilities:{dash:true,double:true,super:true,overdrive:true},portalFailures:0,runner:null,pausedFrom:"playing"};
+let game={state:'menu',mode:'solo',character:'blue',difficulty:'medium',wave:0,score:0,kills:0,combo:0,comboTime:0,level:1,xp:0,required:14,spawnLeft:0,spawnTimer:0,waveDelay:-1,time:0,shake:0,flash:0,superFlash:0,last:0,pendingWins:0,played:0,upgrades:{},stage:0,record:0,rage:0,rageTime:0,arenaHazard:8,impact:0,droneTimer:0,shards:0,version:"4.1.0",credits:0,ownedWeapons:["pulse"],weapon:'pulse',abilities:{dash:true,double:true,super:true,overdrive:true},portalFailures:0,runner:null,pausedFrom:"playing"};
 let players=[],enemies=[],bullets=[],particles=[],drops=[],floaters=[],rings=[],effects=[],hazards=[],trails=[];
 const BOSS_WAVES={4:'warden',7:'titan',10:'boss'};
 const BOSS_LABELS={warden:'THE GLITCH WARDEN',titan:'CRYSTAL TITAN',boss:'PORTAL KING'};
@@ -184,21 +225,33 @@ const DIFFICULTIES={
 };
 let selectedCharacter='blue',selectedDifficulty='medium';
 const WEAPONS=[
- {id:'pulse',icon:'✹',name:'PULSE BLASTER',cool:.32,damage:24,speed:880,r:11,color:'#6ceaff'},
- {id:'scatter',icon:'✦',name:'CHAOS SHOTGUN',cool:.66,damage:14,speed:840,r:8,color:'#ffae75'},
- {id:'rail',icon:'⚡',name:'RAIL CANNON',cool:.83,damage:88,speed:1550,r:8,color:'#fff188'},
- {id:'rocket',icon:'🚀',name:'NOVA ROCKETS',cool:.93,damage:58,speed:680,r:17,color:'#ff83ca'},
- {id:'arc',icon:'ϟ',name:'CHAIN ARC',cool:.47,damage:34,speed:1000,r:12,color:'#a6a0ff'}
+ {id:'pulse',icon:'✹',name:'PULSE BLASTER',cost:0,desc:'Rask og pålitelig startblaster.',cool:.32,damage:24,speed:880,r:11,color:'#6ceaff'},
+ {id:'scatter',icon:'✦',name:'CHAOS SHOTGUN',cost:260,desc:'Seks prosjektiler i en stor spredning.',cool:.66,damage:14,speed:840,r:8,color:'#ffae75'},
+ {id:'rail',icon:'⚡',name:'RAIL CANNON',cost:680,desc:'Kraftig stråle som trenger gjennom fiender.',cool:.83,damage:88,speed:1550,r:8,color:'#fff188'},
+ {id:'rocket',icon:'🚀',name:'NOVA ROCKETS',cost:990,desc:'Eksplosive raketter med områdeskade.',cool:.93,damage:58,speed:680,r:17,color:'#ff83ca'},
+ {id:'arc',icon:'ϟ',name:'CHAIN ARC',cost:780,desc:'Elektriske skudd som hopper mellom fiender.',cool:.47,damage:34,speed:1000,r:12,color:'#a6a0ff'},
+ {id:'frost',icon:'❄',name:'GLACIER REPEATER',cost:1160,desc:'Isprosjektiler som fryser og sinker monstre.',cool:.24,damage:23,speed:1000,r:10,color:'#99faff'},
+ {id:'minigun',icon:'✹',name:'METEOR MINIGUN',cost:1680,desc:'Ekstrem skuddhastighet og heftig rekyl.',cool:.085,damage:11,speed:1210,r:6,color:'#ffbc77'},
+ {id:'prism',icon:'◆',name:'PRISM ANNIHILATOR',cost:2350,desc:'Gjennomtrengende regnbuestråler med kritiske treff.',cool:.51,damage:58,speed:1680,r:11,color:'#eb8dff'}
 ];
+function ownsWeapon(id){return (game.ownedWeapons||['pulse']).includes(id);}
 function equipWeapon(index,quiet=false){
- if(game.state!=='playing')return;
+ if(game.state!=='playing'&&game.state!=='shop')return false;
  const next=WEAPONS[(index+WEAPONS.length)%WEAPONS.length];
+ if(!ownsWeapon(next.id)){if(!quiet)toast('🔒 KJØP '+next.name+' I BUTIKKEN (B)',1.5);return false;}
  game.weapon=next.id;
- if(!quiet){toast(next.icon+' '+next.name,1.1);beep(680,.08,'sawtooth',.04,350);}
+ if(!quiet){toast(next.icon+' '+next.name,1.1);sfx('xp');}
+ return true;
+}
+function cycleOwnedWeapon(){
+ if(game.state!=='playing')return;
+ const owned=WEAPONS.filter(w=>ownsWeapon(w.id));
+ const next=(owned.findIndex(w=>w.id===game.weapon)+1)%owned.length;
+ equipWeapon(WEAPONS.findIndex(w=>w.id===owned[next].id));
 }
 function activeWeapon(){return WEAPONS.find(w=>w.id===game.weapon)||WEAPONS[0];}
 
-let audio=null,muted=false,musicInterval=null,musicStep=0,lastShootSfx=0;
+let audio=null,muted=false,musicInterval=null,musicStep=0,lastShootSfx=0,musicNextTime=0;
 let toastTimer=null;
 try{game.record=Number(localStorage.getItem('kaosduo_record')||0);}catch(e){}
 $('record').textContent=game.record.toLocaleString('nb-NO');
@@ -225,21 +278,93 @@ const upgradePool=[
  {id:'frenzy',icon:'🔥',name:'RAGE ENGINE',desc:'Fyll OVERDRIVE-måleren raskere.'}
 ];
 const waveNames=['','PORTALBREKK','DET REGNER SLIM','PAPIRFUGLER FRA HELVETE','GLITCH WARDEN','ROBOTINVASJON','SLIMSTORM','KRYSTALLTITANEN','TOTAL SYSTEMFEIL','NÅ BLIR DET RAGNAROK','PORTALKONGENS HEVN'];
+function awardPoints(amount){
+ const pts=Math.max(0,Math.round(Number(amount)||0));
+ game.score+=pts;game.credits=(Number(game.credits)||0)+pts;
+}
 function recordScore(){if(game.score>game.record){game.record=game.score;try{localStorage.setItem('kaosduo_record',String(game.record));}catch(e){} $('record').textContent=game.record.toLocaleString('nb-NO');}}
-function showOverlay(which){['menu','upgrade','pausePanel','endPanel','runnerFailPanel'].forEach(id=>$(id).classList.toggle('hidden',id!==which));$('touch').classList.toggle('hidden',which!==null||game.state!=='playing');$('runnerTouch').classList.toggle('hidden',which!==null||game.state!=='runner');}
+function showOverlay(which){['menu','upgrade','pausePanel','endPanel','runnerFailPanel','shopPanel','savePanel'].forEach(id=>$(id).classList.toggle('hidden',id!==which));$('touch').classList.toggle('hidden',which!==null||game.state!=='playing');$('runnerTouch').classList.toggle('hidden',which!==null||game.state!=='runner');}
 function toast(message,secs=2){const el=$('toast');el.textContent=message;el.classList.add('visible');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('visible'),secs*1000);}
 function beep(freq=440,dur=.1,wave='square',volume=.055,slide=0){if(muted)return;try{audio??=new (window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume();const now=audio.currentTime;const osc=audio.createOscillator(),gain=audio.createGain();osc.type=wave;osc.frequency.setValueAtTime(freq,now);if(slide)osc.frequency.exponentialRampToValueAtTime(Math.max(40,freq+slide),now+dur);gain.gain.setValueAtTime(Math.max(.001,volume),now);gain.gain.exponentialRampToValueAtTime(.0001,now+dur);osc.connect(gain);gain.connect(audio.destination);osc.start(now);osc.stop(now+dur+.01);}catch(e){}}
 function sfx(type){if(muted)return;switch(type){case 'shoot1':beep(360,.055,'triangle',.035,-160);break;case 'shoot2':beep(240,.085,'sawtooth',.033,400);break;case 'hit':beep(110,.09,'sawtooth',.035,-65);break;case 'hurt':beep(170,.21,'square',.06,-120);break;case 'kill':beep(500,.08,'triangle',.034,180);break;case 'xp':beep(850,.08,'sine',.035,160);break;case 'power':beep(550,.25,'sawtooth',.08,620);setTimeout(()=>beep(950,.3,'triangle',.08,-220),85);break;case 'wave':beep(420,.14,'square',.045,250);setTimeout(()=>beep(650,.15,'square',.045,250),120);break;case 'boss':beep(90,.65,'sawtooth',.11,130);break;case 'dash':beep(530,.12,'sawtooth',.044,-390);break;case 'lose':beep(390,.45,'triangle',.07,-330);break;}}
-function startMusic(){if(musicInterval)return;musicInterval=setInterval(()=>{if(muted||!['playing','upgrade'].includes(game.state))return;const notes=[164.81,196,220,164.81,246.94,220,196,146.83,164.81,220,293.66,246.94,196,164.81,146.83,110];const note=notes[(musicStep+(game.wave>=8?4:0))%notes.length];
- beep(note*(game.rageTime>0?2:1),.13,game.rageTime>0?'sawtooth':'triangle',.012);
- if(musicStep%2===0)beep(note/2,.15,'square',.012);
- if(musicStep%4===0)beep(65,.06,'sine',.031,-23);
- if(musicStep%4===2)beep(1300,.045,'triangle',.007,-900);
- musicStep++;},game.rageTime>0?170:200);}
+// Original, generated soundtrack: no sampled or third-party music tracks.
+function musicTone(freq,duration,wave='triangle',volume=.018,cutoff=2400){
+ if(muted||document.hidden)return;
+ try{
+  audio??=new (window.AudioContext||window.webkitAudioContext)();
+  if(audio.state==='suspended')audio.resume();
+  const now=audio.currentTime,osc=audio.createOscillator(),env=audio.createGain(),low=audio.createBiquadFilter();
+  low.type='lowpass';low.frequency.value=cutoff;osc.type=wave;
+  osc.frequency.setValueAtTime(freq,now);
+  env.gain.setValueAtTime(.0001,now);
+  env.gain.exponentialRampToValueAtTime(Math.max(.0002,volume),now+.012);
+  env.gain.exponentialRampToValueAtTime(.0001,now+duration);
+  osc.connect(low);low.connect(env);env.connect(audio.destination);
+  osc.start(now);osc.stop(now+duration+.02);
+ }catch(e){}
+}
+// Palm-muted synthetic guitar: self-generated original riff (no recordings or samples).
+let guitarCurve=null;
+function metalGuitar(freq,duration=.14,volume=.016){
+ if(muted||document.hidden)return;
+ try{
+  audio??=new (window.AudioContext||window.webkitAudioContext)();
+  if(audio.state==='suspended')audio.resume();
+  if(!guitarCurve){guitarCurve=new Float32Array(1024);for(let i=0;i<1024;i++){const v=i/511.5-1;guitarCurve[i]=Math.tanh(v*7);}}
+  const now=audio.currentTime,shaper=audio.createWaveShaper(),filter=audio.createBiquadFilter(),gain=audio.createGain();
+  shaper.curve=guitarCurve;shaper.oversample='2x';
+  filter.type='lowpass';filter.frequency.value=1300;
+  gain.gain.setValueAtTime(.0001,now);
+  gain.gain.exponentialRampToValueAtTime(volume,now+.007);
+  gain.gain.exponentialRampToValueAtTime(.0001,now+duration);
+  shaper.connect(filter);filter.connect(gain);gain.connect(audio.destination);
+  for(const detune of [-5,5]){
+   const o=audio.createOscillator();o.type='sawtooth';o.frequency.value=freq;o.detune.value=detune;
+   o.connect(shaper);o.start(now);o.stop(now+duration+.01);
+  }
+ }catch(e){}
+}
+const BLUE_CHORDS=[[196,246.94,293.66],[146.83,185,220],[130.81,164.81,196],[164.81,196,246.94]];
+const METAL_RIFF=[82.41,82.41,0,82.41,98,82.41,110,0,82.41,82.41,0,123.47,110,98,82.41,73.42];
+function tickCharacterMusic(){
+ if(muted||document.hidden||!['playing','runner','upgrade','shop'].includes(game.state))return;
+ const now=Date.now();
+ if(now<musicNextTime)return;
+ const metal=game.character==='metal',interval=metal?145:275;
+ musicNextTime=now+interval;
+ const step=musicStep++;
+ if(metal){
+  const freq=METAL_RIFF[step%METAL_RIFF.length];
+  if(freq){
+   metalGuitar(freq,.14,.017);
+   metalGuitar(freq*1.5,.13,.007);
+   if(step%4===0)metalGuitar(freq*2,.25,.008);
+  }
+  // Original double-kick / snare / hi-hat pattern.
+  if(step%2===0)beep(58,.075,'sine',.038,-24);
+  if(step%4===2)musicTone(173,.055,'triangle',.023,1700);
+  musicTone(1250+(step%2)*700,.022,'square',.0035,4400);
+ }else{
+  const chord=BLUE_CHORDS[Math.floor(step/8)%BLUE_CHORDS.length];
+  const note=chord[[0,1,2,1,0,2,1,2][step%8]];
+  musicTone(note*2,.37,'sine',.016,2100);
+  musicTone(note,.58,'triangle',.010,1200);
+  if(step%8===0){
+   chord.forEach((freq,i)=>musicTone(freq,.98,'sine',.007-(i*.001),950));
+   musicTone(chord[0]/2,.9,'sine',.012,650);
+  }
+  if(step%4===2)musicTone(note*4,.16,'sine',.006,1900);
+ }
+}
+function startMusic(){
+ musicNextTime=0;musicStep=0;
+ if(musicInterval)return;
+ musicInterval=setInterval(tickCharacterMusic,65);
+}
 function createPlayer(id,x,image,hp){return {id,x,y:GROUND,vx:0,vy:0,img:image,hp,maxHp:hp,alive:true,facing:1,cooldown:0,invuln:0,special:35,shooting:0,speech:'',speechT:0,feetDust:0,dashCd:0,dashTime:0,jumps:0,wasJump:false,droneAngle:0,droneCd:0};}
 function reset(){
  const settings=DIFFICULTIES[selectedDifficulty];
- game.state='playing';game.mode='solo';game.character=selectedCharacter;game.difficulty=selectedDifficulty;game.wave=0;game.score=0;game.kills=0;game.combo=0;game.comboTime=0;game.level=1;game.xp=0;game.required=14;game.time=0;game.shake=0;game.flash=0;game.superFlash=0;game.pendingWins=0;game.upgrades={};game.stage=0;game.played=0;game.rage=0;game.rageTime=0;game.arenaHazard=8;game.impact=0;game.droneTimer=0;game.shards=0;game.abilities={dash:true,double:true,super:true,overdrive:true};game.weapon='pulse';game.portalFailures=0;game.runner=null;game.pausedFrom="playing";
+ game.state='playing';game.mode='solo';game.character=selectedCharacter;game.difficulty=selectedDifficulty;game.wave=0;game.score=0;game.kills=0;game.combo=0;game.comboTime=0;game.level=1;game.xp=0;game.required=14;game.time=0;game.shake=0;game.flash=0;game.superFlash=0;game.pendingWins=0;game.upgrades={};game.stage=0;game.played=0;game.rage=0;game.rageTime=0;game.arenaHazard=8;game.impact=0;game.droneTimer=0;game.shards=0;game.abilities={dash:true,double:true,super:true,overdrive:true};game.weapon='pulse';game.ownedWeapons=['pulse'];game.credits=0;game.portalFailures=0;game.runner=null;game.pausedFrom="playing";
  enemies=[];bullets=[];particles=[];drops=[];floaters=[];rings=[];effects=[];hazards=[];trails=[];players=[createPlayer(selectedCharacter==='blue'?0:1,640,selectedCharacter==='blue'?imgBlue:imgMetal,settings.hp)];
  showOverlay(null);startMusic();startWave();}
 function say(p,message,duration=2){p.speech=message;p.speechT=duration;}
@@ -252,6 +377,7 @@ function startWave(){
  if(boss){toast('☠ '+BOSS_LABELS[boss]+' KOMMER!',3.4);say(players[0],game.wave===10?'DET ER NÅ ELLER ALDRI!':'DET HER SÅ IKKE LOVENDE UT!',3);sfx('boss');}
  else {toast('BØLGE '+game.wave+' – '+waveNames[game.wave],2.5);sfx('wave');}
  if(game.wave===1)say(players[0],'EN HELT. TI BØLGER. NULL ANGRERETT.',3);
+ persistSave('auto',true);
 }
 function spawnEnemy(type=null){
  let kind=type;
@@ -293,10 +419,11 @@ function shoot(p,isAuto=false){
   const vx=(dx*Math.cos(ang)-dy*Math.sin(ang))*w.speed,vy=(dx*Math.sin(ang)+dy*Math.cos(ang))*w.speed;
   const crit=Math.random()<Math.min(.7,.06+.12*(game.upgrades.crit||0));
   bullets.push({x:p.x+p.facing*33,y:p.y-129,vx,vy,owner:p.id,kind:w.id,r:w.r,
-   life:w.id==='scatter'?.64:w.id==='rail'?.92:1.6,damage:dmg*(crit?2.1:1),crit,hit:[],pierce:w.id==='rail'?4:1,glow:0});
+   life:w.id==='scatter'?.64:(w.id==='rail'||w.id==='prism')?.92:1.6,damage:dmg*(crit?2.1:1),crit,hit:[],pierce:(w.id==='rail'||w.id==='prism')?4:1,glow:0});
  }
  if(!reducedMotion)spawnParticle(p.x+p.facing*35,p.y-129,w.color,w.id==='scatter'?18:9,160,w.id==='rocket'?15:8);
- if(w.id==='rail'){ring(p.x+p.facing*37,p.y-129,'#ffec95',90);game.shake=Math.max(game.shake,7);}
+ if(w.id==='rail'||w.id==='prism'){ring(p.x+p.facing*37,p.y-129,'#ffec95',90);game.shake=Math.max(game.shake,7);}
+ if(w.id==='minigun'&&Math.random()<.21){game.shake=Math.max(game.shake,2);}
  if(w.id==='rocket'){game.shake=Math.max(game.shake,4);}
  if(game.time-lastShootSfx>.07){sfx(w.id==='rail'?'power':isBlue?'shoot1':'shoot2');lastShootSfx=game.time;}
 }
@@ -315,7 +442,7 @@ function weaponSplash(b,e,p){
    damageEnemy(next,b.damage*(.68-i*.12),p,false,true);origin=next;
   }
  }
- if(b.kind==='rail'){trails.push({x1:b.x-b.vx*.07,y1:b.y-b.vy*.07,x2:b.x,y2:b.y,t:.23,color:'#fff2ac'});}
+ if(b.kind==='rail'||b.kind==='prism'){trails.push({x1:b.x-b.vx*.07,y1:b.y-b.vy*.07,x2:b.x,y2:b.y,t:.23,color:'#fff2ac'});}
 }
 
 function doSuper(p){
@@ -347,7 +474,7 @@ function damageEnemy(e,damage,p,freeze=false,secondary=false){
  if(e.hp<=0){
    e.dead=true;game.kills++;game.combo++;game.comboTime=4;
    const pts=e.value*Math.max(1,Math.floor(game.combo/5)+1);
-   game.score+=pts;
+   awardPoints(pts);
    const gain=(BOSS_LABELS[e.kind]?24:7)*(1+(game.upgrades.frenzy||0)*.22);
    if(game.rageTime<=0&&game.abilities.overdrive){game.rage=clamp(game.rage+gain,0,100);if(game.rage>=100)startOverdrive();}
    if(game.upgrades.vamp&&p)p.hp=clamp(p.hp+Math.min(6,2*game.upgrades.vamp),0,p.maxHp);
@@ -468,8 +595,9 @@ function updateBullet(b,dt){
  }else{
   for(const e of enemies){if(e.dead||b.hit.includes(e))continue;
    if(hypot(e.x-b.x,e.y-b.y)<e.r+b.r){b.hit.push(e);const p=players.find(p=>p.id===b.owner);
-    damageEnemy(e,b.damage,p,b.kind==='snow');
+    damageEnemy(e,b.damage,p,b.kind==='snow'||b.kind==='frost');
     if(b.crit)floating(e.x,e.y-52,'CRIT!','#fff282',20);
+    if(b.kind==='prism'&&Math.random()<.35){ring(e.x,e.y,'#d3aaff',75);}
     if(b.kind==='note'){ring(e.x,e.y,'#ff75e1',45);if(Math.random()<.22)for(const other of enemies){if(!other.dead&&other!==e&&hypot(other.x-e.x,other.y-e.y)<105)damageEnemy(other,b.damage*.35,p,false,true);}}
     if((game.upgrades.shock||0)>0&&Math.random()<Math.min(.65,.17*game.upgrades.shock)){
       ring(e.x,e.y,'#ffe282',120);for(const other of enemies)if(!other.dead&&other!==e&&hypot(other.x-e.x,other.y-e.y)<130)damageEnemy(other,b.damage*.35,p,false,true);
@@ -487,22 +615,171 @@ function updateDrop(d,dt){
  let closest=null,min=1e9;for(const p of players){if(!p.alive)continue;let dist=hypot(p.x-d.x,p.y-36-d.y);if(dist<min){min=dist;closest=p;}}
  const attract=150+(game.upgrades.magnet||0)*85;
  if(closest){if(min<attract){const dx=closest.x-d.x,dy=closest.y-36-d.y;d.x+=dx*dt*4;d.y+=dy*dt*4;}
-  if(min<44){d.ttl=-1;sfx('xp');if(d.kind==='star'){game.xp+=3;game.score+=5;closest.special=clamp(closest.special+2,0,100);}if(d.kind==='heart'){closest.hp=clamp(closest.hp+28,0,closest.maxHp);floating(d.x,d.y-15,'+28 HP','#8cffb1',23);}if(d.kind==='bolt'){for(const p of players)p.special=clamp(p.special+25,0,100);floating(d.x,d.y-15,'+25 SUPER','#ffe9a6',20);}if(d.kind==='rage'&&game.abilities.overdrive){game.rage=clamp(game.rage+18,0,100);if(game.rage>=100&&game.rageTime<=0)startOverdrive();floating(d.x,d.y-15,'+18 RAGE','#ffb076',20);}}
+  if(min<44){d.ttl=-1;sfx('xp');if(d.kind==='star'){game.xp+=3;awardPoints(5);closest.special=clamp(closest.special+2,0,100);}if(d.kind==='heart'){closest.hp=clamp(closest.hp+28,0,closest.maxHp);floating(d.x,d.y-15,'+28 HP','#8cffb1',23);}if(d.kind==='bolt'){for(const p of players)p.special=clamp(p.special+25,0,100);floating(d.x,d.y-15,'+25 SUPER','#ffe9a6',20);}if(d.kind==='rage'&&game.abilities.overdrive){game.rage=clamp(game.rage+18,0,100);if(game.rage>=100&&game.rageTime<=0)startOverdrive();floating(d.x,d.y-15,'+18 RAGE','#ffb076',20);}}
  }
  if(d.age>15)d.ttl=-1;
 }
 function generateUpgrade(){
  game.state='upgrade';const shuffled=[...upgradePool].sort(()=>Math.random()-.5).slice(0,3);
+ renderUpgradeChoices(shuffled);game.offered=shuffled;showOverlay('upgrade');sfx('wave');
+}
+function renderUpgradeChoices(shuffled){
  $('choices').innerHTML='';shuffled.forEach((u,i)=>{const b=document.createElement('button');b.className='upgrade-card';b.innerHTML=`<span class="number">VALG ${i+1}</span><span class="uicon">${u.icon}</span><span class="uname">${u.name}</span><span class="udesc">${u.desc}</span>`;b.addEventListener('click',()=>selectUpgrade(u));$('choices').appendChild(b);});
- game.offered=shuffled;showOverlay('upgrade');sfx('wave');}
+}
 function selectUpgrade(u){if(game.state!=='upgrade')return;game.upgrades[u.id]=(game.upgrades[u.id]||0)+1;if(u.id==='heart')for(const p of players){p.maxHp+=35;p.hp=clamp(p.hp+50,0,p.maxHp);}game.state='playing';showOverlay(null);toast(u.icon+' '+u.name.toUpperCase()+'!',1.6);}
-function finish(won){if(game.state==='end')return;game.state='end';recordScore();$('endEyebrow').textContent=won?'HELT ABSURD SEIER!':'HELTEN BLE SLÅTT UT';$('endTitle').textContent=won?'🏆 DU REDDET VIRKELIGHETEN!':'💀 PORTALEN VANT ... DENNE GANGEN';$('endText').textContent=`${game.character==='blue'?'❄️ Blå':'🎸 Metal'} · ${DIFFICULTIES[game.difficulty].label} · ${game.score.toLocaleString('nb-NO')} poeng · ${game.kills} monstre sendt hjem · Bølge ${game.wave}/${MAX_WAVES} · Portalkrasj: ${game.portalFailures} · Evner igjen: ${Object.values(game.abilities).filter(Boolean).length}/4 · Beste rekord: ${game.record.toLocaleString('nb-NO')}. ${won?'PORTALKONGEN BLE TIL STØV!':'Prøv en annen oppgradering og ta hevn på slimene!'}`;showOverlay('endPanel');if(!won)sfx('lose');else{sfx('power');spawnParticle(650,230,'#fff19e',90,460,9);}}
+function finish(won){if(game.state==='end')return;game.state='end';recordScore();$('endEyebrow').textContent=won?'HELT ABSURD SEIER!':'HELTEN BLE SLÅTT UT';$('endTitle').textContent=won?'🏆 DU REDDET VIRKELIGHETEN!':'💀 PORTALEN VANT ... DENNE GANGEN';$('endText').textContent=`${game.character==='blue'?'❄️ Blå':'🎸 Metal'} · ${DIFFICULTIES[game.difficulty].label} · ${game.score.toLocaleString('nb-NO')} poeng · ${game.kills} monstre sendt hjem · ${formatPoints(game.credits)} butikkpoeng · ${game.ownedWeapons.length}/8 våpen · Bølge ${game.wave}/${MAX_WAVES} · Portalkrasj: ${game.portalFailures} · Evner igjen: ${Object.values(game.abilities).filter(Boolean).length}/4 · Beste rekord: ${game.record.toLocaleString('nb-NO')}. ${won?'PORTALKONGEN BLE TIL STØV!':'Prøv en annen oppgradering og ta hevn på slimene!'}`;showOverlay('endPanel');if(!won)sfx('lose');else{sfx('power');spawnParticle(650,230,'#fff19e',90,460,9);}}
 function togglePause(force){
  if(['menu','end','upgrade','runnerFail'].includes(game.state))return;
  const pause=typeof force==='boolean'?force:['playing','runner'].includes(game.state);
  if(pause){if(game.state==='paused')return;game.pausedFrom=game.state;game.state='paused';}
  else{if(game.state!=='paused')return;game.state=game.pausedFrom==='runner'?'runner':'playing';}
  showOverlay(pause?'pausePanel':null);
+}
+
+// === V4.1 ARMORY & SAVE SYSTEM ===
+const SAVE_KEYS={manual:'kaosduo_v41_manual',auto:'kaosduo_v41_auto'};
+let savePanelBack='menu',shopPanelBack='pausePanel';
+function formatPoints(v){return Math.floor(Number(v)||0).toLocaleString('nb-NO');}
+function weaponShop(){
+ if(!['playing','paused'].includes(game.state))return;
+ if(game.state==='paused'&&game.pausedFrom==='runner'){toast('🛒 VÅPENBUTIKKEN ÅPNER I KAMPBØLGENE',1.7);return;}
+ shopPanelBack='pausePanel';
+ if(game.state==='playing'){game.pausedFrom='playing';}
+ game.state='shop';renderWeaponShop();showOverlay('shopPanel');
+}
+function renderWeaponShop(){
+ $('shopCredits').textContent=formatPoints(game.credits);
+ const grid=$('weaponShopGrid');grid.replaceChildren();
+ for(let i=0;i<WEAPONS.length;i++){
+  const w=WEAPONS[i],owned=ownsWeapon(w.id),equipped=game.weapon===w.id;
+  const card=document.createElement('article');card.className='shop-item'+(owned?' owned':'')+(equipped?' equipped':'');
+  const icon=document.createElement('div');icon.className='shop-icon';icon.textContent=w.icon;
+  const title=document.createElement('h3');title.textContent=(i+1)+'. '+w.name;
+  const desc=document.createElement('p');desc.textContent=w.desc;
+  const action=document.createElement('button');
+  action.textContent=equipped?'✓ UTSTYRT':owned?'BRUK VÅPEN':'💰 KJØP FOR '+formatPoints(w.cost);
+  action.disabled=equipped||(!owned&&game.credits<w.cost);
+  action.className=owned?'secondary':'primary';
+  action.addEventListener('click',()=>{
+   if(ownsWeapon(w.id)){game.weapon=w.id;toast('🔫 '+w.name+' ER UTSTYRT',1.4);}
+   else if(game.credits>=w.cost){
+    game.credits-=w.cost;game.ownedWeapons.push(w.id);game.weapon=w.id;
+    sfx('power');toast('🛒 KJØPT '+w.name+'!',1.9);
+    persistSave('auto',true);
+   }
+   renderWeaponShop();
+  });
+  card.append(icon,title,desc,action);grid.appendChild(card);
+ }
+}
+function closeWeaponShop(){if(game.state!=='shop')return;game.state='paused';game.pausedFrom='playing';showOverlay('pausePanel');}
+function snapshot(){
+ if(!players.length||['menu','end'].includes(game.state))return null;
+ const g={...game};
+ if(g.state==='shop'){g.state='paused';g.pausedFrom='playing';}
+ // Saving while a menu overlays the arena should never advance the world.
+ g.last=0;
+ return {schema:1,version:'4.1.0',savedAt:new Date().toISOString(),
+  game:g,players:players.map(({img,...p})=>({...p})),
+  enemies,bullets,drops,hazards,trails,particles:particles.slice(-80),floaters:floaters.slice(-40),rings:rings.slice(-35),effects};
+}
+function storageSlot(slot){try{const s=localStorage.getItem(SAVE_KEYS[slot]);return s?JSON.parse(s):null;}catch(e){return null;}}
+function persistSave(slot='manual',quiet=false){
+ const save=snapshot();if(!save){if(!quiet)saveStatus('Start et spill før du lagrer.',false);return false;}
+ try{localStorage.setItem(SAVE_KEYS[slot],JSON.stringify(save));if(!quiet){saveStatus('✅ Spill lagret!');toast('💾 LAGRING OK',1.1);}refreshSaveSlots();return true;}
+ catch(err){if(!quiet){saveStatus('Nettleseren blokkerte lokal lagring. Bruk EKSPORTER SAVE.',false);toast('⚠ LAGRING BLOKKERT',2);}return false;}
+}
+function saveStatus(msg,ok=true){$('saveStatus').textContent=msg;$('saveStatus').style.color=ok?'#9fffd0':'#ffacb9';}
+function isValidSave(data){
+ if(!data||typeof data!=='object'||data.schema!==1||!data.game||!Array.isArray(data.players)||data.players.length!==1)return false;
+ const g=data.game,p=data.players[0];
+ return ['blue','metal'].includes(g.character)&&DIFFICULTIES[g.difficulty]&&
+  Number.isInteger(g.wave)&&g.wave>=1&&g.wave<=MAX_WAVES&&
+  Number.isFinite(g.score)&&g.score>=0&&Number.isFinite(g.credits)&&g.credits>=0&&
+  Array.isArray(g.ownedWeapons)&&g.ownedWeapons.includes('pulse')&&g.ownedWeapons.every(w=>WEAPONS.some(x=>x.id===w))&&
+  typeof g.weapon==='string'&&g.ownedWeapons.includes(g.weapon)&&
+  Number.isFinite(p.hp)&&Number.isFinite(p.maxHp)&&p.maxHp>0&&
+  ['playing','runner','paused','upgrade','runnerFail'].includes(g.state)&&
+  ['playing','runner'].includes(g.pausedFrom||'playing')&&
+  ['object'].includes(typeof g.abilities)&&g.abilities!==null&&
+  ['object'].includes(typeof g.upgrades)&&g.upgrades!==null&&
+  (!['runner','runnerFail'].includes(g.state)&&!(g.state==='paused'&&g.pausedFrom==='runner')||g.runner&&typeof g.runner==='object'&&Array.isArray(g.runner.obstacles));
+}
+function restoreSave(data){
+ if(!isValidSave(data)){saveStatus('Denne lagringsfilen er ugyldig eller inkompatibel.',false);return false;}
+ const g=data.game;
+ game={...game,...g};game.version='4.1.0';game.last=0;
+ game.credits=Math.floor(game.credits);
+ game.ownedWeapons=[...new Set(game.ownedWeapons)];
+ selectedCharacter=game.character;selectedDifficulty=game.difficulty;
+ updateSelection();
+ const img=selectedCharacter==='blue'?imgBlue:imgMetal;
+ players=data.players.map(p=>({...p,img}));
+ enemies=Array.isArray(data.enemies)?data.enemies:[];
+ bullets=Array.isArray(data.bullets)?data.bullets:[];
+ drops=Array.isArray(data.drops)?data.drops:[];
+ hazards=Array.isArray(data.hazards)?data.hazards:[];
+ trails=Array.isArray(data.trails)?data.trails:[];
+ particles=Array.isArray(data.particles)?data.particles:[];
+ floaters=Array.isArray(data.floaters)?data.floaters:[];
+ rings=Array.isArray(data.rings)?data.rings:[];
+ effects=Array.isArray(data.effects)?data.effects:[];
+ for(const key of Object.keys(KEYS))KEYS[key]=false;
+ if(game.state==='playing'||game.state==='runner'){game.pausedFrom=game.state;game.state='paused';}
+ if(game.state==='upgrade'){game.offered=(game.offered||[]).map(u=>upgradePool.find(x=>x.id===u.id)).filter(Boolean);if(!game.offered.length)game.offered=upgradePool.slice(0,3);renderUpgradeChoices(game.offered);}
+ if(game.state==='runnerFail'){
+  const r=game.runner;
+  const lost=r?.losses?.[r.losses.length-1];
+  $('runnerLost').textContent=lost?.name||'EN SPESIALEVNE';
+  $('runnerFailureText').textContent='HP UENDRET · Forsøk '+(r?.attempts||0)+' · Trykk prøv igjen';
+  $('runnerAbilities').replaceChildren();
+  PORTAL_SKILLS.forEach(a=>{const span=document.createElement('span');span.textContent=a.icon+' '+a.name;span.className=game.abilities[a.id]?'':'lost';$('runnerAbilities').append(span);});
+ }
+ let oldRecord=0;try{oldRecord=Number(localStorage.getItem('kaosduo_record')||0);}catch(e){}game.record=Math.max(game.record,oldRecord);
+ $('record').textContent=formatPoints(game.record);
+ musicStep=0;musicNextTime=0;startMusic();
+ if(game.state==='paused')showOverlay('pausePanel');
+ else if(game.state==='upgrade')showOverlay('upgrade');
+ else if(game.state==='runnerFail')showOverlay('runnerFailPanel');
+ toast('📂 LAGRING LASTET INN!',2);
+ saveStatus('✅ Spill lastet inn!');
+ return true;
+}
+function loadSave(slot){
+ const data=storageSlot(slot);
+ if(!data){saveStatus('Ingen lagring i denne plassen.',false);return;}
+ restoreSave(data);
+}
+function refreshSaveSlots(){
+ for(const slot of ['manual','auto']){
+  const save=storageSlot(slot),id=slot==='manual'?'manualSaveInfo':'autoSaveInfo';
+  if(!save||!isValidSave(save)){$(id).textContent='Tom lagringsplass';continue;}
+  const date=new Date(save.savedAt);
+  const stamp=Number.isNaN(date.getTime())?'Ukjent tid':date.toLocaleString('nb-NO');
+  $(id).textContent=stamp+' · '+(save.game.character==='metal'?'🎸 Metal':'❄️ Blå')+' · Bølge '+save.game.wave+'/10 · '+formatPoints(save.game.credits)+' butikkpoeng · '+save.game.ownedWeapons.length+' våpen';
+ }
+ $('saveManual').disabled=!players.length||game.state==='menu';
+ $('exportSave').disabled=!players.length||game.state==='menu';
+ $('loadManual').disabled=!storageSlot('manual');$('loadAuto').disabled=!storageSlot('auto');
+}
+function openSavePanel(){
+ if(game.state==='playing'||game.state==='runner')togglePause(true);
+ savePanelBack=game.state==='menu'?'menu':game.state==='upgrade'?'upgrade':game.state==='runnerFail'?'runnerFailPanel':game.state==='shop'?'shopPanel':'pausePanel';
+ refreshSaveSlots();showOverlay('savePanel');saveStatus('Velg en lagringsplass eller importer en .json-fil.');
+}
+function closeSavePanel(){showOverlay(savePanelBack);}
+function exportSaveFile(){
+ const data=snapshot();if(!data){saveStatus('Start et spill før du eksporterer.',false);return;}
+ const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+ const href=URL.createObjectURL(blob),a=document.createElement('a');
+ a.href=href;a.download='KAOSDUO_v4.1_'+game.character+'_wave'+game.wave+'.json';document.body.appendChild(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(href),3000);saveStatus('✅ Lagringsfil eksportert!');
+}
+async function importSaveFile(file){
+ if(!file)return;
+ if(file.size>3*1024*1024){saveStatus('Filen er for stor (maks 3 MB).',false);return;}
+ try{const data=JSON.parse(await file.text());if(isValidSave(data))restoreSave(data);else saveStatus('Ukjent eller ødelagt KAOSDUO-lagring.',false);}
+ catch(e){saveStatus('Kunne ikke lese JSON-lagringsfil.',false);}
 }
 function update(dt){
  game.time+=dt;game.shake=Math.max(0,game.shake-40*dt);game.flash=Math.max(0,game.flash-1.6*dt);game.superFlash=Math.max(0,game.superFlash-1.25*dt);
@@ -541,7 +818,7 @@ function update(dt){
  if(game.spawnLeft<=0&&!enemies.length&&(!bossType||game.bossSpawned)){
   if(game.wave===MAX_WAVES){finish(true);return;}
   if(game.waveDelay<0){game.waveDelay=2.7;toast('✅ BØLGE '+game.wave+' KLART! NESTE: PORTAL RUN!',2);
-    const p=players[0];if(p.alive)p.hp=clamp(p.hp+12,0,p.maxHp);game.score+=game.wave*70;}
+    const p=players[0];if(p.alive)p.hp=clamp(p.hp+12,0,p.maxHp);awardPoints(game.wave*70);}
   game.waveDelay-=dt;if(game.waveDelay<=0)beginPortalRun();
  }
 }
@@ -683,7 +960,7 @@ function drawEnemy(e,t){
  ctx.restore();ctx.shadowBlur=0;
  if(BOSS_LABELS[e.kind]&&e.hp>0){const ww=210;fillRect(e.x-ww/2,e.y-e.r-49,ww,11,'#1c132b');fillRect(e.x-ww/2,e.y-e.r-49,ww*clamp(e.hp/e.maxHp,0,1),11,COLORS[e.kind]);}
 }
-function drawBullets(t){for(const b of bullets){ctx.save();ctx.translate(b.x,b.y);ctx.shadowBlur=18;ctx.shadowColor=b.kind==='enemy'?'#ff8765':b.kind==='pulse'?'#7ceaff':b.kind==='rail'?'#fff5a2':b.kind==='rocket'?'#ff7cb8':b.kind==='arc'?'#aba0ff':b.kind==='drone'?'#ffe082':'#ffa267';if(b.kind==='pulse'){ctx.fillStyle='#defaff';ctx.beginPath();ctx.arc(0,0,b.r,0,Math.PI*2);ctx.fill();fillRect(-4,-5,9,6,'#74c8f5');fillRect(1,3,5,4,'#86bcf8');}else if(['rail','rocket','arc','scatter'].includes(b.kind)){ctx.fillStyle=b.kind==='rail'?'#fff4ab':b.kind==='rocket'?'#ff82cb':b.kind==='arc'?'#b5a1ff':'#ffbf81';ctx.beginPath();ctx.arc(0,0,b.r,0,Math.PI*2);ctx.fill();ctx.fillStyle='#fff';ctx.fillRect(-3,-3,6,6);}else if(b.kind==='drone'){ctx.fillStyle='#ffe787';ctx.beginPath();ctx.arc(0,0,b.r,0,Math.PI*2);ctx.fill();}else if(b.kind==='note'){ctx.fillStyle='#ff90ee';ctx.font='bold 29px system-ui';ctx.fillText('♫',-13,9);}else{ctx.fillStyle='#ff8b60';ctx.beginPath();ctx.arc(0,0,b.r,0,Math.PI*2);ctx.fill();fillRect(-4,-5,8,8,'#fff0ab');}ctx.restore();}}
+function drawBullets(t){for(const b of bullets){ctx.save();ctx.translate(b.x,b.y);ctx.shadowBlur=18;ctx.shadowColor=b.kind==='enemy'?'#ff8765':b.kind==='pulse'?'#7ceaff':b.kind==='rail'?'#fff5a2':b.kind==='rocket'?'#ff7cb8':b.kind==='arc'?'#aba0ff':b.kind==='drone'?'#ffe082':'#ffa267';if(b.kind==='pulse'){ctx.fillStyle='#defaff';ctx.beginPath();ctx.arc(0,0,b.r,0,Math.PI*2);ctx.fill();fillRect(-4,-5,9,6,'#74c8f5');fillRect(1,3,5,4,'#86bcf8');}else if(['rail','rocket','arc','scatter','frost','minigun','prism'].includes(b.kind)){ctx.fillStyle=b.kind==='rail'?'#fff4ab':b.kind==='prism'?'#efb4ff':b.kind==='frost'?'#a8f8ff':b.kind==='minigun'?'#ffbd74':b.kind==='rocket'?'#ff82cb':b.kind==='arc'?'#b5a1ff':'#ffbf81';ctx.beginPath();ctx.arc(0,0,b.r,0,Math.PI*2);ctx.fill();ctx.fillStyle='#fff';ctx.fillRect(-3,-3,6,6);}else if(b.kind==='drone'){ctx.fillStyle='#ffe787';ctx.beginPath();ctx.arc(0,0,b.r,0,Math.PI*2);ctx.fill();}else if(b.kind==='note'){ctx.fillStyle='#ff90ee';ctx.font='bold 29px system-ui';ctx.fillText('♫',-13,9);}else{ctx.fillStyle='#ff8b60';ctx.beginPath();ctx.arc(0,0,b.r,0,Math.PI*2);ctx.fill();fillRect(-4,-5,8,8,'#fff0ab');}ctx.restore();}}
 function drawDrops(t){for(const d of drops){const bob=Math.sin(t*6+d.x)*5;ctx.save();ctx.shadowBlur=14;ctx.shadowColor=d.kind==='star'?'#ffe67a':d.kind==='heart'?'#ff6b9e':d.kind==='rage'?'#ffad64':'#65e9ff';ctx.font='bold 22px system-ui';ctx.textAlign='center';ctx.fillStyle='#fff';ctx.fillText(d.kind==='star'?'⭐':d.kind==='heart'?'❤️':d.kind==='rage'?'🔥':'⚡',d.x,d.y+bob);ctx.textAlign='left';ctx.restore();}}
 function drawVfx(){for(const p of particles){ctx.globalAlpha=clamp(p.ttl/.45,0,1);fillRect(p.x,p.y,p.size,p.size,p.color);}ctx.globalAlpha=1;for(const r of rings){ctx.save();ctx.globalAlpha=clamp(r.t/.55,0,1);ctx.strokeStyle=r.color;ctx.lineWidth=6;ctx.shadowBlur=20;ctx.shadowColor=r.color;ctx.beginPath();ctx.arc(r.x,r.y,r.r,0,Math.PI*2);ctx.stroke();ctx.restore();}
  for(const tr of trails){ctx.save();ctx.globalAlpha=clamp(tr.t/.22,0,1);ctx.strokeStyle=tr.color;ctx.lineWidth=4;ctx.shadowColor=tr.color;ctx.shadowBlur=12;ctx.beginPath();ctx.moveTo(tr.x1,tr.y1);ctx.lineTo(tr.x2,tr.y2);ctx.stroke();ctx.restore();}
@@ -704,7 +981,7 @@ function drawHUD(){
  ctx.fillStyle='#fff1ce';ctx.font='800 13px system-ui';ctx.fillText(game.rageTime>0?'RAGE '+game.rageTime.toFixed(1)+'s':'RAGE '+Math.floor(game.rage)+'%',280,130);
  fillRect(444,17,390,87,'#12122ce0');ctx.strokeStyle='#c9b0ff';ctx.lineWidth=2;ctx.strokeRect(444,17,390,87);
  ctx.textAlign='center';ctx.fillStyle='#ffe293';ctx.font='1000 25px system-ui';ctx.fillText('BØLGE '+game.wave+' / '+MAX_WAVES,640,47);
- ctx.fillStyle='#f3e9ff';ctx.font='900 16px system-ui';ctx.fillText('⭐ '+game.score.toLocaleString('nb-NO')+'   |   💀 '+game.kills,640,80);
+ ctx.fillStyle='#f3e9ff';ctx.font='900 16px system-ui';ctx.fillText('⭐ '+formatPoints(game.score)+'   |   💰 '+formatPoints(game.credits)+'   |   💀 '+game.kills,640,80);
  ctx.textAlign='left';
  fillRect(941,19,320,84,'#12122ce0');ctx.strokeStyle=game.difficulty==='insane'?'#ff5d7c':'#9581cf';ctx.strokeRect(941,19,320,84);
  ctx.fillStyle=game.difficulty==='insane'?'#ff8a9f':'#ffe09a';ctx.font='900 20px system-ui';ctx.fillText('⚔ '+diff.label,961,50);
@@ -713,8 +990,8 @@ function drawHUD(){
  const chosen=activeWeapon();
  fillRect(365,114,566,45,'#090c25e9');ctx.strokeStyle=chosen.color;ctx.lineWidth=2;ctx.strokeRect(365,114,566,45);
  ctx.font='900 17px system-ui';ctx.fillStyle=chosen.color;
- ctx.fillText('VÅPEN '+(WEAPONS.findIndex(w=>w.id===chosen.id)+1)+'/5  '+chosen.icon+' '+chosen.name,381,140);
- ctx.fillStyle='#e2d4fa';ctx.font='12px system-ui';ctx.fillText('TRYKK 1–5 FOR Å BYTTE',706,141);
+ ctx.fillText('VÅPEN '+(WEAPONS.findIndex(w=>w.id===chosen.id)+1)+'/8  '+chosen.icon+' '+chosen.name,381,140);
+ ctx.fillStyle='#e2d4fa';ctx.font='12px system-ui';ctx.fillText('1–8 KJØPTE VÅPEN · B BUTIKK',706,141);
  const dashLeft=Math.ceil(p.dashCd*10)/10;
  ctx.fillStyle='#fff2a3';ctx.font='900 15px system-ui';ctx.fillText('⚡ DASH '+(!game.abilities.dash?'TAPT':p.dashCd>0?dashLeft.toFixed(1)+'s':'KLAR'),24,183);
  drawCombatAbilities();
@@ -794,7 +1071,7 @@ function beginPortalRun(){
   hasMiniBoss,miniBoss:{hp:bossHp,maxHp:bossHp,defeated:false,fireCd:1.1,bullets:[],sparks:[],time:0},
   portalShots:[],portalFireCd:0,modeFlash:0,modeBanner:'KUBE-MODUS'};
  game.state='runner';game.rageTime=0;game.rage=game.abilities.overdrive?game.rage:0;
- showOverlay(null);sfx('wave');toast('🚀 PORTAL '+game.wave+'/9 · KUBE → FLY → GRAVITASJON'+(hasMiniBoss?' · ⚠ MINI-BOSS!':''),2.5);
+ showOverlay(null);persistSave('auto',true);sfx('wave');toast('🚀 PORTAL '+game.wave+'/9 · KUBE → FLY → GRAVITASJON'+(hasMiniBoss?' · ⚠ MINI-BOSS!':''),2.5);
 }
 function portalJump(){
  if(game.state!=='runner'||!game.runner)return;
@@ -857,13 +1134,13 @@ function failPortalRun(){
  $('runnerLost').textContent=lost?`${lost.icon} ${lost.name}`:'INGEN EVNER IGJEN';
  $('runnerFailureText').textContent=`${lost?lost.detail:'Alle fire spesialevnene er allerede mistet.'}  ·  HP UENDRET!  ·  Forsøk ${r.attempts}  ·  ${Math.round(100*r.distance/r.length)} % fullført`;
  $('runnerAbilities').innerHTML=PORTAL_SKILLS.map(x=>`<span class="${game.abilities[x.id]?'':'lost'}">${x.icon} ${x.name} ${game.abilities[x.id]?'✓':'✕'}</span>`).join('');
- showOverlay('runnerFailPanel');sfx('lose');
+ showOverlay('runnerFailPanel');persistSave('auto',true);sfx('lose');
 }
 function completePortalRun(){
  if(game.state!=='runner')return;
  const r=game.runner;
  const completed=r.fromWave;
- game.score+=150+completed*55+Math.max(0,4-r.attempts)*100;
+ awardPoints(150+completed*55+Math.max(0,4-r.attempts)*100);
  game.state='playing';game.runner=null;game.combo=0;game.comboTime=0;
  // startWave() increments wave once; no automatic wave skipping.
  startWave();showOverlay(null);
@@ -938,7 +1215,7 @@ function updatePortalRun(dt){
     b.dead=true;boss.hp-=14+Math.floor(r.fromWave/3)*2;
     game.shake=Math.max(game.shake,5);
     if(boss.hp<=0){
-     boss.hp=0;boss.defeated=true;r.phase='course';game.score+=600+r.fromWave*100;
+     boss.hp=0;boss.defeated=true;r.phase='course';awardPoints(600+r.fromWave*100);
      r.portalShots=[];boss.bullets=[];
      toast('💥 PORTAL SENTINEL KNUST! +BONUS!',2.2);sfx('power');
      break;
@@ -1270,9 +1547,26 @@ function updateSelection(){
   const active=el.dataset.character===selectedCharacter;el.setAttribute('aria-pressed',String(active));el.querySelector('.pick-status').textContent=active?'✓ VALGT':'';
  }
  for(const el of document.querySelectorAll('[data-difficulty]'))el.setAttribute('aria-pressed',String(el.dataset.difficulty===selectedDifficulty));
+ $('musicBanner').textContent=selectedCharacter==='metal'?'🎸 METAL: Infernal Riff — original tung riff-musikk':'❄️ BLÅ: Cozy Fjord — rolig, koselig originalmusikk';
 }
-for(const el of document.querySelectorAll('[data-character]'))el.addEventListener('click',()=>{selectedCharacter=el.dataset.character;updateSelection();sfx('xp');});
+for(const el of document.querySelectorAll('[data-character]'))el.addEventListener('click',()=>{selectedCharacter=el.dataset.character;updateSelection();musicStep=0;musicNextTime=0;sfx('xp');});
 for(const el of document.querySelectorAll('[data-difficulty]'))el.addEventListener('click',()=>{selectedDifficulty=el.dataset.difficulty;updateSelection();sfx('xp');});
+$('menuLoad').addEventListener('click',openSavePanel);
+$('pauseShop').addEventListener('click',weaponShop);
+$('pauseSave').addEventListener('click',openSavePanel);
+$('upgradeSave').addEventListener('click',openSavePanel);
+$('runnerFailSave').addEventListener('click',openSavePanel);
+$('shopBtn').addEventListener('click',weaponShop);
+$('closeShop').addEventListener('click',closeWeaponShop);
+$('saveBtn').addEventListener('click',openSavePanel);
+$('quickSave').addEventListener('click',()=>{if(game.state==='playing'||game.state==='runner')togglePause(true);persistSave('manual');});
+$('closeSavePanel').addEventListener('click',closeSavePanel);
+$('saveManual').addEventListener('click',()=>persistSave('manual'));
+$('loadManual').addEventListener('click',()=>loadSave('manual'));
+$('loadAuto').addEventListener('click',()=>loadSave('auto'));
+$('exportSave').addEventListener('click',exportSaveFile);
+$('importSave').addEventListener('click',()=>$('saveFileInput').click());
+$('saveFileInput').addEventListener('change',e=>{importSaveFile(e.target.files?.[0]);e.target.value='';});
 $('start').addEventListener('click',()=>reset());
 updateSelection();
 $('resume').addEventListener('click',()=>togglePause(false));
@@ -1288,7 +1582,7 @@ $('runnerFireButton').addEventListener('pointerdown',e=>{e.preventDefault();port
 for(const eventType of ['pointerup','pointercancel','lostpointercapture'])$('runnerFireButton').addEventListener(eventType,()=>{KEYS.portalFire=false;});
 canvas.addEventListener('pointerdown',()=>{if(game.state==='runner')portalJump();});
 canvas.addEventListener('pointerup',()=>{KEYS.portalThrust=false;});
-$('weaponCycle').addEventListener('click',()=>{if(game.state==='playing')equipWeapon(WEAPONS.findIndex(w=>w.id===game.weapon)+1);});
+$('weaponCycle').addEventListener('click',cycleOwnedWeapon);
 
 $('mute').addEventListener('click',setAudio);
 window.addEventListener('keydown',event=>{
@@ -1297,12 +1591,15 @@ window.addEventListener('keydown',event=>{
   KEYS[k]=true;
   if(event.repeat)return;
   if((k==='p'||k==='P'||k==='Escape')&&['playing','runner','paused'].includes(game.state))togglePause();
+  else if(k==='Escape'&&game.state==='shop')closeWeaponShop();
   if(k==='m'||k==='M')setAudio();
   if(game.state==='runner'&&['w','W','ArrowUp',' ','Spacebar'].includes(k))portalJump();
   if(game.state==='runnerFail'&&['Enter',' ','Spacebar'].includes(k))retryPortalRun();
   if(game.state==='upgrade'&&['1','2','3'].includes(k)){const u=game.offered[Number(k)-1];if(u)selectUpgrade(u);}
   if(game.state==='playing'&&['g','G','l','L'].includes(k))doSuper(players[0]);
-  if(game.state==='playing'&&['1','2','3','4','5'].includes(k))equipWeapon(Number(k)-1);
+  if(game.state==='playing'&&['1','2','3','4','5','6','7','8'].includes(k))equipWeapon(Number(k)-1);
+  if(['b','B'].includes(k)&&['playing','paused'].includes(game.state))weaponShop();
+  if(['l','L'].includes(k)&&['playing','runner','paused','menu'].includes(game.state))openSavePanel();
   if(game.state==='runner'&&['x','X','f','F','k','K'].includes(k))portalFire();
   if(game.state==='menu'&&k==='Enter'&&event.target.tagName!=='BUTTON')reset();
   if(game.state==='end'&&(k==='Enter'||k==='r'||k==='R'))reset();
@@ -1315,7 +1612,7 @@ for(const btn of document.querySelectorAll('[data-touch]')){
  btn.addEventListener('pointerdown',e=>{e.preventDefault();KEYS[k]=true;btn.setPointerCapture(e.pointerId);});
  for(const typ of ['pointerup','pointercancel','lostpointercapture'])btn.addEventListener(typ,e=>{e.preventDefault();KEYS[k]=false;});
 }
-showOverlay('menu');requestAnimationFrame(frame);
+showOverlay('menu');refreshSaveSlots();requestAnimationFrame(frame);
 
 </script>
 </body>
