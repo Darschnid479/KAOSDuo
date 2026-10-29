@@ -2,17 +2,21 @@
 
 # 💠 KAOSDUO: PORTAL RUN
 
-### SOLO EDITION · v2.1.0 · PIXEL-ART ACTION + NEON PLATFORMING
+### SOLO EDITION · v3.0.0 · PIXEL-ART ACTION + NEON PLATFORMING
 
 **10 combat waves. 9 cube intermissions. 3 bosses. One hero. Every mistake costs a power.**
 
 [![Play](https://img.shields.io/badge/PLAY-IN_BROWSER-77FFEA?style=for-the-badge&labelColor=19152C)](https://darschnid479.github.io/KAOSDuo/play/)
-[![Latest release](https://img.shields.io/badge/DOWNLOAD-v2.1.0-FF9F83?style=for-the-badge&labelColor=19152C)](https://github.com/Darschnid479/KAOSDuo/releases/tag/v2.1.0)
+[![Latest release](https://img.shields.io/badge/DOWNLOAD-v3.0.0-FF9F83?style=for-the-badge&labelColor=19152C)](https://github.com/Darschnid479/KAOSDuo/releases/tag/v3.0.0)
 [![Mode](https://img.shields.io/badge/MODE-100%25_SOLO-AD9AFF?style=for-the-badge&labelColor=19152C)](#gameplay)
 
 ![Actual in-game Portal Run with cube, spikes and neon saw](assets/portal_wave9.webp)
 
 </div>
+
+## ✨ NEW IN v3.0 — PORTAL FLASH
+
+The nine between-wave cube levels now have beat-reactive neon flashes, animated aurora bands, energetic particles, glowing cube trails, pulsing hazards, portal rings, and vibrant finish gates. Combat, difficulty modes and the loss-of-one-special-ability penalty remain unchanged.
 
 ## 🎮 About the game
 
@@ -28,7 +32,7 @@
 - **True ability-loss mechanic:** losing a portal attempt disables one available power for the rest of the run; never costs health.
 - **4 difficulty levels:** Lett, Medium, Vanskelig and Drit Vanskelig.
 - **17 arena upgrades**, score combos, screen effects, double jump, dash and OVERDRIVE.
-- **Offline and touch controls:** runs in a modern browser, with Android-style touch controls in the browser. A native Android APK is NOT included in v2.1.
+- **Offline and touch controls:** runs in a modern browser, with Android-style touch controls in the browser. A native Android APK is NOT included in v3.0.
 
 ## ⚡ Portal penalties
 
@@ -58,9 +62,9 @@ On touch devices, the arena has movement/attack buttons and Portal Run has a sep
 
 ## 📦 Installation
 
-**Recommended offline download:** [KAOSDUO_PORTAL_RUN_v2.1.0.html](https://github.com/Darschnid479/KAOSDuo/releases/download/v2.1.0/KAOSDUO_PORTAL_RUN_v2.1.0.html). Double-click to open in Chrome, Edge or Firefox. All assets are embedded; no installation or internet connection required.
+**Recommended offline download:** [KAOSDUO_PORTAL_FLASH_v3.0.0.html](https://github.com/Darschnid479/KAOSDuo/releases/download/v3.0.0/KAOSDUO_PORTAL_FLASH_v3.0.0.html). Double-click to open in Chrome, Edge or Firefox. All assets are embedded; no installation or internet connection required.
 
-Alternatively download the [complete offline ZIP](https://github.com/Darschnid479/KAOSDuo/releases/download/v2.1.0/KAOSDUO_PORTAL_RUN_v2.1.0_OFFLINE.zip).
+Alternatively download the [complete offline ZIP](https://github.com/Darschnid479/KAOSDuo/releases/download/v3.0.0/KAOSDUO_PORTAL_FLASH_v3.0.0_OFFLINE.zip).
 
 **Web play:** `play/index.html` (requires `assets/blue.webp` and `assets/metal.webp`). The GitHub Pages site requires Pages deployment to be enabled by the repository owner.
 
@@ -87,7 +91,7 @@ Alternatively download the [complete offline ZIP](https://github.com/Darschnid47
 
 ## 🧪 Verification
 
-Portal collision, all nine transitions, HP preservation, ability removal, pause/resume and mobile touch controls were exercised with automated Chromium testing. The 9 courses were also completed in a gameplay simulation at all four difficulty levels (36 course completions). No claim is made that an Android APK was tested or released for v2.1.
+Portal collision, all nine transitions, HP preservation, ability removal, pause/resume and mobile touch controls were exercised with automated Chromium testing. The 9 courses were also completed in a gameplay simulation at all four difficulty levels (36 course completions). No claim is made that an Android APK was tested or released for v3.0.
 
 ---
 

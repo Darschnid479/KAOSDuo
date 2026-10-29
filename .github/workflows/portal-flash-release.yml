@@ -1,0 +1,49 @@
+name: Publish KAOSDUO PORTAL FLASH v3.0.0
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'dist/KAOSDUO_PORTAL_FLASH_v3.0.0.html'
+      - 'dist/KAOSDUO_PORTAL_FLASH_v3.0.0_OFFLINE.zip'
+      - '.github/workflows/portal-flash-release.yml'
+      - 'RELEASE_NOTES.md'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate offline build
+        run: |
+          python3 - <<'PYVALIDATE'
+          from pathlib import Path
+          from zipfile import ZipFile
+          html=Path('dist/KAOSDUO_PORTAL_FLASH_v3.0.0.html').read_text()
+          assert 'data:image/webp;base64,' in html
+          assert 'function drawPortalRun(t)' in html
+          assert 'const pulseFast=' in html
+          assert 'game.abilities' in html and 'failPortalRun' in html
+          assert '../assets/' not in html
+          with ZipFile('dist/KAOSDUO_PORTAL_FLASH_v3.0.0_OFFLINE.zip') as z:
+              assert z.testzip() is None
+              assert 'KAOSDUO_PORTAL_FLASH_v3.0.0.html' in z.namelist()
+              assert 'README.md' in z.namelist()
+          PYVALIDATE
+      - name: Generate SHA-256 checksums
+        run: |
+          cd dist
+          sha256sum KAOSDUO_PORTAL_FLASH_v3.0.0.html KAOSDUO_PORTAL_FLASH_v3.0.0_OFFLINE.zip > SHA256SUMS.txt
+      - name: Create or update official v3.0.0 release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view v3.0.0 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload v3.0.0 dist/KAOSDUO_PORTAL_FLASH_v3.0.0.html dist/KAOSDUO_PORTAL_FLASH_v3.0.0_OFFLINE.zip dist/SHA256SUMS.txt --clobber --repo "$GITHUB_REPOSITORY"
+          else
+            gh release create v3.0.0 dist/KAOSDUO_PORTAL_FLASH_v3.0.0.html dist/KAOSDUO_PORTAL_FLASH_v3.0.0_OFFLINE.zip dist/SHA256SUMS.txt --title 'KAOSDUO: PORTAL FLASH v3.0.0' --notes-file RELEASE_NOTES.md --target "$GITHUB_SHA" --latest --repo "$GITHUB_REPOSITORY"
+          fi

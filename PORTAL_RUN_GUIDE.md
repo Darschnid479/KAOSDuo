@@ -1,4 +1,4 @@
-# KAOSDUO: PORTAL RUN 2.1.0
+# KAOSDUO: PORTAL RUN 3.0.0
 
 ## Spilleregler
 
@@ -21,6 +21,10 @@ P / Escape = pause. M = slå lyden av/på. Etter krasj: Enter, mellomrom eller P
 
 ## Installering
 
-Åpne `KAOSDUO_PORTAL_RUN_v2.1.0.html` i Chrome, Edge eller Firefox på PC. Filen inneholder både spillmotoren og all karaktergrafikk og kan spilles uten internett. Ingen installasjon.
+Åpne `KAOSDUO_PORTAL_FLASH_v3.0.0.html` i Chrome, Edge eller Firefox på PC. Filen inneholder både spillmotoren og all karaktergrafikk og kan spilles uten internett. Ingen installasjon.
 
 Det finnes ingen ny APK i denne releasen. Den tidligere Android-betaen er ikke dette spillet.
+
+## New in v3.0.0
+
+Neon color flashes, animated energy rings, reactive grid floor, sparkling particles, glowing cube and finish-line effects. Flashing lights warning for photosensitive players.
