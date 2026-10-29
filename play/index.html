@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 <meta name="theme-color" content="#111028">
 <meta name="description" content="KAOSDUO: OVERDRIVE — 10 combat waves, five weapons, cube jumps, rocket flight, gravity flips and a 25 percent portal miniboss chance.">
-<title>KAOSDUO: HYPERDRIVE — v4.1.0 | Save, Shop & Soundtracks</title>
+<title>KAOSDUO: HYPERDRIVE — v4.2.0 | Save, Shop & Soundtracks</title>
 <style>
 :root { --pink:#ff5c9a; --cyan:#60f2fc; --gold:#ffe080; --ink:#111128; --light:#f4f1ff; }
 * { box-sizing:border-box; }
@@ -122,6 +122,17 @@ h1 span{color:#ffe27b;filter:drop-shadow(0 0 11px #ffa75e77)}
 #toolbar{flex-wrap:wrap;justify-content:end;max-width:min(90%,600px)}#toolbar button{background:#242a50df;border-color:#8ea9de;font-size:11px}
 @media(max-width:780px){.shop-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.shop-panel,.save-panel{padding:14px}.shop-item{min-height:145px}.save-slot{flex-direction:column;align-items:stretch}.slot-actions button{flex:1}}
 @media(max-width:500px){.shop-grid{gap:6px}.shop-item{padding:8px}.shop-item h3{font-size:12px}.save-slot{padding:9px}.shop-panel h2,.save-panel h2{font-size:24px}#toolbar button{padding:6px 8px;font-size:9px}}
+
+/* v4.2 automatic coin shop prompt between waves */
+.wave-shop-panel{width:min(95%,740px);padding:clamp(18px,3vw,34px);border:2px solid #ffdc79;box-shadow:0 0 65px #fdb8504b,0 0 110px #7c54fa40;background:linear-gradient(145deg,#21284e,#17152e 65%,#392042)}
+.wave-shop-panel h2{font-size:clamp(25px,4vw,49px);line-height:1.08;color:#ffe8a6;margin:10px 0}
+.wave-shop-panel p{font-size:clamp(13px,1.45vw,19px);line-height:1.5;color:#e8e4ff}
+.wave-shop-coins{font-size:clamp(22px,3.6vw,40px);font-weight:1000;color:#ffde79;filter:drop-shadow(0 0 18px #ffb45d88)}
+.wave-shop-suggest{background:#34476a88;border:1px solid #84f3ff77;border-radius:12px;padding:11px;margin:13px auto;max-width:580px;color:#a9fff6!important}
+.wave-shop-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:18px 0 10px}
+.wave-shop-actions button{font-size:clamp(13px,1.5vw,19px);min-width:185px;min-height:52px}
+#waveShopNo{border:2px solid #9ab0d9;background:#252e57;color:#fff}
+@media(max-width:620px){.wave-shop-actions button{min-width:100%;min-height:44px}.wave-shop-panel{max-height:94%;overflow:auto}}
 </style>
 </head>
 <body>
@@ -130,9 +141,9 @@ h1 span{color:#ffe27b;filter:drop-shadow(0 0 11px #ffa75e77)}
 <div id="toast" aria-live="polite"></div>
 <div class="overlay" id="menu">
   <div class="panel">
-    <p class="eyebrow">⚡ VERSION 4.1 / SOUNDTRACK & ARMORY EDITION ⚡</p>
-    <h1>KAOS<span>DUO</span></h1><div class="kicker">🎸 ARMORY & SOUNDTRACK UPDATE ❄️</div>
-    <p class="subtitle">10 kampbølger, 8 våpen å låse opp med butikkpoeng og 9 reiser med KUBE, FLYVING og TYNGDEKRAFT-SKIFT! 25 % sjanse for PORTAL MINIBOSS. Kollisjon = mist én spesialevne, aldri HP. Kun solo.</p>
+    <p class="eyebrow">⚡ VERSION 4.2 / PORTAL AMBUSH EDITION ⚡</p>
+    <h1>KAOS<span>DUO</span></h1><div class="kicker">⚡ PORTAL AMBUSH & COIN SHOP ⚡</div>
+    <p class="subtitle">10 kampbølger, 8 våpen å låse opp med butikkpoeng og 9 reiser med KUBE, FLYVING og TYNGDEKRAFT-SKIFT! 25 % sjanse for PLUTSELIG SKYTEBOSS MIDT I PORTALEN. Kollisjon = mist én spesialevne, aldri HP. Kun solo.</p>
     <div class="selection-heading">1 — VELG KARAKTER</div>
     <div class="hero-choices" role="group" aria-label="Velg en karakter">
       <button class="hero-choice" type="button" data-character="blue" aria-pressed="true"><img src="../assets/blue.webp" alt=""><span class="hero-meta"><span class="hero-name">❄️ BLÅ</span><span class="hero-desc">Frostangrep + rolig, koselig originalmusikk.</span><span class="pick-status">✓ VALGT</span></span></button>
@@ -148,7 +159,7 @@ h1 span{color:#ffe27b;filter:drop-shadow(0 0 11px #ffa75e77)}
     <div class="actions"><button id="start" class="primary start-button">▶ START NYTT SPILL</button><button id="menuLoad" class="secondary" type="button">💾 LAST INN</button></div>
     <div class="music-banner" id="musicBanner">❄️ BLÅ: Cozy Fjord — avslappende, original chiptune</div>
     <div class="controls"><div><strong>STYRING:</strong> A/D = GÅ · W = HOPP · F = SKYT · G = SUPER · 1–8 = KJØPTE VÅPEN · B = VÅPENBUTIKK · L = SAVE / LOAD · PORTAL: HOLD FOR Å FLY, TRYKK FOR Å SNU TYNGDEKRAFT · X = SKYT PÅ MINIBOSS</div></div>
-    <p class="small">100 % SOLO · 8 VÅPEN · VÅPENBUTIKK · SAVE / LOAD · 3 PORTALFORMER · 25 % MINIBOSS · KRASJ = MIST EN EVNE · P/Esc pause · M lyd · Rekord: <strong id="record">0</strong></p>
+    <p class="small">100 % SOLO · 8 VÅPEN · VÅPENBUTIKK · SAVE / LOAD · 3 PORTALFORMER · 25 % MIDT-I-PORTALEN SKYTEMODUS · KRASJ = MIST EN EVNE · P/Esc pause · M lyd · Rekord: <strong id="record">0</strong></p>
   </div>
 </div>
 <div class="overlay hidden" id="upgrade">
@@ -160,12 +171,20 @@ h1 span{color:#ffe27b;filter:drop-shadow(0 0 11px #ffa75e77)}
   <div class="runner-loss">⚡ MISTET EVNE: <strong id="runnerLost">–</strong></div>
   <p id="runnerFailureText">0 HP mistet · 0% progresjon</p>
   <div class="runner-ability-list" id="runnerAbilities"></div>
-  <p class="small">Kube = hopp · Skip = hold for å fly · Tyngdekraft = trykk for å snu. Miniboss kan dukke opp! Ingen HP-tap i portalene.</p>
+  <p class="small">Kube = hopp · Skip = hold for å fly · Tyngdekraft = trykk for å snu. Midt i portalen kan SKYTEMODUS plutselig starte! Ingen HP-tap i portalene.</p>
   <div class="actions"><button class="primary" id="retryRunner">↻ PRØV PORTALEN IGJEN</button><button id="runnerFailSave">💾 SAVE / LOAD</button><button id="runnerMenu">HOVEDMENY</button></div>
   <p class="small">Trykk Enter eller mellomrom for nytt forsøk.</p>
 </div></div>
 <div class="overlay hidden" id="endPanel"><div class="panel"><div class="eyebrow" id="endEyebrow">SPILL SLUTT</div><h2 id="endTitle">DET BLE KAOS!</h2><p id="endText"></p><div class="actions"><button class="primary" id="again">🔁 PRØV IGJEN</button><button id="endMenu">HOVEDMENY</button></div></div></div>
 
+<div class="overlay hidden" id="shopPrompt"><div class="panel wave-shop-panel">
+ <p class="eyebrow">💰 BØLGEN ER FULLFØRT!</p><h2>VIL DU KJØPE ET NYTT VÅPEN?</h2>
+ <div class="wave-shop-coins">🪙 <span id="waveShopCoins">0</span> MYNTER</div>
+ <p>Du tjener mynter ved å drepe monstre. Bruk dem på nye våpen før du tar portalreisen videre.</p>
+ <p class="wave-shop-suggest" id="waveShopSuggestion">Se hva du har råd til i våpenbutikken.</p>
+ <div class="wave-shop-actions"><button class="primary" id="waveShopYes">🛒 JA, VIS VÅPENBUTIKKEN</button><button id="waveShopNo">▶ NEI, GÅ TIL PORTALEN</button></div>
+ <button class="secondary" id="waveShopSave">💾 LAGRE / LAST INN</button>
+</div></div>
 <div class="overlay hidden" id="shopPanel"><div class="panel shop-panel">
   <p class="eyebrow">🛒 KAOSDUO VÅPENSMIE</p><h2>THE CHAOS ARMORY</h2>
   <p class="panel-lead">Tjen butikkpoeng ved å beseire fiender, samle stjerner og overleve portalreiser. Kjøpte våpen beholdes i denne spillrunden og i lagringsfilen.</p>
@@ -210,7 +229,7 @@ const palettes=[
  {sky1:'#0e1024',sky2:'#342978',mount:'#28224e',far:'#43368a',floor:'#2a2152',trim:'#e25ff9',moon:'#8ff7fa'},
  {sky1:'#081e30',sky2:'#134b5f',mount:'#143a4c',far:'#1d6570',floor:'#13354d',trim:'#58ffd1',moon:'#9affdf'}
 ];
-let game={state:'menu',mode:'solo',character:'blue',difficulty:'medium',wave:0,score:0,kills:0,combo:0,comboTime:0,level:1,xp:0,required:14,spawnLeft:0,spawnTimer:0,waveDelay:-1,time:0,shake:0,flash:0,superFlash:0,last:0,pendingWins:0,played:0,upgrades:{},stage:0,record:0,rage:0,rageTime:0,arenaHazard:8,impact:0,droneTimer:0,shards:0,version:"4.1.0",credits:0,ownedWeapons:["pulse"],weapon:'pulse',abilities:{dash:true,double:true,super:true,overdrive:true},portalFailures:0,runner:null,pausedFrom:"playing"};
+let game={state:'menu',mode:'solo',character:'blue',difficulty:'medium',wave:0,score:0,kills:0,combo:0,comboTime:0,level:1,xp:0,required:14,spawnLeft:0,spawnTimer:0,waveDelay:-1,time:0,shake:0,flash:0,superFlash:0,last:0,pendingWins:0,played:0,upgrades:{},stage:0,record:0,rage:0,rageTime:0,arenaHazard:8,impact:0,droneTimer:0,shards:0,version:"4.1.0",credits:0,ownedWeapons:["pulse"],weapon:'pulse',shopReturn:null,abilities:{dash:true,double:true,super:true,overdrive:true},portalFailures:0,runner:null,pausedFrom:"playing"};
 let players=[],enemies=[],bullets=[],particles=[],drops=[],floaters=[],rings=[],effects=[],hazards=[],trails=[];
 const BOSS_WAVES={4:'warden',7:'titan',10:'boss'};
 const BOSS_LABELS={warden:'THE GLITCH WARDEN',titan:'CRYSTAL TITAN',boss:'PORTAL KING'};
@@ -283,7 +302,7 @@ function awardPoints(amount){
  game.score+=pts;game.credits=(Number(game.credits)||0)+pts;
 }
 function recordScore(){if(game.score>game.record){game.record=game.score;try{localStorage.setItem('kaosduo_record',String(game.record));}catch(e){} $('record').textContent=game.record.toLocaleString('nb-NO');}}
-function showOverlay(which){['menu','upgrade','pausePanel','endPanel','runnerFailPanel','shopPanel','savePanel'].forEach(id=>$(id).classList.toggle('hidden',id!==which));$('touch').classList.toggle('hidden',which!==null||game.state!=='playing');$('runnerTouch').classList.toggle('hidden',which!==null||game.state!=='runner');}
+function showOverlay(which){['menu','upgrade','pausePanel','endPanel','runnerFailPanel','shopPanel','savePanel','shopPrompt'].forEach(id=>$(id).classList.toggle('hidden',id!==which));$('touch').classList.toggle('hidden',which!==null||game.state!=='playing');$('runnerTouch').classList.toggle('hidden',which!==null||game.state!=='runner');}
 function toast(message,secs=2){const el=$('toast');el.textContent=message;el.classList.add('visible');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('visible'),secs*1000);}
 function beep(freq=440,dur=.1,wave='square',volume=.055,slide=0){if(muted)return;try{audio??=new (window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume();const now=audio.currentTime;const osc=audio.createOscillator(),gain=audio.createGain();osc.type=wave;osc.frequency.setValueAtTime(freq,now);if(slide)osc.frequency.exponentialRampToValueAtTime(Math.max(40,freq+slide),now+dur);gain.gain.setValueAtTime(Math.max(.001,volume),now);gain.gain.exponentialRampToValueAtTime(.0001,now+dur);osc.connect(gain);gain.connect(audio.destination);osc.start(now);osc.stop(now+dur+.01);}catch(e){}}
 function sfx(type){if(muted)return;switch(type){case 'shoot1':beep(360,.055,'triangle',.035,-160);break;case 'shoot2':beep(240,.085,'sawtooth',.033,400);break;case 'hit':beep(110,.09,'sawtooth',.035,-65);break;case 'hurt':beep(170,.21,'square',.06,-120);break;case 'kill':beep(500,.08,'triangle',.034,180);break;case 'xp':beep(850,.08,'sine',.035,160);break;case 'power':beep(550,.25,'sawtooth',.08,620);setTimeout(()=>beep(950,.3,'triangle',.08,-220),85);break;case 'wave':beep(420,.14,'square',.045,250);setTimeout(()=>beep(650,.15,'square',.045,250),120);break;case 'boss':beep(90,.65,'sawtooth',.11,130);break;case 'dash':beep(530,.12,'sawtooth',.044,-390);break;case 'lose':beep(390,.45,'triangle',.07,-330);break;}}
@@ -364,7 +383,7 @@ function startMusic(){
 function createPlayer(id,x,image,hp){return {id,x,y:GROUND,vx:0,vy:0,img:image,hp,maxHp:hp,alive:true,facing:1,cooldown:0,invuln:0,special:35,shooting:0,speech:'',speechT:0,feetDust:0,dashCd:0,dashTime:0,jumps:0,wasJump:false,droneAngle:0,droneCd:0};}
 function reset(){
  const settings=DIFFICULTIES[selectedDifficulty];
- game.state='playing';game.mode='solo';game.character=selectedCharacter;game.difficulty=selectedDifficulty;game.wave=0;game.score=0;game.kills=0;game.combo=0;game.comboTime=0;game.level=1;game.xp=0;game.required=14;game.time=0;game.shake=0;game.flash=0;game.superFlash=0;game.pendingWins=0;game.upgrades={};game.stage=0;game.played=0;game.rage=0;game.rageTime=0;game.arenaHazard=8;game.impact=0;game.droneTimer=0;game.shards=0;game.abilities={dash:true,double:true,super:true,overdrive:true};game.weapon='pulse';game.ownedWeapons=['pulse'];game.credits=0;game.portalFailures=0;game.runner=null;game.pausedFrom="playing";
+ game.state='playing';game.mode='solo';game.character=selectedCharacter;game.difficulty=selectedDifficulty;game.wave=0;game.score=0;game.kills=0;game.combo=0;game.comboTime=0;game.level=1;game.xp=0;game.required=14;game.time=0;game.shake=0;game.flash=0;game.superFlash=0;game.pendingWins=0;game.upgrades={};game.stage=0;game.played=0;game.rage=0;game.rageTime=0;game.arenaHazard=8;game.impact=0;game.droneTimer=0;game.shards=0;game.abilities={dash:true,double:true,super:true,overdrive:true};game.weapon='pulse';game.ownedWeapons=['pulse'];game.credits=0;game.shopReturn=null;game.portalFailures=0;game.runner=null;game.pausedFrom="playing";
  enemies=[];bullets=[];particles=[];drops=[];floaters=[];rings=[];effects=[];hazards=[];trails=[];players=[createPlayer(selectedCharacter==='blue'?0:1,640,selectedCharacter==='blue'?imgBlue:imgMetal,settings.hp)];
  showOverlay(null);startMusic();startWave();}
 function say(p,message,duration=2){p.speech=message;p.speechT=duration;}
@@ -640,11 +659,29 @@ function togglePause(force){
 const SAVE_KEYS={manual:'kaosduo_v41_manual',auto:'kaosduo_v41_auto'};
 let savePanelBack='menu',shopPanelBack='pausePanel';
 function formatPoints(v){return Math.floor(Number(v)||0).toLocaleString('nb-NO');}
+function offerWaveShop(){
+ if(game.state!=='playing'||game.wave>=MAX_WAVES)return;
+ game.state='shopPrompt';game.shopReturn='portal';game.waveDelay=-1;
+ renderWaveShopPrompt();showOverlay('shopPrompt');persistSave('auto',true);
+ sfx('wave');
+}
+function renderWaveShopPrompt(){
+ $('waveShopCoins').textContent=formatPoints(game.credits);
+ const affordable=WEAPONS.filter(w=>!ownsWeapon(w.id)&&w.cost<=game.credits);
+ const next=WEAPONS.filter(w=>!ownsWeapon(w.id)).sort((a,b)=>a.cost-b.cost)[0];
+ $('waveShopSuggestion').textContent=affordable.length?`✅ Du har råd til ${affordable.length} nye våpen! Prøv ${affordable[0].name} eller spar til noe kraftigere.`:next?`Neste våpen: ${next.name} (${formatPoints(next.cost)} mynter). Du kan spare myntene til senere.`:'🎉 Du eier allerede alle våpnene!';
+}
+function departForPortal(){
+ if(game.state!=='shopPrompt')return;
+ game.state='playing';game.shopReturn=null;
+ beginPortalRun();
+}
 function weaponShop(){
- if(!['playing','paused'].includes(game.state))return;
+ if(!['playing','paused','shopPrompt'].includes(game.state))return;
  if(game.state==='paused'&&game.pausedFrom==='runner'){toast('🛒 VÅPENBUTIKKEN ÅPNER I KAMPBØLGENE',1.7);return;}
- shopPanelBack='pausePanel';
- if(game.state==='playing'){game.pausedFrom='playing';}
+ const fromPrompt=game.state==='shopPrompt';
+ game.shopReturn=fromPrompt?'portal':null;
+ if(game.state==='playing')game.pausedFrom='playing';
  game.state='shop';renderWeaponShop();showOverlay('shopPanel');
 }
 function renderWeaponShop(){
@@ -672,11 +709,11 @@ function renderWeaponShop(){
   card.append(icon,title,desc,action);grid.appendChild(card);
  }
 }
-function closeWeaponShop(){if(game.state!=='shop')return;game.state='paused';game.pausedFrom='playing';showOverlay('pausePanel');}
+function closeWeaponShop(){if(game.state!=='shop')return;if(game.shopReturn==='portal'){game.state='shopPrompt';renderWaveShopPrompt();departForPortal();return;}game.state='paused';game.pausedFrom='playing';showOverlay('pausePanel');}
 function snapshot(){
  if(!players.length||['menu','end'].includes(game.state))return null;
  const g={...game};
- if(g.state==='shop'){g.state='paused';g.pausedFrom='playing';}
+ if(g.state==='shop'){g.state=g.shopReturn==='portal'?'shopPrompt':'paused';g.pausedFrom='playing';}
  // Saving while a menu overlays the arena should never advance the world.
  g.last=0;
  return {schema:1,version:'4.1.0',savedAt:new Date().toISOString(),
@@ -699,11 +736,20 @@ function isValidSave(data){
   Array.isArray(g.ownedWeapons)&&g.ownedWeapons.includes('pulse')&&g.ownedWeapons.every(w=>WEAPONS.some(x=>x.id===w))&&
   typeof g.weapon==='string'&&g.ownedWeapons.includes(g.weapon)&&
   Number.isFinite(p.hp)&&Number.isFinite(p.maxHp)&&p.maxHp>0&&
-  ['playing','runner','paused','upgrade','runnerFail'].includes(g.state)&&
+  ['playing','runner','paused','upgrade','runnerFail','shopPrompt'].includes(g.state)&&
   ['playing','runner'].includes(g.pausedFrom||'playing')&&
   ['object'].includes(typeof g.abilities)&&g.abilities!==null&&
   ['object'].includes(typeof g.upgrades)&&g.upgrades!==null&&
   (!['runner','runnerFail'].includes(g.state)&&!(g.state==='paused'&&g.pausedFrom==='runner')||g.runner&&typeof g.runner==='object'&&Array.isArray(g.runner.obstacles));
+}
+function upgradeLegacyRunner(r){
+ if(!Array.isArray(r.modeSections)){
+  r.modeSections=[{start:0,mode:'cube'},{start:r.shipStart||2650,mode:'ship'},{start:r.gravityStart||5360,mode:'gravity'}];
+ }
+ if(!Number.isFinite(r.bossTrigger))r.bossTrigger=(r.shipStart||2600)+1200;
+ if(typeof r.bossTriggered!=='boolean')r.bossTriggered=!!(r.miniBoss?.defeated||r.phase==='miniboss');
+ if(!Number.isFinite(r.bossIntro))r.bossIntro=0;
+ if(r.phase==='miniboss'&&r.mode!=='shooter')r.mode='shooter';
 }
 function restoreSave(data){
  if(!isValidSave(data)){saveStatus('Denne lagringsfilen er ugyldig eller inkompatibel.',false);return false;}
@@ -711,6 +757,7 @@ function restoreSave(data){
  game={...game,...g};game.version='4.1.0';game.last=0;
  game.credits=Math.floor(game.credits);
  game.ownedWeapons=[...new Set(game.ownedWeapons)];
+ if(game.runner)upgradeLegacyRunner(game.runner);
  selectedCharacter=game.character;selectedDifficulty=game.difficulty;
  updateSelection();
  const img=selectedCharacter==='blue'?imgBlue:imgMetal;
@@ -739,6 +786,7 @@ function restoreSave(data){
  $('record').textContent=formatPoints(game.record);
  musicStep=0;musicNextTime=0;startMusic();
  if(game.state==='paused')showOverlay('pausePanel');
+ else if(game.state==='shopPrompt'){renderWaveShopPrompt();showOverlay('shopPrompt');}
  else if(game.state==='upgrade')showOverlay('upgrade');
  else if(game.state==='runnerFail')showOverlay('runnerFailPanel');
  toast('📂 LAGRING LASTET INN!',2);
@@ -764,7 +812,7 @@ function refreshSaveSlots(){
 }
 function openSavePanel(){
  if(game.state==='playing'||game.state==='runner')togglePause(true);
- savePanelBack=game.state==='menu'?'menu':game.state==='upgrade'?'upgrade':game.state==='runnerFail'?'runnerFailPanel':game.state==='shop'?'shopPanel':'pausePanel';
+ savePanelBack=game.state==='menu'?'menu':game.state==='upgrade'?'upgrade':game.state==='runnerFail'?'runnerFailPanel':game.state==='shop'?'shopPanel':game.state==='shopPrompt'?'shopPrompt':'pausePanel';
  refreshSaveSlots();showOverlay('savePanel');saveStatus('Velg en lagringsplass eller importer en .json-fil.');
 }
 function closeSavePanel(){showOverlay(savePanelBack);}
@@ -819,7 +867,7 @@ function update(dt){
   if(game.wave===MAX_WAVES){finish(true);return;}
   if(game.waveDelay<0){game.waveDelay=2.7;toast('✅ BØLGE '+game.wave+' KLART! NESTE: PORTAL RUN!',2);
     const p=players[0];if(p.alive)p.hp=clamp(p.hp+12,0,p.maxHp);awardPoints(game.wave*70);}
-  game.waveDelay-=dt;if(game.waveDelay<=0)beginPortalRun();
+  game.waveDelay-=dt;if(game.waveDelay<=0)offerWaveShop();
  }
 }
 function startOverdrive(){
@@ -1027,33 +1075,37 @@ function makePortalCourse(wave,difficulty){
  const rand=seededPortal((wave*20261029+49)>>>0);
  const scalar={easy:.86,medium:1,hard:1.10,insane:1.19}[difficulty];
  const speed=(360+wave*9)*scalar;
- const obstacles=[];
+ const obstacles=[],modeSections=[{start:0,mode:'cube'}];
  let x=770;
- // Segment 1: classic cube jumps.
+ // Three opening cube jumps, then the order of flight and gravity changes between portal runs.
  for(let i=0;i<3;i++){
   const kind=i===0?'spike':(rand()<.43?'double':'spike');
   obstacles.push({x:Math.round(x),w:kind==='double'?78:45,h:50,y:PORTAL_FLOOR-50,kind,spin:rand()*6.283});
   x+=620;
  }
- const shipStart=x+30;
- // Segment 2: active hold-to-fly through gaps.
- x=shipStart+720;
- const gapCenters=[327,389,288];
- for(let i=0;i<3;i++){
-  const gapY=gapCenters[(i+wave)%3];
-  obstacles.push({x:Math.round(x),w:88,h:0,y:0,kind:'gate',gapY,gapH:228-(difficulty==='insane'?20:0),spin:rand()*6.283});
-  x+=625;
+ const otherModes=wave%2===0?['gravity','ship']:['ship','gravity'];
+ let shipStart=0,gravityStart=0;const ambushCandidates=[];
+ for(const mode of otherModes){
+  const start=x+90;
+  modeSections.push({start,mode});
+  if(mode==='ship')shipStart=start;else gravityStart=start;
+  x=start+720;
+  for(let i=0;i<3;i++){
+   if(mode==='ship'){
+    const gapY=[327,389,288][(i+wave)%3];
+    obstacles.push({x:Math.round(x),w:88,h:0,y:0,kind:'gate',gapY,gapH:228-(difficulty==='insane'?20:0),spin:rand()*6.283});
+   }else{
+    const kind=i%2===0?'floorBeam':'ceilingBeam';
+    obstacles.push({x:Math.round(x),w:74,h:kind==='floorBeam'?147:294,y:kind==='floorBeam'?PORTAL_FLOOR-147:0,kind,spin:rand()*6.283});
+   }
+   // A safe region just after an obstacle: a surprise boss can interrupt mid-course.
+   if(mode===otherModes[0])ambushCandidates.push(Math.round(x+255));
+   x+=625;
+  }
+  x+=215;
  }
- const gravityStart=x+150;
- // Segment 3: tap to reverse gravity, between floor and ceiling beams.
- x=gravityStart+810;
- for(let i=0;i<3;i++){
-  const kind=i%2===0?'floorBeam':'ceilingBeam';
-  obstacles.push({x:Math.round(x),w:74,h:kind==='floorBeam'?147:294,y:kind==='floorBeam'?PORTAL_FLOOR-147:0,kind,spin:rand()*6.283});
-  x+=670;
- }
- const bossStart=x+380;
- return {obstacles,speed,shipStart,gravityStart,bossStart,length:Math.round(bossStart+740),bpm:124+wave*5};
+ const bossTrigger=ambushCandidates[Math.floor(rand()*ambushCandidates.length)];
+ return {obstacles,speed,shipStart,gravityStart,bossTrigger,modeSections,length:Math.round(x+710),bpm:124+wave*5};
 }
 function pickPortalType(rand,i,wave){return rand<.5?'spike':'double';}
 
@@ -1068,10 +1120,10 @@ function beginPortalRun(){
  game.runner={fromWave:game.wave,attempts:0,losses:[],...course,phase:'course',mode:'cube',beat:-1,
   distance:0,y:PORTAL_FLOOR-PORTAL_CUBE,vy:0,rotation:0,gravity:1,flipLock:0,
   onGround:true,jumpBuffer:0,countdown:2.3,time:0,trails:[],lastImpact:0,
-  hasMiniBoss,miniBoss:{hp:bossHp,maxHp:bossHp,defeated:false,fireCd:1.1,bullets:[],sparks:[],time:0},
+  hasMiniBoss,bossTrigger:course.bossTrigger,bossTriggered:false,bossIntro:0,miniBoss:{hp:bossHp,maxHp:bossHp,defeated:false,fireCd:1.1,bullets:[],sparks:[],time:0},
   portalShots:[],portalFireCd:0,modeFlash:0,modeBanner:'KUBE-MODUS'};
  game.state='runner';game.rageTime=0;game.rage=game.abilities.overdrive?game.rage:0;
- showOverlay(null);persistSave('auto',true);sfx('wave');toast('🚀 PORTAL '+game.wave+'/9 · KUBE → FLY → GRAVITASJON'+(hasMiniBoss?' · ⚠ MINI-BOSS!':''),2.5);
+ showOverlay(null);persistSave('auto',true);sfx('wave');toast('🚀 PORTAL '+game.wave+'/9 · KLAR FOR UKJENT REISE?',2.5);
 }
 function portalJump(){
  if(game.state!=='runner'||!game.runner)return;
@@ -1086,7 +1138,7 @@ function resetPortalAttempt(r){
  r.distance=0;r.y=PORTAL_FLOOR-PORTAL_CUBE;r.vy=0;r.rotation=0;r.onGround=true;
  r.mode='cube';r.phase='course';r.gravity=1;r.flipLock=0;
  r.jumpBuffer=0;r.countdown=1.65;r.time=0;r.trails=[];r.beat=-1;r.lastImpact=0;
- r.portalShots=[];r.portalFireCd=0;r.modeFlash=0;r.modeBanner='KUBE-MODUS';
+ r.portalShots=[];r.portalFireCd=0;r.modeFlash=0;r.modeBanner='KUBE-MODUS';r.bossTriggered=false;r.bossIntro=0;
  r.miniBoss.hp=r.miniBoss.maxHp;r.miniBoss.defeated=false;r.miniBoss.fireCd=1.1;
  r.miniBoss.bullets=[];r.miniBoss.sparks=[];r.miniBoss.time=0;
  KEYS.portalThrust=false;KEYS.portalFire=false;
@@ -1099,9 +1151,9 @@ function retryPortalRun(){
 function portalModeSwitch(r,mode){
  if(r.mode===mode)return;
  r.mode=mode;r.modeFlash=1.4;r.rotation=0;
- if(mode==='ship'){
+ if(mode==='ship'||mode==='shooter'){
   r.y=315;r.vy=0;r.onGround=false;
-  r.modeBanner='🚀 FLY MODUS · HOLD FOR Å STIGE';
+  r.modeBanner=mode==='shooter'?'⚠ SKYTE-MODUS · MINI-BOSS!':'🚀 FLY MODUS · HOLD FOR Å STIGE';
  }else if(mode==='gravity'){
   r.y=PORTAL_FLOOR-PORTAL_CUBE;r.vy=0;r.gravity=1;r.flipLock=0;
   r.modeBanner='🌀 GRAVITASJON · TRYKK FOR Å SNU';
@@ -1110,11 +1162,13 @@ function portalModeSwitch(r,mode){
  toast(r.modeBanner,1.8);
 }
 function startPortalMiniBoss(r){
- r.phase='miniboss';r.distance=r.bossStart;
- portalModeSwitch(r,'ship');r.y=320;r.vy=0;
- r.miniBoss.time=0;r.miniBoss.fireCd=1.15;
+ r.phase='miniboss';r.bossTriggered=true;r.distance=r.bossTrigger;
+ portalModeSwitch(r,'shooter');r.y=320;r.vy=0;r.bossIntro=1.2;
+ r.modeFlash=2.6;r.modeBanner='⚠ BAKHOLD! SKYTE-MODUS!';
+ r.miniBoss.time=0;r.miniBoss.fireCd=1.25;
  r.miniBoss.bullets=[];r.portalShots=[];r.portalFireCd=0;
- sfx('boss');toast('⚠  PORTAL SENTINEL! 25% SJANSE · HOLD F / X FOR Å SKYTE!',3);
+ game.superFlash=.85;game.shake=20;
+ sfx('boss');toast('⚠ PORTAL AMBUSH!',1.1);
 }
 
 function failPortalRun(){
@@ -1153,11 +1207,13 @@ function updatePortalRun(dt){
  if(r.countdown>0){r.countdown=Math.max(0,r.countdown-dt);return;}
  // Flight, jump, or reverse gravity, depending on the current section.
  if(r.phase==='course'){
-  const requested=r.distance>=r.gravityStart?'gravity':r.distance>=r.shipStart?'ship':'cube';
+  const requested=r.modeSections.reduce((mode,section)=>r.distance>=section.start?section.mode:mode,'cube');
   portalModeSwitch(r,requested);
   r.distance+=r.speed*dt;
+  // Probability was determined once at portal entry; reveal it only at this random mid-run trigger.
+  if(r.hasMiniBoss&&!r.bossTriggered&&r.distance>=r.bossTrigger){startPortalMiniBoss(r);return;}
  }else if(r.phase==='miniboss'){
-  portalModeSwitch(r,'ship');
+  if(r.mode!=='shooter')portalModeSwitch(r,'shooter');
  }
  const thrust=KEYS.portalThrust||KEYS.w||KEYS.W||KEYS.ArrowUp||KEYS[' '];
  if(r.mode==='cube'){
@@ -1166,7 +1222,7 @@ function updatePortalRun(dt){
   r.vy+=2250*dt;r.y+=r.vy*dt;
   if(r.y>=PORTAL_FLOOR-PORTAL_CUBE){r.y=PORTAL_FLOOR-PORTAL_CUBE;r.vy=0;r.onGround=true;}
   if(!r.onGround)r.rotation+=dt*6.2;else r.rotation=Math.round(r.rotation/(Math.PI/2))*(Math.PI/2);
- }else if(r.mode==='ship'){
+ }else if(r.mode==='ship'||r.mode==='shooter'){
   r.vy=clamp(r.vy+(thrust?-2200:1720)*dt,-550,570);
   r.y=clamp(r.y+r.vy*dt,165,PORTAL_FLOOR-PORTAL_CUBE);
   if(r.y===165||r.y===PORTAL_FLOOR-PORTAL_CUBE)r.vy=0;
@@ -1183,6 +1239,7 @@ function updatePortalRun(dt){
  if(beat!==r.beat){r.beat=beat;if(beat%2===0)beep(92,.095,'sine',.028,-36);else beep(680,.035,'triangle',.012,-300);}
  if(r.phase==='miniboss'){
   const boss=r.miniBoss;boss.time+=dt;
+  if(r.bossIntro>0){r.bossIntro=Math.max(0,r.bossIntro-dt);return;}
   const bossY=325+Math.sin(boss.time*2.2)*74;
   boss.fireCd-=dt;
   if(boss.fireCd<=0){
@@ -1216,7 +1273,8 @@ function updatePortalRun(dt){
     game.shake=Math.max(game.shake,5);
     if(boss.hp<=0){
      boss.hp=0;boss.defeated=true;r.phase='course';awardPoints(600+r.fromWave*100);
-     r.portalShots=[];boss.bullets=[];
+     r.portalShots=[];boss.bullets=[];r.modeFlash=1.5;r.modeBanner='✅ BOSS NEDE · TILBAKE TIL PORTALEN';
+     portalModeSwitch(r,r.modeSections.reduce((mode,section)=>r.distance>=section.start?section.mode:mode,'cube'));
      toast('💥 PORTAL SENTINEL KNUST! +BONUS!',2.2);sfx('power');
      break;
     }
@@ -1246,7 +1304,6 @@ function updatePortalRun(dt){
   }
   if(collision){failPortalRun();return;}
  }
- if(r.hasMiniBoss&&!r.miniBoss.defeated&&r.distance>=r.bossStart){startPortalMiniBoss(r);return;}
  if(r.distance>r.length)completePortalRun();
 }
 
@@ -1417,7 +1474,7 @@ function drawPortalRun(t){
  }
 
  // Portal mode gates and miniboss.
- const sections=[{x:r.shipStart,label:'🚀 FLY',color:'#8dffff'},{x:r.gravityStart,label:'🌀 GRAVITY',color:'#ffa7f0'}];
+ const sections=(r.modeSections||[]).slice(1).map(section=>({x:section.start,label:section.mode==='ship'?'🚀 FLY':'🌀 GRAVITY',color:section.mode==='ship'?'#8dffff':'#ffa7f0'}));
  for(const sect of sections){
   const sx=sect.x-r.distance+PORTAL_SCREEN_X;
   if(sx>-70&&sx<W+80){
@@ -1436,6 +1493,12 @@ function drawPortalRun(t){
   ctx.closePath();ctx.fill();ctx.stroke();ctx.shadowBlur=18;ctx.fillStyle='#ffe58c';
   ctx.beginPath();ctx.arc(0,0,26+5*pulse,0,Math.PI*2);ctx.fill();ctx.fillStyle='#291a39';
   ctx.beginPath();ctx.arc(0,0,10,0,Math.PI*2);ctx.fill();ctx.restore();
+  // Shooting encounter feels like an abrupt, separate arcade phase.
+  ctx.save();ctx.globalAlpha=.10+.12*Math.sin(t*12)**2;ctx.fillStyle='#ff3b78';ctx.fillRect(0,160,W,PORTAL_FLOOR-160);ctx.restore();
+  ctx.save();ctx.strokeStyle='#ff75ad88';ctx.lineWidth=3;ctx.setLineDash([16,14]);ctx.strokeRect(107,196,1055,330);ctx.setLineDash([]);
+  ctx.textAlign='center';ctx.font='1000 34px system-ui';ctx.fillStyle='#fff2b6';ctx.shadowBlur=25;ctx.shadowColor='#ff3b7d';
+  ctx.fillText('✹ SKYT BOSSEN — F / X ✹',640,525);ctx.restore();
+  if(r.bossIntro>0){ctx.save();ctx.globalAlpha=Math.min(1,r.bossIntro);ctx.textAlign='center';ctx.font='1000 65px system-ui';ctx.fillStyle='#ffffff';ctx.shadowBlur=45;ctx.shadowColor='#ff71b4';ctx.fillText('⚠ BAKHOLD!',640,374);ctx.restore();}
   ctx.fillStyle='#0b0c27';ctx.fillRect(777,140,466,46);ctx.strokeStyle='#ffa5dc';ctx.lineWidth=2;ctx.strokeRect(777,140,466,46);
   ctx.font='900 18px system-ui';ctx.fillStyle='#ffbae8';ctx.fillText('⚠ PORTAL SENTINEL — MINI BOSS',797,134);
   ctx.fillStyle='#2c173c';ctx.fillRect(791,154,438,17);ctx.fillStyle='#ff6bb6';ctx.fillRect(791,154,438*clamp(boss.hp/boss.maxHp,0,1),17);
@@ -1456,7 +1519,7 @@ function drawPortalRun(t){
  ctx.translate(PORTAL_SCREEN_X+PORTAL_CUBE/2,r.y+PORTAL_CUBE/2);ctx.rotate(r.rotation);
  ctx.shadowBlur=34+flash*10;ctx.shadowColor=game.character==='blue'?'#8ee8ff':'#f998f2';
  ctx.fillStyle=game.character==='blue'?'#84deff':'#ff9edb';
- if(r.mode==='ship'){
+ if(r.mode==='ship'||r.mode==='shooter'){
   ctx.beginPath();ctx.moveTo(27,0);ctx.lineTo(-22,-20);ctx.lineTo(-13,0);ctx.lineTo(-22,20);ctx.closePath();ctx.fill();
   ctx.shadowColor='#ffb66c';ctx.fillStyle='#ffe98b';ctx.fillRect(-38,-6,16+Math.sin(t*20)*7,12);
  }else ctx.fillRect(-PORTAL_CUBE/2,-PORTAL_CUBE/2,PORTAL_CUBE,PORTAL_CUBE);
@@ -1486,10 +1549,10 @@ function drawPortalRun(t){
  // HUD
  ctx.fillStyle='#080d27d9';ctx.fillRect(23,18,540,138);ctx.strokeStyle=pal[2]+'aa';ctx.lineWidth=2;ctx.strokeRect(23,18,540,138);
  ctx.textAlign='left';ctx.fillStyle='#fff';ctx.font='1000 32px system-ui';ctx.fillText('◆ PORTAL RUN  '+r.fromWave+' / 9',42,59);
- ctx.font='bold 17px system-ui';ctx.fillStyle=pal[2];ctx.fillText('BØLGE '+r.fromWave+' → '+(r.fromWave+1)+' · '+(r.phase==='miniboss'?'⚠ BOSS KAMP':r.mode==='cube'?'▣ KUBE':r.mode==='ship'?'🚀 FLYSKIP':'🌀 GRAVITASJON'),42,91);
+ ctx.font='bold 17px system-ui';ctx.fillStyle=pal[2];ctx.fillText('BØLGE '+r.fromWave+' → '+(r.fromWave+1)+' · '+(r.phase==='miniboss'?'⚠ SKYTE-MODUS! BOSS KAMP':r.mode==='cube'?'▣ KUBE':r.mode==='ship'?'🚀 FLYSKIP':'🌀 GRAVITASJON'),42,91);
  ctx.fillStyle='#e3d9ff';ctx.font='bold 14px system-ui';
  ctx.fillText(r.phase==='miniboss'?'HOLD F / X / SKYT · FLY FOR Å UNNGÅ SKUDD!':r.mode==='cube'?'SPACE / W / TRYKK = HOPP':r.mode==='ship'?'HOLD SPACE / W / ACTION FOR Å FLY OPP':'TRYKK SPACE / W / ACTION FOR Å SNU GRAVITASJON',42,121);
- if(r.modeFlash>0){ctx.save();ctx.globalAlpha=clamp(r.modeFlash/1.4,0,1);ctx.textAlign='center';ctx.font='1000 44px system-ui';ctx.fillStyle='#fff2bd';ctx.shadowBlur=30;ctx.shadowColor=pal[3];ctx.fillText(r.modeBanner,650,260);ctx.restore();}
+ if(r.modeFlash>0&&r.phase!=='miniboss'){ctx.save();ctx.globalAlpha=clamp(r.modeFlash/1.4,0,1);ctx.textAlign='center';ctx.font='1000 44px system-ui';ctx.fillStyle='#fff2bd';ctx.shadowBlur=30;ctx.shadowColor=pal[3];ctx.fillText(r.modeBanner,650,260);ctx.restore();}
 
  ctx.fillStyle='#080d27d9';ctx.fillRect(784,17,472,93);ctx.strokeStyle=pal[3]+'aa';ctx.strokeRect(784,17,472,93);
  const progress=clamp(r.distance/r.length,0,1);const bw=428;
@@ -1558,6 +1621,9 @@ $('upgradeSave').addEventListener('click',openSavePanel);
 $('runnerFailSave').addEventListener('click',openSavePanel);
 $('shopBtn').addEventListener('click',weaponShop);
 $('closeShop').addEventListener('click',closeWeaponShop);
+$('waveShopYes').addEventListener('click',weaponShop);
+$('waveShopNo').addEventListener('click',departForPortal);
+$('waveShopSave').addEventListener('click',openSavePanel);
 $('saveBtn').addEventListener('click',openSavePanel);
 $('quickSave').addEventListener('click',()=>{if(game.state==='playing'||game.state==='runner')togglePause(true);persistSave('manual');});
 $('closeSavePanel').addEventListener('click',closeSavePanel);
@@ -1598,8 +1664,9 @@ window.addEventListener('keydown',event=>{
   if(game.state==='upgrade'&&['1','2','3'].includes(k)){const u=game.offered[Number(k)-1];if(u)selectUpgrade(u);}
   if(game.state==='playing'&&['g','G','l','L'].includes(k))doSuper(players[0]);
   if(game.state==='playing'&&['1','2','3','4','5','6','7','8'].includes(k))equipWeapon(Number(k)-1);
-  if(['b','B'].includes(k)&&['playing','paused'].includes(game.state))weaponShop();
-  if(['l','L'].includes(k)&&['playing','runner','paused','menu'].includes(game.state))openSavePanel();
+  if(['b','B'].includes(k)&&['playing','paused','shopPrompt'].includes(game.state))weaponShop();
+  if(game.state==='shopPrompt'&&k==='Enter')departForPortal();
+  if(['l','L'].includes(k)&&['playing','runner','paused','menu','shopPrompt'].includes(game.state))openSavePanel();
   if(game.state==='runner'&&['x','X','f','F','k','K'].includes(k))portalFire();
   if(game.state==='menu'&&k==='Enter'&&event.target.tagName!=='BUTTON')reset();
   if(game.state==='end'&&(k==='Enter'||k==='r'||k==='R'))reset();

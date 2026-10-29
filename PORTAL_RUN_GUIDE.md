@@ -1,22 +1,17 @@
-# KAOSDUO v4.1 — Playing Guide
+# KAOSDUO Portal Ambush v4.2 — spillerhjelp
 
-## Start
-Choose **Blue** (calm, cozy soundtrack) or **Metal** (fast synth-metal riff). Select a difficulty and start a solo run.
+## Hver kampbølge
+Drep monstre for å tjene mynter. Når bølgen er ferdig, spør spillet automatisk om du vil kjøpe nye våpen: **JA** åpner våpenbutikken; **NEI** starter portalreisen. Du kan kjøpe flere ting i butikken før du går videre.
 
-## Earn and spend points
-Defeated enemies, collected stars, cleared waves and completed portals award points. These add to your score *and* your spendable weapon-shop balance. Buying a weapon only deducts from the shop balance, not from your score record.
+## Portalreisene
+- **Kube**: trykk for å hoppe.
+- **Flyskip**: hold inne W / mellomrom eller ACTION på mobil for å fly opp. Slipp for å synke.
+- **Tyngdekraft**: trykk for å snu mellom gulv og tak.
+- **25 % miniboss-sjanse**: på et tilfeldig sted midt i portalen kan spillet plutselig skifte til SKYTEMODUS. Hold F / X eller trykk SKYT på mobil for å skade bossen; hold flyknappen for å unnslippe skuddene.
+- Når minibossen er slått, går du videre i samme portal. Du kan aldri miste HP i portalen, bare én tilgjengelig spesialevne per krasj.
 
-Press **B** (or the **BUTIKK** button) while fighting or paused to open the Armory. Buy a gun and equip it immediately; only purchased weapons are available on keys **1–8**. The shop pauses the fight.
+## Lagring
+Trykk **L** / SAVE / LOAD for manuelt eller automatisk lagret progresjon. Coin-butikken kan også lagres før portal. Kjøpte våpen blir med i lagringen.
 
-## Save and load
-Press **L**, use the toolbar **LOAD** button, or open **SAVE / LOAD** from the pause menu. Choose **LAGRE** for a manual save or **LAST INN** for a previous manual/automatic save. You can also **EKSPORTER SAVE** to a `.json` file and **IMPORTER SAVE** later. Loading resumes in a paused state so you have time to prepare.
-
-## Portal modes
-- **Cube**: jump over spikes and obstacles.
-- **Ship**: hold action to rise, release to fall.
-- **Gravity**: tap to invert the direction of gravity.
-- **Portal Sentinel**: appears on a random 25% of portal runs; shoot with F/X while flying.
-- **Failure**: never costs health. One available special ability is lost instead. Reattempt as needed.
-
-## Audio
-Metal uses an original guitar-like synthesized riff and percussion. Blue uses soft synthesized chord progressions and gentle melodic notes. Press **M** or **LYD** to mute/unmute.
+## Musikk
+Blå har avslappende originalmusikk. Metal har tung synth-metal. Trykk **M** for å mute.

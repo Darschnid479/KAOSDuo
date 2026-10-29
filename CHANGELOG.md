@@ -1,22 +1,11 @@
 # Changelog
 
-## v4.1.0 — Armory, Saves & Character Music (2026-10-29)
+## v4.2.0 — Surprise Portal Ambush & Coins (2026-10-29)
 
-### Added
-- Eight-weapon Armory: seven purchasable guns plus the free Pulse Blaster.
-- Three new weapons: Glacier Repeater, Meteor Minigun, Prism Annihilator.
-- Shop points are awarded alongside score and saved separately from the permanent score record.
-- Manual save slot, automatic checkpoint slot and JSON save import/export.
-- Full state restoration for combat, active Portal Run, portal failures and level-up selection.
-- Original dynamic metal-style synthesized soundtrack for Metal.
-- Original cozy, mellow synthesized soundtrack for Blue.
-- New buttons and shortcuts for Armory and Save / Load.
-
-### Retained
-- Ten battle waves and three bosses.
-- Nine neon Portal Run transitions (cube, ship, gravity).
-- Independent 25% probability of a Portal Sentinel miniboss per portal run.
-- Portal mistakes cost abilities without costing HP.
-
-### Compatibility
-- v4.1.0 saves have their own keys and schema. Older v4.0 builds did not include a save system.
+- 25% chance per portal to interrupt **mid-level** with a separate, intense shooting miniboss phase. No boss warning at the beginning of the portal.
+- Defeat the Sentinel to resume exactly where you were interrupted; retry after a crash preserves the original encounter roll.
+- Portal modes now alternate between different cube/ship/gravity orders depending on the portal.
+- After every cleared combat wave, the game asks whether to buy a new weapon with monster-earned coins. Buy or skip before continuing.
+- Shop offers and bought weapons persist in Save/Load. Legacy 4.1 save state receives transition defaults.
+- Portal collisions still cost an ability but **never HP**.
+- Original character music, 8 weapons, solo gameplay and 4 difficulties retained.

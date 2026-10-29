@@ -1,0 +1,42 @@
+name: Publish KAOSDUO PORTAL AMBUSH v4.2.0
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'dist/KAOSDUO_PORTAL_AMBUSH_v4.2.0.html'
+      - 'dist/KAOSDUO_PORTAL_AMBUSH_v4.2.0_OFFLINE.zip'
+      - '.github/workflows/portal-ambush-release.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate game and package
+        run: |
+          python3 - <<'PYVALIDATE'
+          from pathlib import Path
+          from zipfile import ZipFile
+          h=Path('dist/KAOSDUO_PORTAL_AMBUSH_v4.2.0.html').read_text()
+          for phrase in ['function startPortalMiniBoss(r)', 'function offerWaveShop()', "bossTrigger", 'function renderWaveShopPrompt()', 'function restoreSave(data)', 'data:image/webp;base64,']:
+              assert phrase in h,phrase
+          assert '../assets/' not in h
+          with ZipFile('dist/KAOSDUO_PORTAL_AMBUSH_v4.2.0_OFFLINE.zip') as z:
+              assert z.testzip() is None
+              assert 'KAOSDUO_PORTAL_AMBUSH_v4.2.0.html' in z.namelist()
+          PYVALIDATE
+      - name: Checksums
+        run: |
+          cd dist
+          sha256sum KAOSDUO_PORTAL_AMBUSH_v4.2.0.html KAOSDUO_PORTAL_AMBUSH_v4.2.0_OFFLINE.zip > SHA256SUMS_v4.2.0.txt
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view v4.2.0 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload v4.2.0 dist/KAOSDUO_PORTAL_AMBUSH_v4.2.0.html dist/KAOSDUO_PORTAL_AMBUSH_v4.2.0_OFFLINE.zip dist/SHA256SUMS_v4.2.0.txt --clobber --repo "$GITHUB_REPOSITORY"
+          else
+            gh release create v4.2.0 dist/KAOSDUO_PORTAL_AMBUSH_v4.2.0.html dist/KAOSDUO_PORTAL_AMBUSH_v4.2.0_OFFLINE.zip dist/SHA256SUMS_v4.2.0.txt --title 'KAOSDUO: PORTAL AMBUSH v4.2.0' --notes-file RELEASE_NOTES.md --latest --target "$GITHUB_SHA" --repo "$GITHUB_REPOSITORY"
+          fi

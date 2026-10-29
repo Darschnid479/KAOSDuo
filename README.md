@@ -1,8 +1,8 @@
-# ⚡ KAOSDUO: HYPERDRIVE v4.1.0
+# ⚡ KAOSDUO: PORTAL AMBUSH v4.2.0
 
 **A pixel-art solo action game with ten combat waves, nine Portal Runs, eight unlockable weapons and two original character themes.**
 
-[▶ Play online](https://darschnid479.github.io/KAOSDuo/play/) · [⬇ Download v4.1.0](https://github.com/Darschnid479/KAOSDuo/releases/tag/v4.1.0) · [Source code](https://github.com/Darschnid479/KAOSDuo)
+[▶ Play online](https://darschnid479.github.io/KAOSDuo/play/) · [⬇ Download v4.2.0](https://github.com/Darschnid479/KAOSDuo/releases/tag/v4.2.0) · [Source code](https://github.com/Darschnid479/KAOSDuo)
 
 > GitHub Pages needs to be enabled in repository settings before the online links work. The release HTML can be opened directly in a browser offline.
 
@@ -12,8 +12,8 @@
 
 - **Solo:** Pick **❄️ Blue** or **🎸 Metal**. Four difficulties: Lett, Medium, Vanskelig and Drit Vanskelig.
 - **Fight:** Ten waves with three bosses and 17 character upgrades.
-- **Portal Run:** Nine neon transitions combining cube jumps, ship flying and gravity changes. A miniboss has a **25% chance on each portal run**. Losing a portal attempt removes a special ability, **not HP**.
-- **Armory:** Earn shop points in combat and portal journeys. Begin with Pulse Blaster, buy seven other guns with your earnings, and equip any owned weapon with keys **1–8**.
+- **Portal Run:** Nine neon transitions combining cube jumps, ship flying and gravity changes. Each portal independently has a **25% chance** for an unannounced, sudden shooting miniboss phase **in the middle of the run**. Defeat it, then continue the same portal. Losing a portal attempt removes a special ability, **not HP**.
+- **Armory:** Earn coins from monster kills and portal journeys. **After every cleared battle wave, the game asks whether you want to buy a weapon** before entering the next portal. You can buy or skip. Begin with Pulse Blaster, buy seven other guns with your earnings, and equip any owned weapon with keys **1–8**.
 - **Save / Load:** Manual and automatic checkpoints, including character, difficulty, HP, XP, score, shop currency, weapons, upgrades, abilities and Portal Run state. Export/import `.json` backups to move progress between browsers.
 - **Original soundtrack:** Metal has fast distorted synthetic guitar riffs; Blue has calm cozy arpeggios. Music is generated with the Web Audio API, without external music files.
 
@@ -56,3 +56,11 @@ Download the self-contained `.html` file from **Releases** and open it in Chrome
 ## Notes
 
 The game includes strong animated neon light effects. All character music is newly composed via code, not existing copyrighted recordings.
+
+## v4.2.0: Surprise portal ambush & automatic weapon offer
+
+- **25% per portal**, selected once when the portal starts; the encounter is hidden until it actually interrupts the level around the middle. Failure/retry does not reroll the encounter.
+- The run pauses for an actual **shooting phase**. You keep flight controls and shoot the mini boss with **F / X**; defeating it resumes the course at the interruption point.
+- Portal levels alternate the order of **ship and gravity sections**, rather than repeating an identical sequence.
+- **Coin shop offer** appears automatically after every combat wave (except the final victory). Choose **Yes** to browse/buy and **No** to continue to the portal. The offer and purchases are saved.
+- Old v4.1 saves remain loadable through the original manual and auto save slots.
