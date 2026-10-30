@@ -41,17 +41,17 @@ Public Class MusicPlayer
         If _current = track Then Return
         Try
             Directory.CreateDirectory(_mediaFolder)
-            Dim path = Path.Combine(_mediaFolder, track)
-            If Not File.Exists(path) OrElse New FileInfo(path).Length < 20000 Then
+            Dim trackPath As String = IO.Path.Combine(_mediaFolder, track)
+            If Not File.Exists(trackPath) OrElse New FileInfo(trackPath).Length < 20000 Then
                 Using stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("KAOSDUO.Assets." & track)
                     If stream Is Nothing Then Throw New IOException("Soundtrack not embedded: " & track)
-                    Using output = New FileStream(path, FileMode.Create, FileAccess.Write)
+                    Using output = New FileStream(trackPath, FileMode.Create, FileAccess.Write)
                         stream.CopyTo(output)
                     End Using
                 End Using
             End If
             StopMusic()
-            Dim openCode = MciSendString("open """ & path & """ type mpegvideo alias kaosduomusic", Nothing, 0, IntPtr.Zero)
+            Dim openCode = MciSendString("open """ & trackPath & """ type mpegvideo alias kaosduomusic", Nothing, 0, IntPtr.Zero)
             If openCode <> 0 Then Throw New IOException("Windows audio code: " & openCode.ToString())
             Dim playCode = MciSendString("play kaosduomusic repeat", Nothing, 0, IntPtr.Zero)
             If playCode <> 0 Then Throw New IOException("Windows playback code: " & playCode.ToString())
