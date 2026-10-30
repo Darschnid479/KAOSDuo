@@ -31,7 +31,7 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Run headless VB.NET rule and save tests
         run: |
-          & 'src/KAOSDUO.VB/bin/Release/net8.0-windows/win-x64/KAOSDUO.exe' --self-test
+          dotnet 'src/KAOSDUO.VB/bin/Release/net8.0-windows/win-x64/KAOSDUO.dll' --self-test
           if ($LASTEXITCODE -ne 0) {
             if (Test-Path "$env:TEMP/kaosduo_selftest_error.txt") { Get-Content "$env:TEMP/kaosduo_selftest_error.txt" }
             throw 'VB.NET rules self-test failed'
