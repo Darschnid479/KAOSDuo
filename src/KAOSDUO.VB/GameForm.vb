@@ -44,37 +44,94 @@ Public Partial Class GameForm
     Private _screenshotTimer As Single = 0
     Private _musicCheckCharacter As HeroKind = HeroKind.Blue
     Private _fullscreen As Boolean = False
+    Private _loggedFirstFrame As Boolean = False
     Private _oldBounds As Rectangle
     Private _oldBorder As FormBorderStyle
     Private _oldState As FormWindowState
     Private ReadOnly _savePath As String = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "KAOSDUO", "save_v6.json")
 
     Public Sub New()
-        Me.Text = "KAOSDUO: REFORGED v6.0 | Visual Basic .NET"
+        Me.Text = "KAOSDUO: REFORGED v6.0.1 | Visual Basic .NET"
         Me.BackColor = Color.FromArgb(10, 10, 26)
         Me.ClientSize = New Size(1280, 720)
         Me.MinimumSize = New Size(990, 570)
         Me.StartPosition = FormStartPosition.CenterScreen
         Me.DoubleBuffered = True
         Me.KeyPreview = True
-        Me.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath)
+        ' An icon lookup can fail on restricted Windows machines; it must not block the game.
+        Try
+            Dim appIcon = Icon.ExtractAssociatedIcon(Application.ExecutablePath)
+            If appIcon IsNot Nothing Then Me.Icon = appIcon
+        Catch ex As Exception
+            Program.LogIssue("Optional icon could not be loaded", ex)
+        End Try
         Me.SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.UserPaint Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.ResizeRedraw, True)
         _blue = LoadSprite("blue.png")
         _metal = LoadSprite("metal.png")
         AddHandler _frame.Tick, AddressOf OnTick
         _clock.Start()
         _frame.Start()
-        Me.Activate()
     End Sub
 
     Private Function LoadSprite(name As String) As Bitmap
-        Using source = Assembly.GetExecutingAssembly().GetManifestResourceStream("KAOSDUO.Assets." & name)
-            If source Is Nothing Then Throw New IOException("Missing character sprite: " & name)
+        ' Find the actual manifest identifier instead of assuming a resource namespace.
+        Dim resourceName = Program.ResolveResourceName(name)
+        Using source = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName)
+            If source Is Nothing Then Throw New IOException("Missing character sprite: " & resourceName)
             Using temporary As New Bitmap(source)
                 Return CType(temporary.Clone(), Bitmap)
             End Using
         End Using
     End Function
+
+    ' Automated Windows startup/render tests. This is also exercised after publishing the single-file EXE.
+    ' No game simulation is replaced with HTML or C#; all rendering remains native VB.NET.
+    Public Sub RunSmokeTests(outputFolder As String)
+        _frame.Stop()
+        Directory.CreateDirectory(outputFolder)
+        Me.CreateControl()
+        Me.Show()
+        Application.DoEvents()
+        RenderSmokeFrame(outputFolder, "01-main-menu.png")
+        BeginNewGame()
+        RenderSmokeFrame(outputFolder, "02-combat.png")
+        OfferShop()
+        RenderSmokeFrame(outputFolder, "03-shop-offer.png")
+        StartTravel()
+        RenderSmokeFrame(outputFolder, "04-travel.png")
+        _s.Scene = SceneKind.PortalBoss
+        _s.Portal.BossMaxHp = 300
+        _s.Portal.BossHp = 300
+        _s.Portal.BossShield = 3
+        _s.Portal.BossPlayerX = 260
+        _s.Portal.BossPlayerY = 410
+        RenderSmokeFrame(outputFolder, "05-portal-boss.png")
+        _s.Scene = SceneKind.Highway
+        _s.Portal.Type = "HIGHWAY"
+        RenderSmokeFrame(outputFolder, "06-highway.png")
+        _s.Scene = SceneKind.Portal
+        _s.Portal.Type = "GEOMETRY"
+        RenderSmokeFrame(outputFolder, "07-geometry.png")
+        If Not SaveGame(False) Then Throw New IOException("Native save test failed")
+        LoadGame()
+        If _s.Portal Is Nothing Then Throw New InvalidDataException("Native load failed")
+        File.WriteAllText(Path.Combine(outputFolder, "SMOKE_TEST_PASSED.txt"),
+                          "KAOSDUO REFORGED v6.0.1: native WinForms window, embedded sprites, GDI+ scenes, save/load and startup succeeded." & Environment.NewLine &
+                          "Windows: " & Environment.OSVersion.ToString() & Environment.NewLine &
+                          ".NET: " & Environment.Version.ToString() & Environment.NewLine)
+        Me.Hide()
+    End Sub
+
+    Private Sub RenderSmokeFrame(folder As String, name As String)
+        Using frame As New Bitmap(1280, 720)
+            Using g As Graphics = Graphics.FromImage(frame)
+                g.Clear(Color.Black)
+                g.SmoothingMode = SmoothingMode.AntiAlias
+                DrawScene(g)
+            End Using
+            frame.Save(Path.Combine(folder, name), Imaging.ImageFormat.Png)
+        End Using
+    End Sub
 
     Private Function IsHeld(ParamArray keys As Keys()) As Boolean
         For Each k In keys
@@ -480,6 +537,10 @@ Public Partial Class GameForm
         e.Graphics.TranslateTransform(_screenOffsetX, _screenOffsetY)
         e.Graphics.ScaleTransform(_screenScale, _screenScale)
         DrawScene(e.Graphics)
+        If Not _loggedFirstFrame Then
+            _loggedFirstFrame = True
+            Program.LogStatus("First native WinForms frame rendered")
+        End If
     End Sub
 
     Protected Overrides Sub Dispose(disposing As Boolean)

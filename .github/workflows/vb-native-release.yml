@@ -1,12 +1,7 @@
 name: Build and release KAOSDUO Native VB.NET v6.0.0
+# Historical v6.0.0 release workflow. Maintained for manual rebuilds only.
+# Do not overwrite the older release whenever source changes.
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'src/KAOSDUO.VB/**'
-      - 'BUILD_WINDOWS.bat'
-      - 'RELEASE_NOTES_V6.md'
-      - '.github/workflows/vb-native-release.yml'
   workflow_dispatch:
 permissions:
   contents: write

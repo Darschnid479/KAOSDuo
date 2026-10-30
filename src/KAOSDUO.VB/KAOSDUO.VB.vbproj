@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFramework>net10.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <RootNamespace>KAOSDUO</RootNamespace>
     <MyType>Empty</MyType>
@@ -12,8 +12,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AssemblyName>KAOSDUO</AssemblyName>
     <ApplicationIcon>Assets\kaosduo.ico</ApplicationIcon>
-    <Version>6.0.0</Version>
-    <FileVersion>6.0.0.0</FileVersion>
+    <Version>6.0.1</Version>
+    <FileVersion>6.0.1.0</FileVersion>
     <Product>KAOSDUO: REFORGED</Product>
     <PublishSingleFile>true</PublishSingleFile>
     <SelfContained>true</SelfContained>

@@ -43,7 +43,7 @@ Public Class MusicPlayer
             Directory.CreateDirectory(_mediaFolder)
             Dim trackPath As String = IO.Path.Combine(_mediaFolder, track)
             If Not File.Exists(trackPath) OrElse New FileInfo(trackPath).Length < 20000 Then
-                Using stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("KAOSDUO.Assets." & track)
+                Using stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(Program.ResolveResourceName(track))
                     If stream Is Nothing Then Throw New IOException("Soundtrack not embedded: " & track)
                     Using output = New FileStream(trackPath, FileMode.Create, FileAccess.Write)
                         stream.CopyTo(output)
@@ -57,7 +57,8 @@ Public Class MusicPlayer
             If playCode <> 0 Then Throw New IOException("Windows playback code: " & playCode.ToString())
             _available = True
             _current = track
-        Catch
+        Catch ex As Exception
+            Program.LogIssue("Optional soundtrack playback failed for " & track, ex)
             _available = False
             _current = ""
             StopMusic()

@@ -1,0 +1,100 @@
+name: Build, smoke-test and release KAOSDUO REFORGED v6.0.1
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/KAOSDUO.VB/**'
+      - 'BUILD_WINDOWS.bat'
+      - 'RUN_KAOSDUO_DEBUG.bat'
+      - 'RELEASE_NOTES_V6_0_1.md'
+      - '.github/workflows/vb-native-fix-601.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  test-build-and-release:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Check out exact project source
+        uses: actions/checkout@v4
+      - name: Install .NET 10 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Restore, compile, and validate embedded resources
+        run: |
+          $project = 'src/KAOSDUO.VB/KAOSDUO.VB.vbproj'
+          dotnet restore $project -r win-x64
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          dotnet build $project -c Release -r win-x64 --no-restore
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          dotnet 'src/KAOSDUO.VB/bin/Release/net10.0-windows/win-x64/KAOSDUO.dll' --self-test
+          if ($LASTEXITCODE -ne 0) { throw 'Rule/asset self-test failed' }
+      - name: Run native WinForms startup, drawing and save/load tests
+        run: |
+          $dll = 'src/KAOSDUO.VB/bin/Release/net10.0-windows/win-x64/KAOSDUO.dll'
+          dotnet $dll --gui-smoke-test 'release/diagnostics/dll'
+          if ($LASTEXITCODE -ne 0) { throw 'Native Windows GUI smoke test failed' }
+          if (!(Test-Path 'release/diagnostics/dll/SMOKE_TEST_PASSED.txt')) { throw 'GUI smoke report missing' }
+          if (!(Test-Path 'release/diagnostics/dll/01-main-menu.png')) { throw 'Native menu screenshot missing' }
+          if (!(Test-Path 'release/diagnostics/dll/05-portal-boss.png')) { throw 'Portal boss render screenshot missing' }
+      - name: Publish self-contained Windows EXE
+        run: |
+          dotnet publish 'src/KAOSDUO.VB/KAOSDUO.VB.vbproj' -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:PublishReadyToRun=false -p:DebugType=None -p:DebugSymbols=false -o 'release/win-x64'
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          if (!(Test-Path 'release/win-x64/KAOSDUO.exe')) { throw 'Windows EXE is missing' }
+          Copy-Item 'RUN_KAOSDUO_DEBUG.bat' 'release/win-x64/RUN_KAOSDUO_DEBUG.bat'
+          & 'release/win-x64/KAOSDUO.exe' --self-test
+          if ($LASTEXITCODE -ne 0) { throw 'Packaged EXE self-test failed' }
+          & 'release/win-x64/KAOSDUO.exe' --gui-smoke-test 'release/diagnostics/exe'
+          if ($LASTEXITCODE -ne 0) { throw 'Packaged EXE GUI smoke test failed' }
+          if (!(Test-Path 'release/diagnostics/exe/SMOKE_TEST_PASSED.txt')) { throw 'Packaged GUI report missing' }
+      - name: Package CLEAN developer source preserving directory layout
+        run: |
+          $stage = Join-Path (Get-Location) 'release/source-stage'
+          $project = Join-Path $stage 'src/KAOSDUO.VB'
+          New-Item -ItemType Directory -Path $project -Force | Out-Null
+          Copy-Item 'src/KAOSDUO.VB/*.vb' $project
+          Copy-Item 'src/KAOSDUO.VB/*.vbproj' $project
+          Copy-Item 'src/KAOSDUO.VB/Assets' (Join-Path $project 'Assets') -Recurse
+          Copy-Item 'BUILD_WINDOWS.bat','RUN_KAOSDUO_DEBUG.bat','README.md','RELEASE_NOTES_V6_0_1.md' $stage
+          New-Item -ItemType Directory -Path 'release/packages' -Force | Out-Null
+          Compress-Archive -Path 'release/win-x64/*' -DestinationPath 'release/packages/KAOSDUO_REFORGED_v6.0.1_WIN64.zip' -Force
+          Compress-Archive -Path "$stage/*" -DestinationPath 'release/packages/KAOSDUO_REFORGED_v6.0.1_SOURCE.zip' -Force
+          Expand-Archive 'release/packages/KAOSDUO_REFORGED_v6.0.1_SOURCE.zip' -DestinationPath 'release/verify-extracted-source' -Force
+          $extractedProject = 'release/verify-extracted-source/src/KAOSDUO.VB/KAOSDUO.VB.vbproj'
+          if (!(Test-Path $extractedProject)) { throw 'SOURCE ZIP does not contain the path BUILD_WINDOWS.bat requires' }
+          if (Get-ChildItem 'release/verify-extracted-source' -Recurse -Directory | Where-Object { $_.Name -in @('obj','bin') }) { throw 'SOURCE ZIP contains generated bin/obj folders' }
+          dotnet build $extractedProject -c Release -r win-x64
+          if ($LASTEXITCODE -ne 0) { throw 'CLEAN SOURCE ZIP build failed' }
+          Get-ChildItem 'release/packages/*.zip' | ForEach-Object { 
+            if ($_.Length -lt 50000) { throw "Unexpected tiny package: $($_.Name)" }
+          }
+          Push-Location 'release/packages'
+          Get-FileHash *.zip -Algorithm SHA256 | ForEach-Object { "$($_.Hash.ToLowerInvariant()) *$(Split-Path $_.Path -Leaf)" } | Set-Content 'SHA256SUMS_v6.0.1.txt'
+          Pop-Location
+      - name: Upload Windows startup screenshots and diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: KAOSDUO-v6.0.1-Windows-smoke-tests
+          path: |
+            release/diagnostics/**
+            release/packages/SHA256SUMS_v6.0.1.txt
+          if-no-files-found: ignore
+          retention-days: 14
+      - name: Publish verified v6.0.1 GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $files = @(Get-ChildItem 'release/packages/*' | ForEach-Object { $_.FullName })
+          if (gh release view v6.0.1 --repo "$env:GITHUB_REPOSITORY" 2>$null) {
+            gh release upload v6.0.1 @files --clobber --repo "$env:GITHUB_REPOSITORY"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          } else {
+            gh release create v6.0.1 @files --title 'KAOSDUO: REFORGED v6.0.1 - Windows Startup and Source Build Fix' --notes-file RELEASE_NOTES_V6_0_1.md --latest --target "$env:GITHUB_SHA" --repo "$env:GITHUB_REPOSITORY"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
