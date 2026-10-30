@@ -1,0 +1,49 @@
+name: Build KAOSDUO VB NEXT (Windows)
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'VBNext/**'
+      - '.github/workflows/vbnext-windows.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Check package
+        shell: pwsh
+        run: |
+          $zip = 'VBNext/KAOSDUO_VB_NEXT_6.0_PREVIEW_SOURCE.zip'
+          if (!(Test-Path $zip)) { throw 'Source ZIP is missing' }
+          Expand-Archive -Path $zip -DestinationPath 'vbnext_unpack' -Force
+          if (!(Test-Path 'vbnext_unpack/KAOSDUO_VB_NEXT/GameForm.vb')) { throw 'Missing native VB.NET game engine' }
+      - name: Compile Windows x64
+        shell: pwsh
+        run: |
+          dotnet publish 'vbnext_unpack/KAOSDUO_VB_NEXT/KAOSDUO.VBNext.vbproj' -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o 'publish'
+      - name: Pack Windows game
+        shell: pwsh
+        run: |
+          Compress-Archive -Path 'publish/*' -DestinationPath 'KAOSDUO_VB_NEXT_Windows_x64.zip' -Force
+      - name: Upload compiled game artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: KAOSDUO_VB_NEXT_Windows_x64
+          path: KAOSDUO_VB_NEXT_Windows_x64.zip
+      - name: Publish preview release after successful build
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag = 'v6.0.0-preview.1'
+          if (gh release view $tag --repo $env:GITHUB_REPOSITORY 2>$null) {
+            gh release upload $tag 'KAOSDUO_VB_NEXT_Windows_x64.zip' 'VBNext/KAOSDUO_VB_NEXT_6.0_PREVIEW_SOURCE.zip' --clobber --repo $env:GITHUB_REPOSITORY
+          } else {
+            gh release create $tag 'KAOSDUO_VB_NEXT_Windows_x64.zip' 'VBNext/KAOSDUO_VB_NEXT_6.0_PREVIEW_SOURCE.zip' --title 'KAOSDUO VB NEXT — Native Visual Basic .NET Preview' --notes 'First native VB.NET game engine preview. Save/load, two playable characters, animated gun sprites, portal boss movement, procedural levels and music. Experimental; not full browser v5 parity.' --prerelease --target $env:GITHUB_SHA --repo $env:GITHUB_REPOSITORY
+          }
