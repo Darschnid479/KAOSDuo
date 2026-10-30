@@ -47,11 +47,15 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           if (!(Test-Path 'release/win-x64/KAOSDUO.exe')) { throw 'Windows EXE is missing' }
           Copy-Item 'RUN_KAOSDUO_DEBUG.bat' 'release/win-x64/RUN_KAOSDUO_DEBUG.bat'
-          & 'release/win-x64/KAOSDUO.exe' --self-test
-          if ($LASTEXITCODE -ne 0) { throw 'Packaged EXE self-test failed' }
-          & 'release/win-x64/KAOSDUO.exe' --gui-smoke-test 'release/diagnostics/exe'
-          if ($LASTEXITCODE -ne 0) { throw 'Packaged EXE GUI smoke test failed' }
-          if (!(Test-Path 'release/diagnostics/exe/SMOKE_TEST_PASSED.txt')) { throw 'Packaged GUI report missing' }
+          # Always wait for the GUI EXE: PowerShell can otherwise continue before the process exits.
+          $exe = (Resolve-Path 'release/win-x64/KAOSDUO.exe').Path
+          $root = (Get-Location).Path
+          $selfTest = Start-Process -FilePath $exe -ArgumentList @('--self-test') -WorkingDirectory $root -Wait -PassThru
+          if ($selfTest.ExitCode -ne 0) { throw "Packaged EXE self-test failed with exit code $($selfTest.ExitCode)" }
+          $guiOutput = Join-Path $root 'release/diagnostics/exe'
+          $guiTest = Start-Process -FilePath $exe -ArgumentList @('--gui-smoke-test', $guiOutput) -WorkingDirectory $root -Wait -PassThru
+          if ($guiTest.ExitCode -ne 0) { throw "Packaged EXE GUI smoke test failed with exit code $($guiTest.ExitCode)" }
+          if (!(Test-Path (Join-Path $guiOutput 'SMOKE_TEST_PASSED.txt'))) { throw 'Packaged GUI report missing' }
       - name: Package CLEAN developer source preserving directory layout
         run: |
           $stage = Join-Path (Get-Location) 'release/source-stage'
