@@ -70,8 +70,8 @@ Partial Public Class GameForm
 
     Private Sub TextAt(g As Graphics, value As String, x As Single, y As Single, sz As Single, Optional tint As Color = Nothing, Optional bold As Boolean = True, Optional width As Single = 1000)
         If String.IsNullOrEmpty(value) Then Return
-        Dim fontStyle = If(bold, FontStyle.Bold, FontStyle.Regular)
-        Using f As New Font("Segoe UI", sz, fontStyle, GraphicsUnit.Pixel), b As New SolidBrush(If(tint = Color.Empty, _white, tint))
+        Dim chosenStyle As FontStyle = If(bold, FontStyle.Bold, FontStyle.Regular)
+        Using f As New Font("Segoe UI", sz, chosenStyle, GraphicsUnit.Pixel), b As New SolidBrush(If(tint = Color.Empty, _white, tint))
             Using format As New StringFormat() With {.Trimming = StringTrimming.EllipsisCharacter, .FormatFlags = StringFormatFlags.NoWrap}
                 g.DrawString(value, f, b, New RectangleF(x, y, width, sz * 1.45F), format)
             End Using
@@ -88,11 +88,11 @@ Partial Public Class GameForm
     Private Sub Button(g As Graphics, x As Single, y As Single, w As Single, h As Single, label As String, action As String, Optional accent As Color = Nothing, Optional selected As Boolean = False, Optional enabled As Boolean = True, Optional fontSize As Single = 17)
         Dim tint = If(accent = Color.Empty, _cyan, accent)
         Dim bg = If(selected, Color.FromArgb(101, 53, 131), If(enabled, Color.FromArgb(39, 40, 82), Color.FromArgb(33, 32, 52)))
-        Dim rect As New RectangleF(x, y, w, h)
-        FillPanel(g, rect, bg, If(enabled, tint, Color.FromArgb(90, 90, 125)), 12, If(selected, 3.0F, 1.6F))
+        Dim area As New RectangleF(x, y, w, h)
+        FillPanel(g, area, bg, If(enabled, tint, Color.FromArgb(90, 90, 125)), 12, If(selected, 3.0F, 1.6F))
         If selected Then Rect(g, x + 9, y + h - 7, w - 18, 3, tint)
         CenterText(g, label, x + w / 2, y + (h - fontSize * 1.55F) / 2, fontSize, If(enabled, _white, _muted), True, w - 12)
-        If enabled Then _ui.Add(New HitButton(rect, action))
+        If enabled Then _ui.Add(New HitButton(area, action))
     End Sub
 
     Private Sub Gauge(g As Graphics, x As Single, y As Single, w As Single, h As Single, percent As Single, colour As Color, Optional title As String = "", Optional background As Color = Nothing)
