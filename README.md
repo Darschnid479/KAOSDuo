@@ -1,71 +1,81 @@
 <div align="center">
 
-# 🏎️ KAOSDUO: NEON HIGHWAY v5.0.0
+# ⚡ KAOSDUO: REFORGED
 
-**Two heroes. One player. Ten combat waves. Nine unpredictable intermissions.**
+### v6.0.0 • 100% native Visual Basic .NET game engine • Windows
 
-**[Download v5.0.0](https://github.com/Darschnid479/KAOSDuo/releases/tag/v5.0.0)** · **[Play in browser*](https://darschnid479.github.io/KAOSDuo/play/)** · **[Repository](https://github.com/Darschnid479/KAOSDuo)**
+**The browser engine is gone. A real VB.NET game has taken its place.**
 
-![In-game neon highway screenshot](assets/highway_v5.webp)
+[![GitHub Release](https://img.shields.io/badge/DOWNLOAD-WINDOWS%20RELEASE-ffdf8c?style=for-the-badge)](https://github.com/Darschnid479/KAOSDuo/releases/tag/v6.0.0)
+[![Visual Basic .NET](https://img.shields.io/badge/ENGINE-VISUAL%20BASIC%20.NET-9467f5?style=for-the-badge)](src/KAOSDUO.VB/)
+[![Windows](https://img.shields.io/badge/PLATFORM-WINDOWS%2010%2F11-72eafa?style=for-the-badge)](BUILD_WINDOWS.bat)
 
 </div>
 
-> **Website:** The browser link requires GitHub Pages to be enabled in repository settings. The release HTML is completely self-contained and works offline without Pages.
+## What's new in the full native rewrite
 
-## 🚀 What's new in 5.0
+The **KAOSDUO: REFORGED** Windows game is rendered and simulated using Windows Forms/GDI+ in **Visual Basic .NET**. No WebView, browser, HTML game engine, JavaScript or C# gameplay code is used.
 
-After each monster wave (except the final one) you pass through one of two **randomly selected travel modes**, chosen independently for each intermission:
+- **Animated original pixel-art heroes:** separate animated legs, idle breathing, walking sway, jump, damage flashing, and firing recoil.
+- **Visible held weapons:** eight distinct guns are drawn in the hands, rotate toward the target, and **bullets spawn from the actual muzzle**.
+- **Free movement in the mid-portal miniboss fight:** WASD/arrows to move in both axes; mouse/F to aim and shoot, with three portal shields and no HP loss.
+- **10 combat waves** with five enemy families and big bosses.
+- **8 buyable weapons**, including shotgun, railgun, chain lightning, rockets, ice repeater, minigun and prism weapon.
+- **Coin shop after every combat wave** and optional shop while fighting; weapon purchases persist.
+- **Nine between-wave journeys:** each is independently **50% Neon Highway** or **50% Geometry Portal**.
+- Geometry stages mix jump cube, fly ship and gravity flips; **25% of geometry portals** spawn a surprise mid-run shooting miniboss.
+- Car stages use 3 lanes, traffic hazards, collectibles and nitro.
+- Portal failure permanently removes one remaining ability for the current run, **never combat HP**. Unlimited retries.
+- Automatic and manual **save/load**, including portal and boss positions, shop purchases, difficulty and weapons.
+- Different **original MP3 soundtracks** for Blue and Metal, included as embedded game resources. Toggle with `M`.
+- Extra features: OVERDRIVE, kill combo, loot-based economy, ammo magazines/reload, weapon recoil, boss shield patterns and screenshot capture.
 
-| Probability | Travel mode | Gameplay |
-| --- | --- | --- |
-| **50%** | 🏎️ **Neon Highway** | Drive a colorful perspective/pseudo-3D car through three lanes of traffic hazards; steer with A/D or arrows, use rechargeable nitro with Space/Shift, collect coins and earn near-miss bonuses. |
-| **50%** | 💠 **Geometry Run** | A colorful platforming portal with animated geometric scenery, cube jumps, flying sections, gravity flips and **25% chance of a sudden shooting mini-boss** halfway through the geometry course. |
+## Download / Run
 
-**No portal or highway crash takes any HP.** Each failed travel attempt costs one *remaining* special ability (dash, double jump, special attack or OVERDRIVE). You can retry an unlimited number of times and continue after clearing the route. Both modes support mouse/keyboard and mobile touch controls.
+Download **[v6.0.0](https://github.com/Darschnid479/KAOSDuo/releases/tag/v6.0.0)**, extract the `WIN64.zip` file and run `KAOSDUO.exe` on a 64-bit Windows 10/11 PC. The build is self-contained; players don't need to install .NET separately.
 
-### 🎸 Original character music — now actual audio
+**Developers:** install .NET SDK 8 or newer and double-click `BUILD_WINDOWS.bat`, or run:
 
-- **Metal:** *Infernal Riff* — original heavy, riff-driven instrumental with synthesized distorted power chords, bass, drums and cymbals, available in `assets/metal_theme.mp3`.
-- **Blue:** *Cozy Fjord* — original gentle bells, pads, arpeggios and soft bass, available in `assets/blue_theme.mp3`.
-- Music plays from a real MP3 loop when you click **Start**, and the menu has a **🎧 HØR VALGT MUSIKK** audition button. The Web Audio synthesizer remains as a fallback.
-- Soundtracks are original procedural compositions rendered to MP3, not sampled commercial recordings.
+```powershell
+dotnet publish src/KAOSDUO.VB/KAOSDUO.VB.vbproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:PublishReadyToRun=false -o dist/win-x64
+```
 
-### 🔫 Still included
+## Controls
 
-- **100% solo**, choose Blue or Metal; **Lett, Medium, Vanskelig, Drit Vanskelig**.
-- **10 combat waves**, **3 major bosses**, **8 unlockable weapons**, character skill upgrades.
-- Earn **shop coins** by killing monsters, completing portal journeys, collecting road coins and making near misses.
-- After each wave the game asks if you want to **buy weapons before travelling**. Open or skip the Armory.
-- **Manual / auto Save/Load**, including purchased weapons, abilities, stage, credits and the new road-mode state. JSON export/import. The same v4.1/v4.2 save keys are retained for backward compatibility.
-- **25% miniboss** probability is conditional on Geometry Run (the highway replaces that portal, not the combat wave).
-
-## 🎮 Controls
-
-| Mode | Controls |
+| Action | Controls |
 | --- | --- |
-| Combat | A / D move · W jump · F shoot · G special · Shift/Q dash · 1–8 equipped weapons · B shop |
-| Geometry cube | Space/W/↑/tap = jump |
-| Geometry spaceship | Hold Space/W/↑/ACTION = fly up; release to descend |
-| Geometry gravity | Space/W/↑/tap = reverse gravity |
-| Geometry miniboss | F / X to fire; fly to dodge enemy bullets |
-| Neon Highway car | **A/D or ←/→** = change lane · **Space or Shift** = hold nitro; recharge by releasing |
-| Mobile highway | On-screen ◀ **VENSTRE**, ⚡ **NITRO**, **HØYRE** ▶ |
-| Game menus | P pause · B armory · L save/load · M mute · 🎵 music toggle |
+| Move hero | `A/D`, arrow keys |
+| Jump / double-jump | `W`, `Space`, `Up` |
+| Aim / fire | Hold left mouse, or `F` for auto-target |
+| Dash | `Shift` |
+| Character super | `G` |
+| OVERDRIVE fever | `Q` when charged |
+| Reload | `R` |
+| Equip bought weapons | `1`–`8`, mouse wheel, `Tab` |
+| Shop | `B` (and after every wave) |
+| In portal miniboss battle | **WASD / arrows: freely move; mouse/F: shoot** |
+| Geometry portal | `Space/W`: jump, hold to fly, tap to flip gravity |
+| Neon Highway | `A/D`: change lanes; hold `Space`: nitro |
+| Save / load | `F5` / `F9` |
+| Screenshot | `F12` (Pictures/KAOSDUO) |
+| Pause / audio / fullscreen | `P`/`Esc`, `M`, `F11` |
 
-## 💾 Save/Load and older saves
+## Save file
 
-The game preserves the localStorage slot names from v4.1 (`kaosduo_v41_manual` and `kaosduo_v41_auto`) so earlier saves are not discarded. Existing geometry runner saves are migrated to the correct `geometry` variant. New highway saves serialize road position, lane, pickups, obstacles, nitro and progress. As with browser-local saves in general, an HTML file opened from a new origin/location may see a different storage area; use **Export/Import JSON** to transfer saves.
+Saved locally as `%APPDATA%\KAOSDUO\save_v6.json`. The new native save format is not interchangeable with the old browser `localStorage` format. Your old HTML releases remain archived as previous releases.
 
-## 📥 Install
+## Tech / project structure
 
-1. Download `KAOSDUO_NEON_HIGHWAY_v5.0.0.html` from [the release](https://github.com/Darschnid479/KAOSDuo/releases/tag/v5.0.0).
-2. Open the file in Chrome, Edge or another modern browser. No network connection needed.
-3. Choose Blue or Metal, try **HØR VALGT MUSIKK**, and press **Start**. Make sure your device's media volume is turned up.
+- `src/KAOSDUO.VB/GameData.vb`: gameplay and save models, weapons and probability rules.
+- `src/KAOSDUO.VB/GameForm.vb`: native WinForms game loop, input, menus, save/load.
+- `src/KAOSDUO.VB/Simulation.vb`: native VB.NET combat and portal physics.
+- `src/KAOSDUO.VB/RenderHelpers.vb` and `RenderScenes.vb`: native GDI+ visuals and character animations.
+- `src/KAOSDUO.VB/MusicPlayer.vb`: MP3 music playback using built-in Windows multimedia APIs.
+- `src/KAOSDUO.VB/Assets`: original character illustrations and original character themes embedded in the executable.
+- `BUILD_WINDOWS.bat`: Windows build command.
 
-The full ZIP contains the standalone game, editable web sources, MP3 soundtrack files, graphics and documentation. The earlier Android APK is not this version and remains unverified on real Android hardware.
+## Platform
 
-## ⚠️ Accessibility / notes
+**Windows only** for this native WinForms edition. An Android port of the VB.NET rewrite would require a separate platform UI and renderer; the old experimental Android APK is **not** v6.0 and is not part of this release.
 
-The game includes frequent flashing effects, fast-changing light, motion and intense color transitions. If you're light-sensitive, enable your operating system's **Reduce Motion** option where available and avoid the intense scenes. This is an original game and not affiliated with Geometry Dash.
-
-Built by [Darschnid](https://github.com/Darschnid479). ❤️
+The Geometry-style portal mode is an original, independent implementation; no assets from Geometry Dash are included.

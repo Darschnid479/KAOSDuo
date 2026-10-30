@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <RootNamespace>KAOSDUO</RootNamespace>
+    <MyType>Empty</MyType>
+    <StartupObject>KAOSDUO.Program</StartupObject>
+    <OptionStrict>On</OptionStrict>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionInfer>On</OptionInfer>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>KAOSDUO</AssemblyName>
+    <ApplicationIcon>Assets\kaosduo.ico</ApplicationIcon>
+    <Version>6.0.0</Version>
+    <FileVersion>6.0.0.0</FileVersion>
+    <Product>KAOSDUO: REFORGED</Product>
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>true</SelfContained>
+    <PublishTrimmed>false</PublishTrimmed>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\blue.png" />
+    <EmbeddedResource Include="Assets\metal.png" />
+    <EmbeddedResource Include="Assets\blue_theme.mp3" />
+    <EmbeddedResource Include="Assets\metal_theme.mp3" />
+  </ItemGroup>
+</Project>
